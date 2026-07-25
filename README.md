@@ -20,7 +20,21 @@ Install dependencies, then run `npm run dev`. Open the local address shown in th
 
 ## Deploy to Vercel
 
-Import this GitHub repository in Vercel. It is a standard Next.js app and requires no environment variables or external database.
+Import this GitHub repository in Vercel. It is a standard Next.js app and requires no external database. Environment variables are needed only for optional Oura syncing.
+
+### Oura connection
+
+Create an OAuth application in the Oura developer portal with this redirect URI:
+
+`https://p-n-p.vercel.app/api/oura/callback`
+
+Then add these Vercel environment variables and redeploy:
+
+- `OURA_CLIENT_ID`
+- `OURA_CLIENT_SECRET`
+- `APP_URL=https://p-n-p.vercel.app`
+
+The app requests only Oura's `daily` scope and imports sleep, readiness, activity, stress/recovery, and resilience summaries.
 
 ## Data
 
