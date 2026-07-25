@@ -8,6 +8,10 @@ A standalone, device-local personal operating system built around a real working
 - Editable, reorderable, completable tasks
 - Daily health and emotional check-ins
 - Emotional trends for anxiety, stress, regulation, triggers, responses, and what helped
+- Separate physical and mental health views
+- Weight, personal hygiene, yoga, meals, medication, and hydration tracking
+- Oura sleep, readiness, activity, stress/recovery, and resilience KPIs
+- A private daily relationship model for appreciation, support, affection, follow-through, and remembering what matters
 - KPI dashboard and copyable weekly report
 - Income capture
 - Local browser storage
