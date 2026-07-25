@@ -40,6 +40,19 @@ Then add these Vercel environment variables and redeploy:
 
 The app requests only Oura's `daily` scope and imports sleep, readiness, activity, stress/recovery, and resilience summaries.
 
+### Google daily brief
+
+Enable the Google Calendar API and Gmail API in a Google Cloud project. Create an OAuth client for a web application with:
+
+`https://p-n-p.vercel.app/api/google/callback`
+
+Add these Vercel environment variables:
+
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+
+The existing `APP_URL` is reused. PNP requests read-only Calendar and Gmail permissions, showing only today’s events and unread messages that Google marks important or starred.
+
 ## Data
 
 No account or server is used. Data stays in the current browser until exported or browser storage is cleared. Use **Data & backup → Export JSON** regularly.
