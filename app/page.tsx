@@ -9,7 +9,7 @@ type OuraDay={sleepScore?:number;readinessScore?:number;activityScore?:number;st
 type Health={date:string;sleep:string;weight:string;energy:number;mood:number;hydration:number;bloodSugar:string;exercise:string;yoga:string;hygiene:string[];notes:string;emotion:string;emotionIntensity:number;anxiety:number;stress:number;regulated:number;trigger:string;response:string;helped:string;medsTaken:string[];meals:{breakfast:Meal;lunch:Meal;dinner:Meal};oura?:OuraDay};
 type Morning={date:string;sleepQuality:string;energy:number;emotion:string;focus:string;needs:string[]};
 type Relationship={date:string;actions:string[];hardestTime:string;whatSheNeeds:string;lovedAnswer:string;note:string};
-type State={tasks:Task[];health:Health[];revenue:{date:string;amount:number;source:string}[];mornings:Morning[];medNames:string[];relationships:Relationship[]};
+type State={tasks:Task[];health:Health[];revenue:{date:string;amount:number;source:string}[];mornings:Morning[];medNames:string[];relationships:Relationship[];lastDailyReset:string;dailyHistory:{date:string;completed:string[]}[]};
 type View="home"|"week"|"health"|"relationship"|"kpi"|"data";
 
 const days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
@@ -30,9 +30,10 @@ const relationshipActions=[
  ["Ask directly","Ask what one regular action would make her feel loved."]
 ];
 const now=()=>new Date().toISOString();
-const today=()=>new Date().toISOString().slice(0,10);
+const today=()=>{const d=new Date(),offset=d.getTimezoneOffset()*60000;return new Date(d.getTime()-offset).toISOString().slice(0,10)};
 const blankMeal=():Meal=>({logged:false,note:""});
 const blankHealth=(date=today()):Health=>({date,sleep:"",weight:"",energy:5,mood:5,hydration:0,bloodSugar:"",exercise:"",yoga:"",hygiene:[],notes:"",emotion:"",emotionIntensity:5,anxiety:5,stress:5,regulated:5,trigger:"",response:"",helped:"",medsTaken:[],meals:{breakfast:blankMeal(),lunch:blankMeal(),dinner:blankMeal()}});
+const blankRelationship=(date=today()):Relationship=>({date,actions:[],hardestTime:"",whatSheNeeds:"",lovedAnswer:"",note:""});
 const seed:Task[]=[
  ...["Best Buy","Laundry","Dishes","4 PM Floor Walk","1 hour Coursera"].map((title,i)=>({id:`t${i}`,title,section:"today" as Section,due:title.startsWith("4 PM")?"16:00":"",done:false,created:now()})),
  ...["Job Patrol","Continue Application Vigilance","Theater Jobs","Auditions","Gig Patrol","Acting Class","Re-examine entrepreneur options","Targeted resume drops","Targeted ways to make money","Targeted cash business","Targeted travel opportunities"].map((title,i)=>({id:`p${i}`,title,section:"patrols" as Section,recurring:true,done:false,created:now()})),
@@ -43,12 +44,17 @@ const seed:Task[]=[
  ...["Clear AC line","Paint bedroom","Downstairs bathroom","Paint door","Returns","Pool — Black Algae Hunt","Bug spray","Tree and bush trim"].map((title,i)=>({id:`m${i}`,title,section:"month" as Section,done:false,created:now()})),
  ...["Keep working house","Keep up on applications","Unconventional but legal income opportunities"].map((title,i)=>({id:`l${i}`,title,section:"long" as Section,done:false,created:now()}))
 ];
-const initial:State={tasks:seed,health:[],revenue:[],mornings:[],medNames:["Morning medications","Vitamins / supplements","TRT (Monday / Thursday)"],relationships:[]};
+const initial:State={tasks:seed,health:[],revenue:[],mornings:[],medNames:["Morning medications","Vitamins / supplements","TRT (Monday / Thursday)"],relationships:[],lastDailyReset:today(),dailyHistory:[]};
 const storageKey="pnp-v1";
 
 function normalize(raw:Partial<State>):State{
+ let tasks=raw.tasks||seed,history=raw.dailyHistory||[];
+ if(raw.lastDailyReset&&raw.lastDailyReset!==today()){
+  history=[...history.filter(x=>x.date!==raw.lastDailyReset),{date:raw.lastDailyReset,completed:tasks.filter(t=>(t.section==="today"||t.recurring)&&t.done).map(t=>t.title)}];
+  tasks=tasks.map(t=>(t.section==="today"||t.recurring)?{...t,done:false,completed:undefined}:t);
+ }
  return{
-  tasks:raw.tasks||seed,revenue:raw.revenue||[],mornings:raw.mornings||[],medNames:raw.medNames||initial.medNames,relationships:raw.relationships||[],
+  tasks,revenue:raw.revenue||[],mornings:raw.mornings||[],medNames:raw.medNames||initial.medNames,relationships:raw.relationships||[],lastDailyReset:today(),dailyHistory:history,
   health:(raw.health||[]).map(h=>({...blankHealth(h.date),...h,medsTaken:h.medsTaken||((h as Health&{meds?:boolean}).meds?["Morning medications"]:[]),meals:h.meals||blankHealth(h.date).meals}))
  };
 }
@@ -60,11 +66,12 @@ export default function Home(){
  const [morningOpen,setMorningOpen]=useState(false),[morningStep,setMorningStep]=useState(0);
  const [morning,setMorning]=useState<Morning>({date:today(),sleepQuality:"",energy:5,emotion:"",focus:"",needs:[]});
  const [income,setIncome]=useState({amount:"",source:""}),[newMed,setNewMed]=useState("");
- const [relationship,setRelationship]=useState<Relationship>({date:today(),actions:[],hardestTime:"",whatSheNeeds:"",lovedAnswer:"",note:""});
+ const [relationship,setRelationship]=useState<Relationship>(blankRelationship());
  const [oura,setOura]=useState({configured:false,connected:false,syncing:false,message:""});
  const backupRef=useRef<HTMLInputElement>(null),healthRef=useRef<HTMLInputElement>(null);
  useEffect(()=>{try{const saved=localStorage.getItem(storageKey);if(saved)setData(normalize(JSON.parse(saved)))}catch{}setReady(true)},[]);
  useEffect(()=>{if(ready)localStorage.setItem(storageKey,JSON.stringify(data))},[data,ready]);
+ useEffect(()=>{if(!ready)return;const rollover=()=>{const date=today();setData(d=>d.lastDailyReset===date?d:normalize(d));setHealth(h=>h.date===date?h:blankHealth(date));setRelationship(r=>r.date===date?r:blankRelationship(date));setMorning(m=>m.date===date?m:{date,sleepQuality:"",energy:5,emotion:"",focus:"",needs:[]})};rollover();const timer=window.setInterval(rollover,60000);return()=>window.clearInterval(timer)},[ready]);
  useEffect(()=>{const saved=data.health.find(x=>x.date===today());if(saved)setHealth(normalize({...initial,health:[saved]}).health[0])},[data.health]);
  useEffect(()=>{const saved=data.relationships.find(x=>x.date===today());if(saved)setRelationship(saved)},[data.relationships]);
  useEffect(()=>{fetch("/api/oura/status").then(r=>r.json()).then(x=>setOura(o=>({...o,...x}))).catch(()=>{})},[]);
