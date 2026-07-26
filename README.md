@@ -11,6 +11,10 @@ A standalone, device-local personal operating system built around a real working
 - Revenue command center with monthly baseline and opportunity pipeline
 - Decision log, universal capture, and guided weekly executive review
 - Automatic plain-language progress narrative
+- Internal notification center for interviews, priorities, blocked outcomes, calendar, mail, and important headlines
+- Priority-only Executive page plus a separate All Tasks command view
+- Clear maintenance versus one-time task behavior
+- Private Google Drive app-data synchronization across devices
 - Editable, reorderable, completable tasks
 - Task editor for moving work between Personal and Business groups
 - Breakfast, lunch, and dinner interviews with optional browser reminders
@@ -51,7 +55,7 @@ The app requests only Oura's `daily` scope and imports sleep, readiness, activit
 
 ### Google daily brief
 
-Enable the Google Calendar API and Gmail API in a Google Cloud project. Create an OAuth client for a web application with:
+Enable the Google Calendar API, Gmail API, and Google Drive API in a Google Cloud project. Create an OAuth client for a web application with:
 
 `https://p-n-p.vercel.app/api/google/callback`
 
@@ -60,7 +64,7 @@ Add these Vercel environment variables:
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
 
-The existing `APP_URL` is reused. PNP requests read-only Calendar and Gmail permissions, showing only today’s events and unread messages that Google marks important or starred.
+The existing `APP_URL` is reused. PNP requests read-only Calendar and Gmail permissions, plus access only to its private Google Drive application-data folder. PNP cannot see or alter the user’s normal Drive files. Existing users must disconnect and reconnect Google once to grant the new private sync permission.
 
 ## Data
 
