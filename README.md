@@ -5,7 +5,9 @@ A standalone, device-local personal operating system built around a real working
 ## Included
 
 - Today, patrols, personal projects, Stottly, week, watch list, month, and long-term sections
+- Dedicated Business tab for SE Housekeeping, StottifAI, Agentic Forge, CartCurios, Socials, R&D, and Stewardship
 - Editable, reorderable, completable tasks
+- Breakfast, lunch, and dinner interviews with optional browser reminders
 - Daily health and emotional check-ins
 - Emotional trends for anxiety, stress, regulation, triggers, responses, and what helped
 - Separate physical and mental health views
