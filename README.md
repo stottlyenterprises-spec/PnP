@@ -6,6 +6,11 @@ A standalone, device-local personal operating system built around a real working
 
 - Today, patrols, personal projects, Stottly, week, watch list, month, and long-term sections
 - Dedicated Business tab for SE Housekeeping, StottifAI, Agentic Forge, CartCurios, Socials, R&D, and Stewardship
+- Executive brief, Today’s Big Three, capacity signals, and focus mode
+- Outcome portfolio with progress, status, next action, and energy requirements
+- Revenue command center with monthly baseline and opportunity pipeline
+- Decision log, universal capture, and guided weekly executive review
+- Automatic plain-language progress narrative
 - Editable, reorderable, completable tasks
 - Task editor for moving work between Personal and Business groups
 - Breakfast, lunch, and dinner interviews with optional browser reminders
