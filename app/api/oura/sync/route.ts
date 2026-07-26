@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-type Doc={day:string;score?:number;total_sleep_duration?:number;stress_high?:number;recovery_high?:number;level?:string};
+type Doc={day:string;score?:number;total_sleep_duration?:number;stress_high?:number;recovery_high?:number;level?:string;type?:string};
 async function oura(path:string,token:string,start:string,end:string){
  const url=new URL(`https://api.ouraring.com/v2/usercollection/${path}`);
  url.search=new URLSearchParams({start_date:start,end_date:end}).toString();
@@ -20,7 +20,7 @@ export async function GET(){
   const map=new Map<string,{date:string;sleepHours?:number;oura:Record<string,number|string>}>();
   const row=(day:string)=>{if(!map.has(day))map.set(day,{date:day,oura:{}});return map.get(day)!};
   dailySleep.forEach(x=>row(x.day).oura.sleepScore=x.score||0);
-  sleep.forEach(x=>{if(x.total_sleep_duration)row(x.day).sleepHours=Math.round(x.total_sleep_duration/360)/10});
+  sleep.filter(x=>x.type!=="deleted").forEach(x=>{if(x.total_sleep_duration){const hours=Math.round(x.total_sleep_duration/360)/10,current=row(x.day).sleepHours||0;if(hours>current)row(x.day).sleepHours=hours}});
   readiness.forEach(x=>row(x.day).oura.readinessScore=x.score||0);
   activity.forEach(x=>row(x.day).oura.activityScore=x.score||0);
   stress.forEach(x=>{row(x.day).oura.stressMinutes=x.stress_high||0;row(x.day).oura.recoveryMinutes=x.recovery_high||0});
