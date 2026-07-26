@@ -15,7 +15,8 @@ export async function GET(){
  const end=new Date(),start=new Date();start.setDate(end.getDate()-30);
  const iso=(d:Date)=>d.toISOString().slice(0,10);
  try{
-  const [dailySleep,sleep,readiness,activity,stress,resilience]=await Promise.all(["daily_sleep","sleep","daily_readiness","daily_activity","daily_stress","daily_resilience"].map(p=>oura(p,token,iso(start),iso(end))));
+  const [dailySleep,sleep,readiness,activity,stress]=await Promise.all(["daily_sleep","sleep","daily_readiness","daily_activity","daily_stress"].map(p=>oura(p,token,iso(start),iso(end))));
+  const resilience=await oura("daily_resilience",token,iso(start),iso(end)).catch(()=>[] as Doc[]);
   const map=new Map<string,{date:string;sleepHours?:number;oura:Record<string,number|string>}>();
   const row=(day:string)=>{if(!map.has(day))map.set(day,{date:day,oura:{}});return map.get(day)!};
   dailySleep.forEach(x=>row(x.day).oura.sleepScore=x.score||0);
