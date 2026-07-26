@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Progress, Not Perfection",
-  description: "A calm personal operating system for forward motion.",
+  description: "Personal planning, health, and work in one place.",
   manifest: "/manifest.webmanifest",
   applicationName: "PNP",
   appleWebApp: {

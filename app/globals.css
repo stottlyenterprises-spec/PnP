@@ -125,3 +125,31 @@ h1{letter-spacing:-.035em}
 @media(max-width:800px){input,select,textarea{font-size:16px!important}.modal>div{height:auto;max-height:calc(100dvh - 92px);margin-bottom:calc(70px + env(safe-area-inset-bottom));overscroll-behavior:contain}.taskEditorActions{bottom:-24px;margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}.journalView{grid-template-columns:1fr}.journalForm{grid-template-columns:1fr}.journalForm .wide{grid-column:auto}.reportHeader{display:grid}.reportRange{width:100%}.reportRange button{flex:1}.reportLenses{grid-template-columns:1fr}}
 
 .autoSaveNote{grid-column:1/-1;margin:2px 0 0;padding:10px 12px;border-radius:9px;background:#edf3ed;color:var(--green);font-size:11px}
+
+/* Cross-device cleanup */
+html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #d7a47f;outline-offset:2px}.content>header>div:first-child,.sectionTitle>div,.taskCommandIntro>div{min-width:0}.taskname{min-width:0;overflow-wrap:anywhere}.tasktools button,.modalClose,.brandNotification{min-width:38px;min-height:38px}.card,.metrics article{overflow-wrap:anywhere}.taskPanel{display:flex;flex-direction:column}.taskPanel>.tasklist{flex:1}.taskPanel>.add{margin-top:auto}.headerActions{min-width:0}
+@media(hover:none){.tasktools{opacity:1}.card:hover{transform:none}}
+@media(min-width:801px) and (max-width:1150px){main{grid-template-columns:214px 1fr}aside{padding-inline:14px}.content{padding-inline:28px}.taskAutoGrid{grid-template-columns:1fr}.executiveHero{padding:28px}.briefSignals{min-width:300px}}
+@media(max-width:800px){
+ body{background-attachment:scroll}
+ aside{top:0;padding:calc(8px + env(safe-area-inset-top)) 12px 8px}
+ .content{padding:18px max(14px,env(safe-area-inset-right)) calc(92px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+ .content>header{margin-bottom:20px}
+ .content>header h1{font-size:clamp(31px,9vw,40px);line-height:1.05}
+ .headerActions{display:grid;grid-template-columns:minmax(0,1fr) auto;width:100%;gap:8px}
+ .cloudPill{max-width:none}
+ .card,.metrics article{border-radius:16px}
+ .task{min-height:50px}
+ .taskname{padding:11px 7px}
+ .tasktools{flex:0 0 auto}
+ .tasktools button{min-width:34px;min-height:42px;padding:0 4px}
+ .dragHandle{min-height:46px}
+ .captureFab,.mobileCommand{bottom:calc(18px + env(safe-area-inset-bottom))}
+ .modal{align-items:end;padding:0}
+ .modal>div{max-height:calc(100dvh - 12px);margin-bottom:0;padding-bottom:calc(18px + env(safe-area-inset-bottom));border-radius:20px 20px 0 0}
+ .taskEditorActions{bottom:calc(-18px - env(safe-area-inset-bottom));margin-right:-18px;margin-bottom:calc(-18px - env(safe-area-inset-bottom));margin-left:-18px;padding:14px 18px calc(14px + env(safe-area-inset-bottom))}
+ .osLaunch{min-height:auto;padding-block:28px}
+ .appGrid button{min-height:78px}
+ .interviewNav{position:sticky;bottom:calc(-18px - env(safe-area-inset-bottom));z-index:2;margin:24px -18px calc(-18px - env(safe-area-inset-bottom));padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:#fffdf8;border-top:1px solid var(--line)}
+}
+@media(max-width:430px){.content{padding-inline:12px}.appGrid{grid-template-columns:repeat(3,minmax(0,1fr))}.appGrid b{font-size:9px}.metrics,.kpis{grid-template-columns:1fr}.taskPanel{padding:16px}.taskPanel>header h2{font-size:18px}.advisorActions{grid-template-columns:1fr}.mailClient.inboxOnly .mailInbox>button{padding-inline:12px}.stockTicker{grid-template-columns:1fr}}

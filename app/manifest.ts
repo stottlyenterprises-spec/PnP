@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Progress, Not Perfection",
     short_name: "PNP",
-    description: "A calm personal operating system for forward motion.",
+    description: "Personal planning, health, and work in one place.",
     start_url: "/",
     display: "standalone",
     background_color: "#f4f0e7",
