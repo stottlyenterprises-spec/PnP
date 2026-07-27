@@ -5,7 +5,7 @@
 **Working status:** Product plan  
 **Date:** July 26, 2026  
 **Product:** Progress, Not Perfection (PNP)  
-**Assistant:** D.e.e.d.s: Detect, Explore, Enable, Drive, Sustain
+**Assistant:** D.E.E.D.S.: Detect, Explore, Enable, Drive, Sustain
 
 ## Executive summary
 
@@ -17,7 +17,7 @@ Version 2 has four priorities:
 
 1. Make the existing product stable, coherent, and easy to maintain.
 2. Make personal data dependable across devices, including offline use.
-3. Make D.e.e.d.s a useful personal assistant that responds to current PNP data.
+3. Make D.E.E.D.S. a useful personal assistant that responds to current PNP data.
 4. Deliver true mobile applications with native features and private, on-device intelligence where supported.
 
 The goal is not to add AI everywhere. The goal is to make the product more perceptive, more useful, and more personal without introducing a required per-message AI cost.
@@ -45,7 +45,7 @@ Trends matter more than isolated days. The product should make partial progress 
 
 ### User judgment comes first
 
-D.e.e.d.s recommends, explains, and helps the user act. The user makes the decision.
+D.E.E.D.S. recommends, explains, and helps the user act. The user makes the decision.
 
 ### People are not scorecards
 
@@ -65,7 +65,7 @@ Core functions should work without a connection. Cloud sync should make data ava
 
 ### Explain the recommendation
 
-Every D.e.e.d.s suggestion should show the evidence behind it, such as urgency, calendar timing, available energy, goal connection, or an approaching deadline.
+Every D.E.E.D.S. suggestion should show the evidence behind it, such as urgency, calendar timing, available energy, goal connection, or an approaching deadline.
 
 ### No unnecessary save buttons
 
@@ -82,7 +82,7 @@ Version 1 has established the product model and the visual direction. It include
 - Google Calendar and Gmail integration
 - local browser storage, export/import, and Google Drive backup
 - KPI and forward-motion reporting
-- D.e.e.d.s recommendations based on structured app data
+- D.E.E.D.S. recommendations based on structured app data
 - responsive web and progressive web app behavior
 - a time-aware, liquid-glass visual system
 
@@ -95,8 +95,8 @@ Version 2 is successful when:
 - the same account can use PNP across web, iPhone, and Android
 - data is durable, synchronized, exportable, and usable offline
 - navigation and layouts remain coherent on desktop and mobile
-- D.e.e.d.s refreshes from current PNP data whenever it opens
-- D.e.e.d.s produces useful next-step guidance without requiring a paid inference service
+- D.E.E.D.S. refreshes from current PNP data whenever it opens
+- D.E.E.D.S. produces useful next-step guidance without requiring a paid inference service
 - goals are separate from tasks but can be advanced by linked tasks and habits
 - health data can come from Oura, Apple Health, and Android Health Connect with clear source labels
 - reports explain meaningful trends across work, health, relationships, goals, and journal data
@@ -119,7 +119,7 @@ The current application should be separated into maintainable modules:
 - mail
 - journal
 - reports and feedback
-- D.e.e.d.s
+- D.E.E.D.S.
 - identity, settings, backup, and connections
 
 Each domain owns its components, data types, validation, and tests. Shared visual components live in a reusable design system.
@@ -148,9 +148,9 @@ Oura, Google, Apple Health, and Health Connect should use separate adapters. A f
 - stale or failed data
 - disconnect and resync controls
 
-## 6. D.e.e.d.s Version 2
+## 6. D.E.E.D.S. Version 2
 
-D.e.e.d.s becomes the decision and guidance layer across PNP.
+D.E.E.D.S. becomes the decision and guidance layer across PNP.
 
 ### Detect
 
@@ -209,7 +209,7 @@ Protect progress over time:
 
 ### Recommendation order
 
-D.e.e.d.s should rank suggestions in this order:
+D.E.E.D.S. should rank suggestions in this order:
 
 1. immediate safety or health needs
 2. fixed commitments and time-sensitive interviews
@@ -386,7 +386,7 @@ The product should not hardcode personal names, relationship assumptions, health
 - add schema migrations and conflict handling
 - migrate existing local data safely
 
-### Phase 3: D.e.e.d.s core
+### Phase 3: D.E.E.D.S. core
 
 - define the signal and recommendation model
 - implement the deterministic ranking engine
@@ -439,7 +439,7 @@ The product should not hardcode personal names, relationship assumptions, health
 - reliable offline use
 - durable migration from Version 1
 - goal model separate from task model
-- D.e.e.d.s deterministic assistant core
+- D.E.E.D.S. deterministic assistant core
 - on-device language capabilities where supported
 - Capacitor iOS and Android applications
 - native notifications and secure storage
@@ -486,7 +486,7 @@ The product should not hardcode personal names, relationship assumptions, health
 
 ### Assistant trust risk
 
-**Risk:** D.e.e.d.s becomes noisy, opaque, or overconfident.  
+**Risk:** D.E.E.D.S. becomes noisy, opaque, or overconfident.  
 **Response:** Limit the number of suggestions, show reasons, expose sources, learn from feedback, and keep consequential decisions with the user.
 
 ## 16. Definition of done
@@ -497,7 +497,7 @@ Version 2 is done when:
 - an existing Version 1 user can migrate without losing tasks, health entries, completion history, goals, journal entries, or settings
 - web, iPhone, and Android stay synchronized and remain useful offline
 - common task and check-in changes autosave
-- D.e.e.d.s refreshes on open and responds to current PNP changes
+- D.E.E.D.S. refreshes on open and responds to current PNP changes
 - every recommendation can explain why it was presented
 - unsupported AI devices receive a complete structured experience
 - imported health values show source and freshness
@@ -511,7 +511,7 @@ Version 2 is done when:
 1. Inventory the Version 1 data model and create migration test files.
 2. Divide the current application into domain modules.
 3. Define shared types for signals, recommendations, explanations, goals, and completion events.
-4. Build the deterministic D.e.e.d.s ranking prototype.
+4. Build the deterministic D.E.E.D.S. ranking prototype.
 5. Create a Capacitor proof of concept on one iPhone and one Android device.
 6. Select the account, cloud database, local database, and synchronization approach.
 7. Write the privacy data map before adding new collection.

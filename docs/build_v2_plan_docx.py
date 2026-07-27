@@ -217,7 +217,7 @@ def build():
         ("STATUS", "Product plan"),
         ("DATE", "July 26, 2026"),
         ("PRODUCT", "Progress, Not Perfection"),
-        ("ASSISTANT", "D.e.e.d.s"),
+        ("ASSISTANT", "D.E.E.D.S."),
     ]
     for cell, (label, value) in zip([c for row in meta.rows for c in row.cells], values):
         shade(cell, PALE)
@@ -288,7 +288,7 @@ def build():
             previous_numbered = False
 
     doc.core_properties.title = "Progress, Not Perfection: Version 2 Product and Build Plan"
-    doc.core_properties.subject = "Version 2 product, mobile, data, and D.e.e.d.s roadmap"
+    doc.core_properties.subject = "Version 2 product, mobile, data, and D.E.E.D.S. roadmap"
     doc.core_properties.author = "Progress, Not Perfection"
     doc.save(OUTPUT)
     print(OUTPUT)
