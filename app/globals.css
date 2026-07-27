@@ -208,3 +208,23 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,i
 /* D.e.e.d.s briefing spacing */
 .nextAdvisor{min-height:180px;margin-bottom:18px;padding:30px 32px}.nextAdvisor>div:first-child{max-width:760px}.nextAdvisor h2{font-size:clamp(28px,2.4vw,36px);line-height:1.1;margin:7px 0 9px}.nextAdvisor p{line-height:1.55}.advisorActions{gap:10px}.advisorActions button{min-height:48px;padding:12px 17px}
 @media(max-width:800px){.nextAdvisor{min-height:0;margin-bottom:16px;padding:24px 20px}.nextAdvisor h2{font-size:28px}.advisorActions button{min-height:46px}}
+
+/* Week planning and quick task capture */
+.capacityStrip>div:first-child p:last-child{max-width:560px;margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.5}
+.weekInlineTask{flex:1;min-width:0;display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:7px;padding:6px}
+.weekInlineTask input,.weekInlineTask select{min-width:0;width:100%;padding:8px 9px;border:1px solid transparent;border-radius:8px;background:#ffffff7d;color:var(--ink)}
+.weekInlineTask input:hover,.weekInlineTask input:focus,.weekInlineTask select:hover,.weekInlineTask select:focus{border-color:var(--line);background:white;outline:0}
+.taskDay{display:inline-flex!important;margin:0 8px 0 0;padding:3px 7px;border-radius:100px;background:#e7eee9;color:var(--green)!important;font:700 9px Arial;text-transform:uppercase;letter-spacing:.05em}
+.quickAddTask{display:grid;gap:14px}
+.quickAddTask h2{margin:0 0 2px;font:500 27px Georgia}
+.quickAddTask>label{display:grid;gap:6px;color:var(--muted);font-size:12px}
+.quickAddTask input,.quickAddTask select{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--ink)}
+.quickAddActions{position:sticky;bottom:-24px;margin:4px -24px -24px;padding:14px 24px calc(14px + env(safe-area-inset-bottom));background:linear-gradient(#fffdf8e8,#fffdf8 22%);border-top:1px solid var(--line)}
+.quickAddActions button{flex:1}
+@media(max-width:800px){
+ .weekInlineTask{grid-template-columns:1fr;gap:4px}
+ .weekInlineTask input,.weekInlineTask select{min-height:42px}
+ .weekInlineTask select{color:var(--green);font-weight:700}
+ .quickAddTask{min-height:min(470px,calc(100dvh - 110px));align-content:start}
+ .quickAddActions{margin-right:-18px;margin-left:-18px;padding-right:18px;padding-left:18px}
+}
