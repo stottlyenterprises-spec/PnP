@@ -1,0 +1,21 @@
+{
+  "appId": "com.stottly.progressnotperfection",
+  "appName": "Progress, Not Perfection",
+  "webDir": "public",
+  "server": {
+    "url": "https://p-n-p.vercel.app",
+    "cleartext": false,
+    "allowNavigation": [
+      "p-n-p.vercel.app",
+      "accounts.google.com",
+      "cloud.ouraring.com"
+    ]
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "preferredContentMode": "mobile"
+  },
+  "android": {
+    "allowMixedContent": false
+  }
+}
