@@ -40,7 +40,7 @@ export async function POST(req: Request) {
   const token = await googleAccessToken(0);
   if (!token) return NextResponse.json({ error: "Connect Google first." }, { status: 401 });
   const text = await req.text();
-  if (text.length > 2_000_000) return NextResponse.json({ error: "PNP data is too large to sync." }, { status: 413 });
+  if (text.length > 2_000_000) return NextResponse.json({ error: "D.E.E.D.S. data is too large to sync." }, { status: 413 });
   try {
     JSON.parse(text);
     const file = await findFile(token);
