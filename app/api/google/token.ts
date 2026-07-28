@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 
-export type GoogleAccount={slot:number;email:string};
+export type GoogleAccount={slot:number;email:string;name?:string;picture?:string};
 export const accountCookie=(kind:"access"|"refresh",slot:number)=>slot===0?`google_${kind}`:`google_${kind}_${slot}`;
 export const activeGoogleSlot=async()=>Math.max(0,Math.min(4,Number((await cookies()).get("google_active")?.value)||0));
 export const readGoogleAccounts=async():Promise<GoogleAccount[]>=>{
