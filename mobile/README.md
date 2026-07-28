@@ -1,6 +1,8 @@
-# PNP Mobile
+# D.E.E.D.S. Mobile
 
-PNP uses Capacitor to share the existing product across iOS, Android, and the web.
+Progress, Not Perfection
+
+D.E.E.D.S. uses Capacitor to share the existing product across iOS, Android, and the web.
 
 ## First-time setup
 
@@ -20,14 +22,17 @@ pnpm mobile:ios
 pnpm mobile:android
 ```
 
-The initial shell loads `https://p-n-p.vercel.app`. OAuth connections therefore continue to use the deployed PNP callback URLs while the native bridge is developed.
+The initial shell loads `https://p-n-p.vercel.app`. OAuth connections therefore continue to use the deployed D.E.E.D.S. callback URLs while the native bridge is developed.
 
 ## Current status
 
 - Shared app identity and native configuration: ready
 - Responsive viewport and safe areas: ready
 - Hosted real-device shell: ready to generate
+- Native recurring check-in notifications and notification routing: ready to sync
+- Deep-link routing for views and voice-created tasks: ready to sync
+- Haptic feedback for completed tasks: ready to sync
 - Native project folders: generated locally after dependencies are installed
-- Push notifications, deep links, Siri/App Actions, HealthKit, Health Connect, biometric lock, and offline queue: planned
+- Remote push notifications, Siri/App Actions, HealthKit, Health Connect, biometric lock, and offline queue: planned
 
 See `docs/MOBILE_ROADMAP.md` for release gates and implementation order.
