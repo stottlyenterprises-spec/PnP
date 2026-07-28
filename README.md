@@ -16,6 +16,7 @@ A standalone, device-local personal operating system built around a real working
 - Internal notification center for interviews, priorities, blocked outcomes, calendar, mail, and important headlines
 - Priority-only Executive page plus a separate All Tasks command view
 - Clear maintenance versus one-time task behavior
+- Google and Microsoft Outlook mail/calendar connections with multiple accounts
 - Private Google Drive app-data synchronization across devices
 - Editable, reorderable, completable tasks
 - Task editor for moving work between Personal and Business groups
@@ -39,7 +40,7 @@ Install dependencies, then run `npm run dev`. Open the local address shown in th
 
 ## Deploy to Vercel
 
-Import this GitHub repository in Vercel. It is a standard Next.js app and requires no external database. Environment variables are needed only for optional Oura syncing.
+Import this GitHub repository in Vercel. It is a standard Next.js app and requires no external database. Environment variables enable the optional Oura, Google, and Outlook connections.
 
 ### Oura connection
 
@@ -66,8 +67,21 @@ Add these Vercel environment variables:
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
 
-The existing `APP_URL` is reused. D.E.E.D.S. requests read-only Calendar and Gmail permissions, plus access only to its private Google Drive application-data folder. D.E.E.D.S. cannot see or alter the user’s normal Drive files. Existing users must disconnect and reconnect Google once to grant the new private sync permission.
+The existing `APP_URL` is reused. D.E.E.D.S. requests Calendar, Gmail read/send, and access only to its private Google Drive application-data folder. D.E.E.D.S. cannot see or alter the user’s normal Drive files.
+
+### Microsoft Outlook
+
+Create an app registration in the Microsoft Entra admin center. Set the supported account types to include both organizational Microsoft accounts and personal Microsoft accounts, then add this Web redirect URI:
+
+`https://p-n-p.vercel.app/api/outlook/callback`
+
+Create a client secret and add these Vercel environment variables:
+
+- `OUTLOOK_CLIENT_ID`
+- `OUTLOOK_CLIENT_SECRET`
+
+The existing `APP_URL` is reused. D.E.E.D.S. requests delegated access to the connected account's basic profile, mail read/send, and calendar read scopes. Outlook is a selectable Mail and Calendar provider; Google remains the private cross-device app-data location.
 
 ## Data
 
-No account or server is used. Data stays in the current browser until exported or browser storage is cleared. Use **Data & backup → Export JSON** regularly.
+The current record is cached in the browser for fast and offline use. When Google is connected, D.E.E.D.S. automatically saves the record to the private Google Drive application-data folder and links it across devices. JSON export and import remain available in Settings.
