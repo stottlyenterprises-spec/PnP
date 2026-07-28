@@ -1,4 +1,4 @@
-export const DATA_SCHEMA_VERSION = 2;
+export const DATA_SCHEMA_VERSION = 3;
 export const LOCAL_DATA_KEY = "deeds-data-v2";
 export const LEGACY_DATA_KEY = "pnp-v1";
 const DEVICE_KEY = "deeds-device-id";
@@ -19,6 +19,7 @@ export type CloudEnvelope<T> = {
 export type LocalEnvelope<T> = CloudEnvelope<T> & {
   cloudRevision: number;
   dirty: boolean;
+  baseData?: T;
 };
 
 export type RecoveryPoint<T> = {
@@ -30,6 +31,104 @@ export type RecoveryPoint<T> = {
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   Boolean(value) && typeof value === "object" && !Array.isArray(value);
+
+const same = (left: unknown, right: unknown) => JSON.stringify(left) === JSON.stringify(right);
+const clone = <T,>(value: T): T => value === undefined ? value : JSON.parse(JSON.stringify(value));
+
+function entityKey(value: unknown) {
+  if (!isRecord(value)) return null;
+  if (typeof value.id === "string") return `id:${value.id}`;
+  if (typeof value.date === "string" && typeof value.period === "string") return `date:${value.date}|period:${value.period}`;
+  if (typeof value.date === "string" && typeof value.profileId === "string") return `date:${value.date}|profile:${value.profileId}`;
+  if (typeof value.date === "string" && typeof value.source === "string" && typeof value.amount === "number") return `date:${value.date}|source:${value.source}|amount:${value.amount}`;
+  if (typeof value.date === "string") return `date:${value.date}`;
+  return null;
+}
+
+function keyedArray(values: unknown[]) {
+  const entries = values.map(value => [entityKey(value), value] as const);
+  if (entries.some(([key]) => !key)) return null;
+  const keys = entries.map(([key]) => key as string);
+  if (new Set(keys).size !== keys.length) return null;
+  return new Map(entries as [string, unknown][]);
+}
+
+function mergePrimitiveArray(base: unknown[], local: unknown[], remote: unknown[]) {
+  const encode = (value: unknown) => JSON.stringify(value);
+  const baseKeys = new Set(base.map(encode)), localKeys = new Set(local.map(encode)), remoteKeys = new Set(remote.map(encode));
+  const result: unknown[] = [];
+  const append = (value: unknown) => {
+    if (!result.some(existing => same(existing, value))) result.push(clone(value));
+  };
+  local.forEach(value => {
+    const key = encode(value);
+    if (!baseKeys.has(key) || remoteKeys.has(key)) append(value);
+  });
+  remote.forEach(value => {
+    const key = encode(value);
+    if (!baseKeys.has(key) || localKeys.has(key)) append(value);
+  });
+  return result;
+}
+
+function mergeValue(base: unknown, local: unknown, remote: unknown, path: string, conflicts: string[]): unknown {
+  if (same(local, remote)) return clone(local);
+  if (same(local, base)) return clone(remote);
+  if (same(remote, base)) return clone(local);
+  if (base === undefined) {
+    if (local === undefined) return clone(remote);
+    if (remote === undefined) return clone(local);
+  }
+  if (local === undefined || remote === undefined) {
+    conflicts.push(path);
+    return clone(local === undefined ? remote : local);
+  }
+  if (Array.isArray(local) && Array.isArray(remote)) {
+    const baseArray = Array.isArray(base) ? base : [];
+    const localMap = keyedArray(local), remoteMap = keyedArray(remote), baseMap = keyedArray(baseArray);
+    if (!localMap || !remoteMap || !baseMap) return mergePrimitiveArray(baseArray, local, remote);
+    const orderedKeys = [...localMap.keys(), ...[...remoteMap.keys()].filter(key => !localMap.has(key))];
+    const merged: unknown[] = [];
+    for (const key of orderedKeys) {
+      const baseItem = baseMap.get(key), localItem = localMap.get(key), remoteItem = remoteMap.get(key);
+      if (baseItem !== undefined && localItem === undefined && remoteItem !== undefined) {
+        if (!same(remoteItem, baseItem)) {
+          conflicts.push(`${path}[${key}]`);
+          merged.push(clone(remoteItem));
+        }
+        continue;
+      }
+      if (baseItem !== undefined && remoteItem === undefined && localItem !== undefined) {
+        if (!same(localItem, baseItem)) {
+          conflicts.push(`${path}[${key}]`);
+          merged.push(clone(localItem));
+        }
+        continue;
+      }
+      if (localItem === undefined && remoteItem === undefined) continue;
+      merged.push(mergeValue(baseItem, localItem, remoteItem, `${path}[${key}]`, conflicts));
+    }
+    return merged;
+  }
+  if (isRecord(local) && isRecord(remote)) {
+    const baseRecord = isRecord(base) ? base : {};
+    const keys = new Set([...Object.keys(baseRecord), ...Object.keys(local), ...Object.keys(remote)]);
+    return Object.fromEntries([...keys].map(key => [
+      key,
+      mergeValue(baseRecord[key], local[key], remote[key], path ? `${path}.${key}` : key, conflicts),
+    ]).filter(([, value]) => value !== undefined));
+  }
+  conflicts.push(path);
+  return clone(local);
+}
+
+export function mergeWithBase<T>(base: T, local: T, remote: T) {
+  const conflicts: string[] = [];
+  return {
+    data: mergeValue(base, local, remote, "", conflicts) as T,
+    conflicts: [...new Set(conflicts.filter(Boolean))],
+  };
+}
 
 export function getDeviceId() {
   if (typeof window === "undefined") return "server";
@@ -67,6 +166,7 @@ export function readLocalEnvelope<T>(
           schemaVersion: DATA_SCHEMA_VERSION,
           cloudRevision: Number(local.cloudRevision) || 0,
           dirty: Boolean(local.dirty),
+          baseData: local.baseData ? normalize(local.baseData as Partial<T>) : undefined,
           data: normalize(local.data as Partial<T>),
         };
       }
@@ -153,9 +253,30 @@ export function acceptCloudEnvelope<T>(cloud: CloudEnvelope<T>): LocalEnvelope<T
     schemaVersion: DATA_SCHEMA_VERSION,
     cloudRevision: cloud.revision,
     dirty: false,
+    baseData: clone(cloud.data),
   };
   writeLocalEnvelope(local);
   return local;
+}
+
+export function prepareMergedEnvelope<T>(
+  local: LocalEnvelope<T>,
+  remote: CloudEnvelope<T>,
+  data: T,
+): LocalEnvelope<T> {
+  const next: LocalEnvelope<T> = {
+    ...local,
+    schemaVersion: DATA_SCHEMA_VERSION,
+    revision: local.revision + 1,
+    cloudRevision: remote.revision,
+    updatedAt: new Date().toISOString(),
+    deviceId: getDeviceId(),
+    dirty: true,
+    baseData: clone(remote.data),
+    data,
+  };
+  writeLocalEnvelope(next);
+  return next;
 }
 
 export function readRecoveryPoints<T>(): RecoveryPoint<T>[] {
