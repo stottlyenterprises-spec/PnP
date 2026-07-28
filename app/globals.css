@@ -439,3 +439,48 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,i
  .pageHeader .principle{border-radius:100px 0 0 100px}
  .pageHeader .cloudPill{margin-left:-1px;border-radius:0 100px 100px 0}
 }
+
+/* First-use setup interview */
+.setupInterviewCard{margin-top:16px;padding:25px;display:flex;align-items:center;justify-content:space-between;gap:24px;border:1px solid #ffffff9c;border-radius:20px;background:linear-gradient(135deg,#fffefa91,#ecf7f19c);box-shadow:inset 0 1px 0 #fff,0 22px 55px #273d3418;backdrop-filter:blur(24px)}
+.setupInterviewCard h2{margin:5px 0;font:500 27px Georgia}
+.setupInterviewCard p:last-child{max-width:720px;margin-bottom:0;color:var(--muted);line-height:1.55}
+.setupInterviewCard button{white-space:nowrap}
+.onboardingLayer{position:fixed;z-index:120;inset:0;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 18% 12%,#7ac5aa38,transparent 34%),radial-gradient(circle at 86% 84%,#e5ab8333,transparent 36%),#14271fe8;backdrop-filter:blur(24px)}
+.onboardingInterview{width:min(760px,100%);max-height:calc(100dvh - 48px);overflow:auto;padding:30px;border:1px solid #ffffff8a;border-radius:28px;background:linear-gradient(145deg,#fffef9ef,#f7f0e4e8);box-shadow:inset 0 1px 0 #fff,0 40px 120px #07140e80;backdrop-filter:blur(32px) saturate(140%)}
+.onboardingInterview>header{display:flex;align-items:start;justify-content:space-between;gap:24px;margin:0 0 16px}
+.onboardingInterview>header h2{margin:5px 0 0;font:500 clamp(27px,4vw,39px)/1.08 Georgia}
+.onboardingInterview>header>span{display:grid;place-items:center;min-width:54px;height:35px;border-radius:100px;background:#17372e;color:#eaf7f2;font-size:12px;font-weight:800}
+.onboardingProgress{height:4px;margin-bottom:28px;overflow:hidden;border-radius:100px;background:#dfe6df}
+.onboardingProgress i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#2f6e60,#68b5a3);transition:width .3s ease}
+.onboardingPage{display:grid;gap:22px;min-height:350px}
+.onboardingPrompt{margin:0;font:500 23px Georgia;color:#253a31}
+.onboardingPage label{display:grid;gap:8px;color:var(--muted);font-size:12px}
+.onboardingPage input:not([type="range"]),.onboardingPage textarea,.onboardingPage select{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:#ffffffd9;color:var(--ink)}
+.onboardingPage textarea{min-height:86px;resize:vertical}
+.onboardingPage fieldset{min-width:0;margin:0;padding:0;border:0}
+.onboardingPage legend{margin-bottom:10px;color:#5d6c65;font-size:12px}
+.surveyChoices{display:flex;flex-wrap:wrap;gap:8px}
+.surveyChoices button{padding:10px 14px;border:1px solid #d5dbd4;border-radius:100px;background:#ffffffb8;color:var(--ink)}
+.surveyChoices button.selected{border-color:#326e60;background:#326e60;color:white;box-shadow:0 7px 18px #326e602b}
+.surveyChoices.days{display:grid;grid-template-columns:repeat(7,1fr)}
+.surveyChoices.days button{padding:11px 5px}
+.surveyNote{margin:0;padding:13px 15px;border-radius:12px;background:#f0ede5b8;color:#64716a;font-size:12px;line-height:1.55}
+.surveyGoal{padding:18px;border:1px solid #ffffffc4;border-radius:15px;background:#ffffff8a}
+.surveyGoal b{color:var(--ink);font-size:16px}
+.surveyGoal input{width:100%;accent-color:#326e60}
+.surveyGoal small{color:var(--muted)}
+.surveyRelationship{display:grid;grid-template-columns:1fr 220px;gap:12px}
+.surveySummary{display:grid;gap:7px;padding:18px;border-radius:15px;background:linear-gradient(135deg,#163a30,#27574d);color:white}
+.surveySummary span{color:#d3e4de;font-size:12px}
+.onboardingInterview>footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:26px;padding-top:18px;border-top:1px solid #deddd5}
+.onboardingInterview>footer>div{display:flex;gap:9px}
+.onboardingInterview>footer button{padding:11px 15px;border:1px solid var(--line);border-radius:10px;background:#ffffffb8;color:var(--ink)}
+@media(max-width:800px){
+ .setupInterviewCard{display:grid}
+ .onboardingLayer{place-items:end center;padding:0}
+ .onboardingInterview{max-height:94dvh;padding:23px 18px calc(20px + env(safe-area-inset-bottom));border-radius:24px 24px 0 0}
+ .onboardingPage{min-height:0}
+ .surveyChoices.days{grid-template-columns:repeat(4,1fr)}
+ .surveyRelationship{grid-template-columns:1fr}
+ .onboardingInterview>footer{position:sticky;bottom:0;margin-left:-18px;margin-right:-18px;padding:15px 18px calc(8px + env(safe-area-inset-bottom));background:#fbf7efed;backdrop-filter:blur(18px)}
+}
