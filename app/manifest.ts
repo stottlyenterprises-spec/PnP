@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Progress, Not Perfection",
-    short_name: "PNP",
-    description: "Personal planning, health, and work in one place.",
+    name: "D.E.E.D.S. | Progress, Not Perfection",
+    short_name: "D.E.E.D.S.",
+    description: "Detect, explore, enable, drive, and sustain progress.",
     start_url: "/",
     scope: "/",
     id: "/",
@@ -14,7 +14,7 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["productivity", "lifestyle", "health"],
     icons: [
       {
-        src: "/pnp-icon.svg",
+        src: "/deeds-icon.svg",
         sizes: "any",
         type: "image/svg+xml",
         purpose: "maskable",

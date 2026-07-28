@@ -2,19 +2,22 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Progress, Not Perfection",
-  description: "Personal planning, health, and work in one place.",
+  title: {
+    default: "D.E.E.D.S.",
+    template: "%s | D.E.E.D.S.",
+  },
+  description: "D.E.E.D.S. helps you detect, explore, enable, drive, and sustain progress. Progress, Not Perfection.",
   manifest: "/manifest.webmanifest",
-  applicationName: "PNP",
+  applicationName: "D.E.E.D.S.",
   appleWebApp: {
     capable: true,
-    title: "PNP",
+    title: "D.E.E.D.S.",
     statusBarStyle: "black-translucent",
   },
   icons: {
-    icon: "/pnp-icon.svg",
-    shortcut: "/pnp-icon.svg",
-    apple: "/pnp-icon.svg",
+    icon: "/deeds-icon.svg",
+    shortcut: "/deeds-icon.svg",
+    apple: "/deeds-icon.svg",
   },
   formatDetection: {
     telephone: false,
