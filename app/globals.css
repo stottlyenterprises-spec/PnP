@@ -393,9 +393,9 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,i
 
 /* The page header is status only */
 .pageHeader .headerActions{display:block;min-width:min(100%,430px)}
-.pageHeader .headerStatusRow{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
-.pageHeader .principle{order:1;white-space:nowrap}
-.pageHeader .cloudPill{order:2;max-width:270px}
+.pageHeader .headerStatusRow{display:flex;align-items:center;justify-content:flex-end;gap:0;width:100%}
+.pageHeader .principle{order:1;white-space:nowrap;border-radius:100px 0 0 100px}
+.pageHeader .cloudPill{order:2;max-width:270px;margin-left:-1px;border-radius:0 100px 100px 0}
 
 /* Build information belongs in Settings */
 .buildInfo{display:grid;grid-template-columns:auto auto minmax(220px,1fr);align-items:center;gap:12px;margin-top:16px;padding:14px 18px;border:1px solid #ffffff9c;border-radius:15px;background:#fffefa78;box-shadow:inset 0 1px 0 #fff,0 14px 36px #273d3412;backdrop-filter:blur(20px)}
@@ -426,4 +426,16 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,i
  .pageHeader .cloudPill{max-width:58%;padding:8px 10px}
  .buildInfo{grid-template-columns:1fr auto}
  .buildInfo small{grid-column:1/-1;justify-self:start;text-align:left}
+}
+
+/* Flexible task recurrence */
+.repeatBuilder{display:grid;gap:12px;padding:15px;border:1px solid #d8e1da;border-radius:13px;background:#f5f8f4}
+.repeatBuilder>label,.repeatEvery label{display:grid;gap:6px;color:var(--muted);font-size:11px}
+.repeatEvery{display:grid;grid-template-columns:minmax(100px,.55fr) minmax(150px,1fr);gap:9px}
+.repeatEvery input,.repeatEvery select,.repeatBuilder>label input{width:100%;min-height:42px;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink)}
+.repeatPreview{margin:0;padding:10px 12px;border-radius:9px;background:#e5eee7;color:var(--green);font-size:12px;font-weight:700}
+@media(max-width:800px){
+ .repeatEvery{grid-template-columns:1fr 1fr}
+ .pageHeader .principle{border-radius:100px 0 0 100px}
+ .pageHeader .cloudPill{margin-left:-1px;border-radius:0 100px 100px 0}
 }
