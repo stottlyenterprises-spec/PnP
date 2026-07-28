@@ -14,7 +14,7 @@ export async function GET(req: Request) {
       try {
         const res = await fetch(
           `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=5d`,
-          { next: { revalidate: 300 }, headers: { "User-Agent": "Mozilla/5.0 PNP" } }
+          { next: { revalidate: 300 }, headers: { "User-Agent": "Mozilla/5.0 DEEDS" } }
         );
         if (!res.ok) return null;
         const meta = (await res.json()).chart?.result?.[0]?.meta;
