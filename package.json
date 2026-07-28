@@ -1,5 +1,5 @@
 {
-  "name": "progress-not-perfection",
+  "name": "deeds",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -13,7 +13,10 @@
     "mobile:add:android": "cap add android"
   },
   "dependencies": {
+    "@capacitor/app": "^8.0.0",
     "@capacitor/core": "^8.0.0",
+    "@capacitor/haptics": "^8.0.0",
+    "@capacitor/local-notifications": "^8.0.0",
     "lucide-react": "^1.27.0",
     "next": "^16.2.6",
     "react": "^19.2.6",

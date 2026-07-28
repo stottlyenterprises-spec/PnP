@@ -1,6 +1,6 @@
 {
-  "appId": "com.stottly.progressnotperfection",
-  "appName": "Progress, Not Perfection",
+  "appId": "com.stottly.deeds",
+  "appName": "D.E.E.D.S.",
   "webDir": "public",
   "server": {
     "url": "https://p-n-p.vercel.app",
@@ -17,5 +17,16 @@
   },
   "android": {
     "allowMixedContent": false
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "iconColor": "#4A8F90",
+      "presentationOptions": [
+        "badge",
+        "sound",
+        "banner",
+        "list"
+      ]
+    }
   }
 }

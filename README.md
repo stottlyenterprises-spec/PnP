@@ -1,4 +1,6 @@
-# Progress, Not Perfection
+# D.E.E.D.S.
+
+Progress, Not Perfection
 
 A standalone, device-local personal operating system built around a real working to-do list.
 
@@ -64,7 +66,7 @@ Add these Vercel environment variables:
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
 
-The existing `APP_URL` is reused. PNP requests read-only Calendar and Gmail permissions, plus access only to its private Google Drive application-data folder. PNP cannot see or alter the user’s normal Drive files. Existing users must disconnect and reconnect Google once to grant the new private sync permission.
+The existing `APP_URL` is reused. D.E.E.D.S. requests read-only Calendar and Gmail permissions, plus access only to its private Google Drive application-data folder. D.E.E.D.S. cannot see or alter the user’s normal Drive files. Existing users must disconnect and reconnect Google once to grant the new private sync permission.
 
 ## Data
 
