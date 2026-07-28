@@ -540,9 +540,19 @@ main[data-skin] .osLaunch .commandApp{border-color:color-mix(in srgb,var(--skin-
 .skin-focus .skinPreview:before{display:none}
 .adaptiveNow{margin:14px 0 0;color:var(--skin-muted);font-size:11px}.adaptiveNow b{color:var(--skin-accent)}
 .reduced-motion *,.reduced-motion *:before,.reduced-motion *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
-section.content:has(.connectionHub)>.appearanceSettings{order:3}
+section.content:has(.connectionHub)>header{order:0}
+section.content:has(.connectionHub)>.appearanceSettings{order:1}
+section.content:has(.connectionHub)>.settingsIdentity{order:2}
+section.content:has(.connectionHub)>.setupInterviewCard{order:3}
 section.content:has(.connectionHub)>.goalSettingCard{order:4}
-section.content:has(.connectionHub)>.dataTools{order:5}
+section.content:has(.connectionHub)>.connectionHub{order:5}
+section.content:has(.connectionHub)>.providerCatalog{order:6}
+section.content:has(.connectionHub)>.accountManager{order:7}
+section.content:has(.connectionHub)>.cloudSaveCard{order:8}
+section.content:has(.connectionHub)>.dataTools{order:9}
+section.content:has(.connectionHub)>.voiceSettings{order:10}
+section.content:has(.connectionHub)>.feedbackCard{order:11}
+section.content:has(.connectionHub)>.buildInfo{order:12}
 @media(max-width:1050px){.skinGallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:800px){
  .appearanceHeading{grid-template-columns:1fr}
