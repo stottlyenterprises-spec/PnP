@@ -301,3 +301,36 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,i
  .feedbackForm{grid-template-columns:1fr}
  .feedbackForm textarea{grid-column:auto}
 }
+
+/* Relationship-first setup and D.E.E.D.S. voice controls */
+.deedsBrandButton{display:flex!important;align-items:center;gap:10px!important}
+.deedsBrandButton>.brandDeedsIcon{flex:0 0 38px!important;width:38px!important;min-width:38px!important;height:38px!important;padding:0!important;border-radius:50%!important}
+.deedsBrandButton>div{display:grid;gap:2px;line-height:1.05}
+.deedsBrandButton>div b{font:800 11px/1 Arial;letter-spacing:.12em;color:#e4ffff}
+.deedsBrandButton>div small{font:10px/1.1 Georgia;color:#b6c9be}
+.deedsHeaderButton,.deedsVoiceButton{display:flex;align-items:center;gap:8px;height:42px;padding:4px 12px 4px 5px;border:1px solid #ffffff38;border-radius:100px;background:linear-gradient(135deg,#173126,#315747);color:#fff;font-weight:700;box-shadow:0 8px 22px #17312624;transition:transform .18s ease,box-shadow .18s ease}
+.deedsHeaderButton:hover,.deedsVoiceButton:hover{transform:translateY(-2px);box-shadow:0 12px 28px #17312635}
+.deedsHeaderButton>span:last-child,.deedsVoiceButton>span{font-size:11px;letter-spacing:.04em}
+.deedsVoiceButton{padding:0 14px;background:linear-gradient(135deg,#684159,#93637b)}
+.deedsVoiceButton svg{width:18px;height:18px}
+.deedsVoiceButton.listening{background:linear-gradient(135deg,#9b4c62,#d37a82);box-shadow:0 0 0 5px #c9667b25,0 10px 28px #71344a35;animation:deedsListening 1.2s ease-in-out infinite}
+@keyframes deedsListening{50%{transform:scale(1.04)}}
+.relationshipOnboarding{width:min(680px,100%);min-height:520px;display:grid;align-content:center;justify-items:center;gap:12px;margin:0 auto;padding:clamp(28px,6vw,58px);border:1px solid #ffffffa8;border-radius:28px;background:radial-gradient(circle at 50% 5%,#eab7c04d,transparent 38%),linear-gradient(145deg,#fffefa91,#f6eee179);box-shadow:inset 0 1px 0 #fff,0 32px 85px #273d3424;backdrop-filter:blur(26px) saturate(150%);text-align:center}
+.relationshipOnboardingMark{width:74px;height:74px;display:grid;place-items:center;margin-bottom:6px;border-radius:24px;background:linear-gradient(145deg,#87586e,#553447);color:#fff0f6;box-shadow:inset 0 1px 0 #ffffff65,0 18px 38px #5633483d}
+.relationshipOnboardingMark svg{width:34px;height:34px}
+.relationshipOnboarding h2{margin:0;font:500 clamp(32px,5vw,48px)/1.05 Georgia}
+.relationshipOnboarding>p:not(.eyebrow){max-width:500px;margin:0 0 14px;color:var(--muted);line-height:1.6}
+.relationshipOnboardingForm{width:min(480px,100%);display:grid;grid-template-columns:1fr 170px;gap:10px;text-align:left}
+.relationshipOnboardingForm label{display:grid;gap:6px;color:var(--muted);font-size:11px}
+.relationshipOnboardingForm input,.relationshipOnboardingForm select{width:100%;padding:13px;border:1px solid var(--line);border-radius:11px;background:#ffffffc9;color:var(--ink)}
+.relationshipOnboardingForm button{grid-column:1/-1;justify-content:center}
+.relationshipOnboarding>small{margin-top:10px;color:#826575}
+@media(max-width:800px){
+ .deedsBrandButton>div small{display:block}
+ .deedsBrandButton>.brandDeedsIcon{flex-basis:34px!important;width:34px!important;min-width:34px!important;height:34px!important}
+ .brandJarvis.deedsVoiceButton{display:flex;padding:0 11px}
+ .deedsHeaderButton,.headerVoiceButton{display:none}
+ .relationshipOnboarding{min-height:calc(100dvh - 150px);padding:28px 20px;border-radius:22px}
+ .relationshipOnboardingForm{grid-template-columns:1fr}
+ .relationshipOnboardingForm button{grid-column:auto}
+}
