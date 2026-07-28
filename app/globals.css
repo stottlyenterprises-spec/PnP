@@ -592,6 +592,24 @@ main[data-skin] .osLaunch .commandApp{border-color:color-mix(in srgb,var(--skin-
 .sideNotifications b{font-size:10px}
 .settingsIdentity small,.providerCatalog article small{font-size:11px;line-height:1.4}
 .reduced-motion *,.reduced-motion *:before,.reduced-motion *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
+@media(prefers-reduced-motion:reduce){
+ main:not(.reduced-motion) .headerDeedsIcon:before{animation:jarvisClockwise 11s linear infinite!important}
+ main:not(.reduced-motion) .headerDeedsIcon:after{animation:jarvisCounter 7s linear infinite!important}
+ main:not(.reduced-motion) .headerDeedsIcon i{animation:jarvisClockwise 4.5s linear infinite!important}
+ main:not(.reduced-motion) .headerDeedsIcon svg{animation:deedsSpark 3.6s ease-in-out infinite!important}
+ main:not(.reduced-motion) .commandIcon:before{animation:commandRingClockwise 16s linear infinite!important}
+ main:not(.reduced-motion) .commandIcon:after{animation:commandRingCounter 11s linear infinite!important}
+ main:not(.reduced-motion) .command-deeds .commandIcon svg{animation:deedsSpark 3.6s ease-in-out infinite!important}
+}
+.taskCommandActions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}
+.taskImportStatus{grid-column:1/-1;margin:0;padding:10px 12px;border:1px solid color-mix(in srgb,var(--skin-accent) 30%,var(--skin-border));border-radius:11px;background:color-mix(in srgb,var(--skin-accent) 9%,transparent);color:var(--skin-ink);font-size:11px}
+.swipeCommandHandle{display:none}
+@media(max-width:800px){
+ .taskCommandActions{width:100%;display:grid;grid-template-columns:1fr 1fr}
+ .taskCommandActions button{width:100%;min-height:44px}
+ .swipeCommandHandle{position:fixed;z-index:45;left:50%;bottom:calc(4px + env(safe-area-inset-bottom));display:grid;place-items:center;width:72px;height:24px;padding:0;transform:translateX(-50%);border:0;background:transparent}
+ .swipeCommandHandle span{display:block;width:38px;height:5px;border-radius:999px;background:color-mix(in srgb,var(--skin-ink) 36%,transparent);box-shadow:0 1px 8px var(--skin-shadow)}
+}
 section.content:has(.connectionHub)>header{order:0}
 section.content:has(.connectionHub)>.appearanceSettings{order:1}
 section.content:has(.connectionHub)>.settingsIdentity{order:2}
