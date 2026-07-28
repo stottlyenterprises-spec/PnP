@@ -1,17 +1,19 @@
-# Progress, Not Perfection: iOS and Android Roadmap
+# D.E.E.D.S.: iOS and Android Roadmap
+
+Progress, Not Perfection
 
 ## Product direction
 
-PNP will remain one product across the web, iPhone, iPad, and Android. The Next.js app continues to own the interface and server integrations. Capacitor provides native iOS and Android containers plus access to device capabilities.
+D.E.E.D.S. will remain one product across the web, iPhone, iPad, and Android. The Next.js app continues to own the interface and server integrations. Capacitor provides native iOS and Android containers plus access to device capabilities.
 
-The first native build intentionally points at the production PNP application. This makes it possible to validate navigation, authentication, safe areas, keyboard behavior, and real-device usability before maintaining packaged web assets. It is a development milestone, not the App Store submission architecture.
+The first native build intentionally points at the production D.E.E.D.S. application. This makes it possible to validate navigation, authentication, safe areas, keyboard behavior, and real-device usability before maintaining packaged web assets. It is a development milestone, not the App Store submission architecture.
 
 ## Phase 1: Native shell
 
 - Capacitor 8 configuration for iOS and Android
-- PNP production environment loaded over HTTPS
+- D.E.E.D.S. production environment loaded over HTTPS
 - Mobile viewport and safe-area support
-- Stable app identity: `com.stottly.progressnotperfection`
+- Stable app identity: `com.stottly.deeds`
 - Native project generation through the package scripts
 - Real-device testing on iPhone and Android
 
@@ -36,9 +38,9 @@ Xcode is required for iOS. Android Studio and the Android SDK are required for A
 
 ## Phase 2: Native value
 
-These features move PNP beyond a repackaged website and should be complete before App Store submission:
+These features move D.E.E.D.S. beyond a repackaged website and should be complete before App Store submission:
 
-1. Native local and push notifications with deep links into D.E.E.D.S., interviews, relationship check-ins, and weekly review.
+1. Native local notifications with deep links into D.E.E.D.S., interviews, and weekly review. The bridge is implemented and ready for real-device validation. Remote push remains a later server-backed step.
 2. Siri/App Intents and Android App Actions for “create a task,” “open D.E.E.D.S.,” and “start my check-in.”
 3. Native share target so text, links, and selected content can be sent into Tasks, Quick Notes, or Journal.
 4. Haptic feedback for task completion and important actions.
@@ -60,12 +62,12 @@ Health integrations require privacy disclosures, permission explanations, data d
 
 The current Google-backed save is useful for personal testing, but a public product needs a provider-neutral account and sync layer:
 
-- PNP account with Apple, Google, or email sign-in
+- D.E.E.D.S. account with Apple, Google, or email sign-in
 - Encrypted user data separated by account
 - Deterministic conflict resolution between web and mobile changes
 - Background sync with visible last-sync status
 - Export, import, and full account deletion
-- Multiple Gmail accounts remain separate connected services, not the user's PNP identity
+- Multiple Gmail accounts remain separate connected services, not the user's D.E.E.D.S. identity
 
 ## Phase 5: Store readiness
 
@@ -80,7 +82,7 @@ The current Google-backed save is useful for personal testing, but a public prod
 
 ## Release gates
 
-PNP is ready for store review only when:
+D.E.E.D.S. is ready for store review only when:
 
 - core capture and check-in flows work offline
 - sync is reliable across at least two devices
@@ -91,4 +93,4 @@ PNP is ready for store review only when:
 
 ## Immediate next build
 
-The next implementation slice should generate both native projects and add the native bridge for deep links, notification routing, and voice-created tasks. That bridge becomes the common entry point for Siri, Android voice actions, notification taps, and shared content.
+The next implementation slice should generate both native projects and validate the completed bridge for deep links, notification routing, haptics, and voice-created tasks. After that, add Siri App Intents, Android App Actions, and the first HealthKit and Health Connect adapters.
