@@ -581,6 +581,10 @@ main[data-skin] .osLaunch .commandApp{border-color:color-mix(in srgb,var(--skin-
 .skin-focus .skinPreview{background:linear-gradient(145deg,#f4f5f3,#c7cfca)}
 .skin-focus .skinPreview:before{display:none}
 .adaptiveNow{margin:14px 0 0;color:var(--skin-muted);font-size:11px}.adaptiveNow b{color:var(--skin-accent)}
+.skinGallery>button>small{min-height:34px;font-size:11px}
+.skinGallery>button>em{font-size:10px}
+.sideNotifications b{font-size:10px}
+.settingsIdentity small,.providerCatalog article small{font-size:11px;line-height:1.4}
 .reduced-motion *,.reduced-motion *:before,.reduced-motion *:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
 section.content:has(.connectionHub)>header{order:0}
 section.content:has(.connectionHub)>.appearanceSettings{order:1}
