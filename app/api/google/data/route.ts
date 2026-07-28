@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { googleAccessToken } from "../token";
 
 const FILE_NAME = "progress-not-perfection.json";
-const DATA_SCHEMA_VERSION = 2;
+const DATA_SCHEMA_VERSION = 3;
 
 type Envelope = {
   kind: "deeds-data";
