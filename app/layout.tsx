@@ -16,9 +16,17 @@ export const metadata: Metadata = {
     shortcut: "/pnp-icon.svg",
     apple: "/pnp-icon.svg",
   },
+  formatDetection: {
+    telephone: false,
+    email: false,
+    address: false,
+  },
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
   themeColor: "#15281f",
 };
 
