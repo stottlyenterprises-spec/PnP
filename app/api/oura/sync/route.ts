@@ -19,10 +19,10 @@ export async function GET(){
   const resilience=await oura("daily_resilience",token,iso(start),iso(end)).catch(()=>[] as Doc[]);
   const map=new Map<string,{date:string;sleepHours?:number;oura:Record<string,number|string>}>();
   const row=(day:string)=>{if(!map.has(day))map.set(day,{date:day,oura:{}});return map.get(day)!};
-  dailySleep.forEach(x=>row(x.day).oura.sleepScore=x.score||0);
+  dailySleep.forEach(x=>{if(Number(x.score)>0)row(x.day).oura.sleepScore=Number(x.score)});
   sleep.filter(x=>x.type!=="deleted").forEach(x=>{if(x.total_sleep_duration){const hours=Math.round(x.total_sleep_duration/360)/10,current=row(x.day).sleepHours||0;if(hours>current)row(x.day).sleepHours=hours}});
-  readiness.forEach(x=>row(x.day).oura.readinessScore=x.score||0);
-  activity.forEach(x=>row(x.day).oura.activityScore=x.score||0);
+  readiness.forEach(x=>{if(Number(x.score)>0)row(x.day).oura.readinessScore=Number(x.score)});
+  activity.forEach(x=>{if(Number(x.score)>0)row(x.day).oura.activityScore=Number(x.score)});
   stress.forEach(x=>{row(x.day).oura.stressMinutes=x.stress_high||0;row(x.day).oura.recoveryMinutes=x.recovery_high||0});
   resilience.forEach(x=>row(x.day).oura.resilience=x.level||"");
   return NextResponse.json({days:[...map.values()].sort((a,b)=>a.date.localeCompare(b.date))});
