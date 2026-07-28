@@ -510,6 +510,14 @@ main[data-skin] input,main[data-skin] textarea,main[data-skin] select,main[data-
 main[data-skin="midnight"] .cloudPill,main[data-skin="midnight"] .principle{background:#0b211fbd;border-color:#7cebe235;color:#c8f9f4}
 main[data-skin="midnight"] .taskname small,main[data-skin="midnight"] .metrics span,main[data-skin="midnight"] .metrics label{color:#99b8b2}
 main[data-skin="midnight"] .check{border-color:#789d96}
+main[data-skin="midnight"] .tasktools button,main[data-skin="midnight"] .dragHandle,main[data-skin="midnight"] .focusMini{color:#d8f5ef;background:#153632;border-color:#6ccfc34a}
+main[data-skin="midnight"] .tasktools .star{color:#b8d2cd}
+main[data-skin="midnight"] .tasktools .star.active{color:#ffd08a}
+main[data-skin="midnight"] .taskScheduleActions button,main[data-skin="midnight"] .trueCalendar article>button{background:#173632;color:#e3f8f4;border-color:#6ccfc34a}
+main[data-skin="midnight"] .trueCalendar article,main[data-skin="midnight"] .calendarToolbar{background:#102a27e8;color:var(--skin-ink);border-color:var(--skin-border)}
+main[data-skin="midnight"] .calendarToolbar>div{background:#081b19}
+main[data-skin="midnight"] .calendarToolbar button.active{background:#1b403b;color:#fff}
+main[data-skin] .trueCalendar article>button.calendarAddTask{margin-top:9px;border:1px dashed color-mix(in srgb,var(--skin-accent) 45%,transparent);background:color-mix(in srgb,var(--skin-panel-strong) 48%,transparent);color:var(--skin-accent);text-align:center}
 main[data-skin="midnight"] .osLaunch{background:radial-gradient(circle at 72% 12%,#1bd6d633,transparent 27%),radial-gradient(circle at 18% 86%,#355c9a33,transparent 32%),linear-gradient(145deg,#030908,#091b19 55%,#071222)}
 main[data-skin="coastal"] .osLaunch{background:radial-gradient(circle at 82% 8%,#ffc48747,transparent 27%),radial-gradient(circle at 15% 85%,#4fd1d84f,transparent 35%),linear-gradient(145deg,#092c35,#155568 56%,#267c8c)}
 main[data-skin="stage"] .osLaunch{background:radial-gradient(circle at 78% 8%,#e9bd6047,transparent 26%),radial-gradient(circle at 14% 88%,#a1365640,transparent 37%),linear-gradient(145deg,#18090d,#42151f 58%,#6c2b38)}
