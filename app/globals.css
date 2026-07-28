@@ -377,3 +377,53 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,i
  .commandCenterButton{width:42px;padding:0;justify-content:center;background:linear-gradient(145deg,#315947,#183428);color:#e6fff3}
  .commandCenterButton span{display:none}
 }
+
+/* Sidebar utilities: Talk, Command Center, Notifications */
+.sideUtilities{display:grid;gap:7px;margin-top:18px}
+.sideUtilities+nav{margin-top:16px}
+.sideUtilityButton{position:relative;display:flex;align-items:center;gap:10px;width:100%;min-height:40px;padding:8px 11px;border:1px solid #ffffff1c;border-radius:11px;background:#ffffff08;color:#c7d5cd;text-align:left;transition:background .18s ease,border-color .18s ease,transform .18s ease}
+.sideUtilityButton:hover{transform:translateY(-1px);border-color:#ffffff35;background:#ffffff10;color:#fff}
+.sideUtilityButton svg{flex:0 0 18px;width:18px;height:18px}
+.sideUtilityButton>span:not(.notificationGlyph){font-size:11px;font-weight:700;letter-spacing:.025em}
+.sideTalk{border-color:#dcb1c151;background:linear-gradient(135deg,#70475c,#9b647d);color:#fff;box-shadow:0 8px 20px #0e1e1740}
+.sideTalk.listening{background:linear-gradient(135deg,#9b4c62,#d37a82);box-shadow:0 0 0 4px #d88ca229,0 9px 24px #0e1e174f}
+.sideCommandCenter{color:#dcf2e5}
+.sideNotifications b{margin-left:auto;min-width:19px;height:19px;padding:0 5px;display:grid;place-items:center;border-radius:10px;background:#d58a70;color:#fff;font-size:9px}
+.notificationGlyph{width:18px;text-align:center;color:#d9e8df;font-size:22px;line-height:1}
+
+/* The page header is status only */
+.pageHeader .headerActions{display:block;min-width:min(100%,430px)}
+.pageHeader .headerStatusRow{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
+.pageHeader .principle{order:1;white-space:nowrap}
+.pageHeader .cloudPill{order:2;max-width:270px}
+
+/* Build information belongs in Settings */
+.buildInfo{display:grid;grid-template-columns:auto auto minmax(220px,1fr);align-items:center;gap:12px;margin-top:16px;padding:14px 18px;border:1px solid #ffffff9c;border-radius:15px;background:#fffefa78;box-shadow:inset 0 1px 0 #fff,0 14px 36px #273d3412;backdrop-filter:blur(20px)}
+.buildInfo span{color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.buildInfo b{font:500 17px Georgia;color:var(--green)}
+.buildInfo small{justify-self:end;color:var(--muted);line-height:1.45;text-align:right}
+
+/* Talk carries the action color; capture stays deliberately quiet */
+.captureFab{border:1px solid #ffffffb8;background:#fffdf8c7;color:var(--green);box-shadow:0 14px 34px #22382d2a,inset 0 1px 0 #fff;backdrop-filter:blur(18px)}
+
+@media(max-width:800px){
+ aside{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;overflow:visible}
+ .brandRow{width:auto;min-width:0}
+ .brandRow .brand{min-width:0}
+ .brandRow .brand div{min-width:0}
+ .brandRow .brand small{display:none}
+ .sideUtilities{display:flex;gap:5px;margin:0}
+ .sideUtilities+nav,aside>nav{display:none}
+ .sideUtilityButton{display:grid;place-items:center;width:38px;min-width:38px;height:38px;min-height:38px;padding:0;border-radius:12px}
+ .sideUtilityButton>span:not(.notificationGlyph){display:none}
+ .sideUtilityButton svg{width:17px;height:17px}
+ .sideNotifications b{position:absolute;top:-4px;right:-4px;min-width:17px;height:17px;padding:0;font-size:8px}
+ .notificationGlyph{width:auto;font-size:20px}
+ .pageHeader{display:block}
+ .pageHeader .headerActions{display:block;width:100%;margin-top:11px}
+ .pageHeader .headerStatusRow{display:flex}
+ .pageHeader .principle{display:inline-flex;padding:8px 10px;font-size:10px}
+ .pageHeader .cloudPill{max-width:58%;padding:8px 10px}
+ .buildInfo{grid-template-columns:1fr auto}
+ .buildInfo small{grid-column:1/-1;justify-self:start;text-align:left}
+}
