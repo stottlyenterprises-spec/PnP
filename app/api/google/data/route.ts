@@ -1,35 +1,7 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { googleAccessToken } from "../token";
 
 const FILE_NAME = "progress-not-perfection.json";
-
-async function accessToken() {
-  const jar = await cookies();
-  const current = jar.get("google_access")?.value;
-  if (current) return current;
-  const refresh = jar.get("google_refresh")?.value;
-  if (!refresh) return null;
-  const res = await fetch("https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      client_id: process.env.GOOGLE_CLIENT_ID || "",
-      client_secret: process.env.GOOGLE_CLIENT_SECRET || "",
-      refresh_token: refresh,
-      grant_type: "refresh_token",
-    }),
-  });
-  if (!res.ok) return null;
-  const body = await res.json();
-  jar.set("google_access", body.access_token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "lax",
-    maxAge: body.expires_in || 3600,
-    path: "/",
-  });
-  return body.access_token as string;
-}
 
 async function findFile(token: string) {
   const url = new URL("https://www.googleapis.com/drive/v3/files");
@@ -48,7 +20,7 @@ async function findFile(token: string) {
 }
 
 export async function GET() {
-  const token = await accessToken();
+  const token = await googleAccessToken(0);
   if (!token) return NextResponse.json({ error: "Connect Google first." }, { status: 401 });
   try {
     const file = await findFile(token);
@@ -65,7 +37,7 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const token = await accessToken();
+  const token = await googleAccessToken(0);
   if (!token) return NextResponse.json({ error: "Connect Google first." }, { status: 401 });
   const text = await req.text();
   if (text.length > 2_000_000) return NextResponse.json({ error: "PNP data is too large to sync." }, { status: 413 });
