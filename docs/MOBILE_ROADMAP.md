@@ -13,7 +13,7 @@ The first native build intentionally points at the production D.E.E.D.S. applica
 - Capacitor 8 configuration for iOS and Android
 - D.E.E.D.S. production environment loaded over HTTPS
 - Mobile viewport and safe-area support
-- Stable app identity: `com.stottly.deeds`
+- Stable app identity: `com.stottlyenterprises.progressnotperfection.deeds`
 - Native iOS and Android projects generated and synchronized
 - Android compile and target SDK set to API 36
 - iOS deployment target set to iOS 15
