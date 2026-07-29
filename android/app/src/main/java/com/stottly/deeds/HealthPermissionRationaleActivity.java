@@ -1,4 +1,4 @@
-package com.stottly.deeds;
+package com.stottlyenterprises.progressnotperfection.deeds;
 
 import android.app.Activity;
 import android.content.Intent;
