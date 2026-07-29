@@ -10,6 +10,12 @@ export type NativePrivacyState = {
   enabled: boolean;
   biometricType?: string;
 };
+export type NativeDraftKind = "interview" | "health" | "journal";
+export type NativeDraft<T = unknown> = {
+  kind: NativeDraftKind;
+  updatedAt: string;
+  payload: T;
+};
 
 type PluginListenerHandle = {
   remove: () => Promise<void> | void;
@@ -155,6 +161,29 @@ export async function nativeSecureGet(key: string): Promise<string | null> {
 export async function nativeSecureRemove(key: string): Promise<boolean> {
   if (!isNativePnp()) return false;
   return plugins()?.DeedsPrivacy?.secureRemove({ key }).then(() => true).catch(() => false) ?? false;
+}
+
+const nativeDraftKey = (kind: NativeDraftKind) => `deeds.draft.${kind}`;
+
+export async function saveNativeDraft<T>(kind: NativeDraftKind, payload: T): Promise<boolean> {
+  const draft: NativeDraft<T> = { kind, updatedAt: new Date().toISOString(), payload };
+  return nativeSecureSet(nativeDraftKey(kind), JSON.stringify(draft));
+}
+
+export async function loadNativeDraft<T>(kind: NativeDraftKind): Promise<NativeDraft<T> | null> {
+  const raw = await nativeSecureGet(nativeDraftKey(kind));
+  if (!raw) return null;
+  try {
+    const draft = JSON.parse(raw) as Partial<NativeDraft<T>>;
+    if (draft.kind !== kind || typeof draft.updatedAt !== "string" || draft.payload == null) return null;
+    return draft as NativeDraft<T>;
+  } catch {
+    return null;
+  }
+}
+
+export async function clearNativeDraft(kind: NativeDraftKind): Promise<boolean> {
+  return nativeSecureRemove(nativeDraftKey(kind));
 }
 
 export async function queueNativeCapture(capture: NativeSharedCapture): Promise<number> {
