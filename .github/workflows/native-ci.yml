@@ -41,6 +41,9 @@ jobs:
       - name: Test recurring tasks
         run: pnpm test:recurrence
 
+      - name: Test encrypted native drafts
+        run: pnpm test:mobile
+
       - name: Build production web app
         run: pnpm build
 
