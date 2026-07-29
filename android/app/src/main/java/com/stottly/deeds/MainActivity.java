@@ -35,10 +35,9 @@ public class MainActivity extends BridgeActivity {
             return;
         }
 
+        DeedsPrivacyPlugin.enqueueCapture(this, "Task", capture);
         Uri captureUrl = Uri.parse("https://p-n-p.vercel.app/").buildUpon()
-            .appendQueryParameter("share", "1")
-            .appendQueryParameter("capture", "Task")
-            .appendQueryParameter("text", capture)
+            .appendQueryParameter("view", "today")
             .build();
 
         getBridge().getWebView().post(() -> getBridge().getWebView().loadUrl(captureUrl.toString()));
