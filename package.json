@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "test:recurrence": "node --experimental-strip-types --test tests/task-recurrence.test.ts",
+    "test:mobile": "node --experimental-strip-types --test tests/mobile-drafts.test.ts",
     "mobile:sync": "cap sync",
     "mobile:ios": "cap open ios",
     "mobile:android": "cap open android",
