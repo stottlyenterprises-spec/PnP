@@ -62,7 +62,7 @@ pnpm mobile:android
 ```
 
 The Android project targets API 36. The iOS project targets iOS 15 and uses
-the bundle identifier `com.stottly.deeds`.
+the bundle identifier `com.stottlyenterprises.progressnotperfection.deeds`.
 
 ## Deploy to Vercel
 

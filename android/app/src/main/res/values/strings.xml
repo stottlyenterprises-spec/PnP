@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">D.E.E.D.S.</string>
     <string name="title_activity_main">D.E.E.D.S.</string>
-    <string name="package_name">com.stottly.deeds</string>
-    <string name="custom_url_scheme">com.stottly.deeds</string>
+    <string name="package_name">com.stottlyenterprises.progressnotperfection.deeds</string>
+    <string name="custom_url_scheme">com.stottlyenterprises.progressnotperfection.deeds</string>
     <string name="shortcut_create_task_short">Add task</string>
     <string name="shortcut_create_task_long">Add a task to D.E.E.D.S.</string>
 </resources>

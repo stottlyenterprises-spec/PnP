@@ -20,7 +20,7 @@ public class DeedsPrivacyPlugin: CAPPlugin, CAPBridgedPlugin {
 
     private let enabledKey = "deeds.privacyLockEnabled"
     private let captureQueueKey = "offline_capture_queue"
-    private let keychainService = "com.stottly.deeds.secure"
+    private let keychainService = "com.stottlyenterprises.progressnotperfection.deeds.secure"
     private let maximumCaptureCount = 50
 
     @objc func status(_ call: CAPPluginCall) {

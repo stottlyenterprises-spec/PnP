@@ -3,8 +3,8 @@
     <capability android:name="actions.intent.OPEN_APP_FEATURE">
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.stottly.deeds.MainActivity"
-            android:targetPackage="com.stottly.deeds">
+            android:targetClass="com.stottlyenterprises.progressnotperfection.deeds.MainActivity"
+            android:targetPackage="com.stottlyenterprises.progressnotperfection.deeds">
             <parameter
                 android:key="feature"
                 android:name="feature" />
@@ -20,8 +20,8 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:data="deeds://open?capture=Task&amp;source=assistant"
-            android:targetClass="com.stottly.deeds.MainActivity"
-            android:targetPackage="com.stottly.deeds" />
+            android:targetClass="com.stottlyenterprises.progressnotperfection.deeds.MainActivity"
+            android:targetPackage="com.stottlyenterprises.progressnotperfection.deeds" />
         <capability-binding android:key="actions.intent.OPEN_APP_FEATURE">
             <parameter-binding
                 android:key="feature"

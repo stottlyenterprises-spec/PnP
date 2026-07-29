@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    namespace = "com.stottly.deeds"
+    namespace = "com.stottlyenterprises.progressnotperfection.deeds"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.stottly.deeds"
+        applicationId "com.stottlyenterprises.progressnotperfection.deeds"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
