@@ -31,6 +31,8 @@ The initial shell loads `https://p-n-p.vercel.app`. OAuth connections therefore 
 - Hosted real-device shell: ready to generate
 - Native recurring check-in notifications and notification routing: ready to sync
 - Deep-link routing for views and voice-created tasks: ready to sync
+- Shared capture routing for tasks, notes, and journal entries: ready to sync
+- Installed-app shortcuts for task capture, check-in, and Journal: ready
 - Haptic feedback for completed tasks: ready to sync
 - Native project folders: generated locally after dependencies are installed
 - Remote push notifications, Siri/App Actions, HealthKit, Health Connect, biometric lock, and offline queue: planned
