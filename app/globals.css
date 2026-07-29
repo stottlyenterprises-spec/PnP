@@ -537,6 +537,9 @@ main[data-skin] :is(.modeSwitch,.calendarToolbar>div){background:color-mix(in sr
 main[data-skin] :is(.modeSwitch button.active,.calendarToolbar button.active){background:var(--skin-control);color:var(--skin-ink);box-shadow:0 3px 12px var(--skin-shadow)}
 main[data-skin] :is(.healthFormActions button,.actions button,.inline button,.interviewNav button,.repeatDays button,.taskScheduleActions button,.notificationPanel .notificationBack,.mailReader>button,.mailOverlay>header button,.voiceShortcut button,.connectionActions button,.connectionActions a){border-color:color-mix(in srgb,var(--skin-muted) 28%,transparent);background:var(--skin-control);color:var(--skin-ink)}
 main[data-skin] :is(.repeatDays button.active,.interviewButtons button.complete,.providerSwitch button.active,.surveyChoices button.selected){background:var(--skin-accent);border-color:var(--skin-accent);color:var(--skin-on-accent)}
+main[data-skin] :is(.tap.selected,.chips button.selected,.scale button.selected,.advisorChoices button.selected){background:var(--skin-accent);border-color:var(--skin-accent);color:var(--skin-on-accent);box-shadow:0 7px 18px color-mix(in srgb,var(--skin-accent) 24%,transparent);transform:translateY(-1px)}
+main[data-skin] :is(.chips button,.scale button,.interviewNav button){transition:background .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease,transform .12s ease}
+main[data-skin] :is(.chips button,.scale button,.interviewNav button):active{transform:scale(.97)}
 main[data-skin] :is(.tasktools button,.dragHandle,.stockTicker button){color:var(--skin-muted)}
 main[data-skin] :is(.tasktools .star.active,.taskname em,.deedsSection summary i,.deedsRelationshipPrompt span,.notificationItem span){color:var(--skin-warm-text)}
 main[data-skin] :is(pre,.affirm,.narrative p:last-child,.goalHistory p,.journalEntries p,.relationshipEvidence p,.relationshipRecommendationLead>p:not(.eyebrow)){color:var(--skin-ink)}
