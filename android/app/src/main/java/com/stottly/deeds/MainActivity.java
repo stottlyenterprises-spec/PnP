@@ -11,6 +11,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(DeedsPrivacyPlugin.class);
+        registerPlugin(DeedsHealthPlugin.class);
         super.onCreate(savedInstanceState);
     }
 
