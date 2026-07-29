@@ -1,4 +1,8 @@
 export type PnpPlatform = "web" | "ios" | "android";
+export type NativeSharedCapture = {
+  kind: "Task" | "Note" | "Journal";
+  text: string;
+};
 
 type PluginListenerHandle = {
   remove: () => Promise<void> | void;
@@ -78,6 +82,25 @@ export function consumeVoiceTask(url = window.location.href): string | null {
   }
 }
 
+export function consumeSharedCapture(url = window.location.href): NativeSharedCapture | null {
+  try {
+    const parsed = new URL(url);
+    const shared = parsed.searchParams.get("share") === "1";
+    const requestedKind = parsed.searchParams.get("capture");
+    if (!shared && !requestedKind) return null;
+    const text = [
+      parsed.searchParams.get("title")?.trim(),
+      parsed.searchParams.get("text")?.trim(),
+      parsed.searchParams.get("url")?.trim(),
+    ].filter(Boolean).join("\n\n");
+    if (!text) return null;
+    const kind = requestedKind === "Journal" ? "Journal" : requestedKind === "Note" ? "Note" : "Task";
+    return { kind, text };
+  } catch {
+    return null;
+  }
+}
+
 export async function taskCompletionHaptic(): Promise<void> {
   if (!isNativePnp()) return;
   await plugins()?.Haptics?.impact({ style: "MEDIUM" }).catch(() => undefined);
@@ -129,6 +152,7 @@ export async function enableNativeCheckInReminders(): Promise<boolean> {
 export async function installNativeBridge(handlers: {
   onView: (view: string) => void;
   onVoiceTask: (task: string) => void;
+  onSharedCapture: (capture: NativeSharedCapture) => void;
   onInterview: (period: string) => void;
   onResume: () => void;
 }): Promise<() => void> {
@@ -138,8 +162,10 @@ export async function installNativeBridge(handlers: {
   const routeUrl = (url?: string) => {
     if (!url) return;
     const task = consumeVoiceTask(url);
+    const capture = consumeSharedCapture(url);
     const view = requestedView(url);
     if (task) handlers.onVoiceTask(task);
+    if (capture) handlers.onSharedCapture(capture);
     if (view) handlers.onView(view);
   };
   if (native?.App) {

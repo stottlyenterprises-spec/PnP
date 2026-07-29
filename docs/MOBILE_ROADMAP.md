@@ -68,6 +68,27 @@ These features move D.E.E.D.S. beyond a repackaged website and should be complet
 5. Biometric lock for health, journal, relationship, and connected-account data.
 6. Offline capture queue for tasks, interviews, health check-ins, and journal entries.
 
+### Native capture contract
+
+Both native apps register the `deeds://open` route. Supported examples:
+
+- `deeds://open?view=tasks`
+- `deeds://open?view=home&period=breakfast`
+- `deeds://open?voiceTask=Call%20the%20contractor`
+- `deeds://open?share=1&capture=Task&text=Review%20this%20article`
+
+Inbound task text always opens the existing editable capture overlay before it
+is saved. Android also registers as a `text/plain` share target and routes
+shared titles, text, and links into that same overlay. The Android handler
+clears the consumed intent so rotating or resuming the app cannot import the
+same item twice.
+
+The custom scheme is the development and fallback route. Production Siri
+App Intents and verified web links will use Universal Links after the Apple
+Team ID is added to the site association file and Associated Domains
+entitlement. Android App Links will be verified after release signing
+certificates are available.
+
 ## Phase 3: Health integration
 
 - iOS: HealthKit with explicit, granular permission requests
