@@ -36,7 +36,31 @@ A standalone, device-local personal operating system built around a real working
 
 ## Run locally
 
-Install dependencies, then run `npm run dev`. Open the local address shown in the terminal.
+This repository uses pnpm 11.9. Install dependencies, then run `pnpm dev`.
+Open the local address shown in the terminal.
+
+`sharp` is explicitly approved in `pnpm-workspace.yaml`, so clean installs and
+deployments do not require an interactive build-script approval.
+
+## Native iOS and Android projects
+
+The Capacitor projects are included in `ios/` and `android/`.
+
+After changing web assets, Capacitor plugins, or native configuration:
+
+```bash
+pnpm mobile:sync
+```
+
+Open the projects:
+
+```bash
+pnpm mobile:ios
+pnpm mobile:android
+```
+
+The Android project targets API 36. The iOS project targets iOS 15 and uses
+the bundle identifier `com.stottly.deeds`.
 
 ## Deploy to Vercel
 

@@ -14,16 +14,19 @@ The first native build intentionally points at the production D.E.E.D.S. applica
 - D.E.E.D.S. production environment loaded over HTTPS
 - Mobile viewport and safe-area support
 - Stable app identity: `com.stottly.deeds`
-- Native project generation through the package scripts
+- Native iOS and Android projects generated and synchronized
+- Android compile and target SDK set to API 36
+- iOS deployment target set to iOS 15
+- App, Haptics, and Local Notifications plugins registered on both platforms
 - Real-device testing on iPhone and Android
 
-### Generate the native projects
+### Current native project status
 
-Install dependencies, then run:
+The native projects now live in `ios/` and `android/`. Do not run the
+`mobile:add` commands again. After installing dependencies or changing a
+Capacitor plugin or configuration, synchronize both projects with:
 
 ```bash
-pnpm mobile:add:ios
-pnpm mobile:add:android
 pnpm mobile:sync
 ```
 
@@ -35,6 +38,24 @@ pnpm mobile:android
 ```
 
 Xcode is required for iOS. Android Studio and the Android SDK are required for Android.
+
+### One-time local validation
+
+1. Open `ios/App/App.xcodeproj` in Xcode, select the App target, choose the
+   Stottly Enterprises development team, and run on an iPhone or simulator.
+2. Open the `android/` directory in Android Studio. Confirm that Android SDK
+   Platform 36, Build Tools, Platform Tools, and Command-line Tools are
+   installed, then run the debug build on an emulator or connected device.
+3. Confirm the hosted production app loads, safe areas are correct, external
+   account authentication returns to D.E.E.D.S., haptics fire, and local
+   notification permission can be granted.
+4. Test notification routing from a cold launch and a background launch.
+
+The web production build and TypeScript validation passed before the native
+projects were generated. Command-line iOS compilation inside Codex is blocked
+by Apple's nested build sandbox, so the first native compile must be completed
+from Xcode. Android Studio is installed, but its SDK components must be present
+before the first Android compile.
 
 ## Phase 2: Native value
 
@@ -91,6 +112,16 @@ D.E.E.D.S. is ready for store review only when:
 - account deletion and data export work
 - the app provides meaningful native utility beyond its website
 
+## Phase 6: Optional task packs
+
+After the native applications, account system, synchronization, and store-readiness gates are complete, D.E.E.D.S. can add optional pre-grouped task packs.
+
+The first implementation will validate free, fully editable packs before introducing Apple or Google one-time purchases. Pack installations must remain separate from personal data, preserve user changes during updates, prevent duplicates, and restore ownership across devices.
+
+See [D.E.E.D.S. Task Packs Plan](./TASK_PACKS_PLAN.md) for the catalog, installation experience, technical model, monetization sequence, and release gates.
+
 ## Immediate next build
 
-The next implementation slice should generate both native projects and validate the completed bridge for deep links, notification routing, haptics, voice-created tasks, and shared capture. After that, register Siri App Intents, Android App Actions, native share extensions, and the first HealthKit and Health Connect adapters.
+Validate the generated projects on one iPhone and one Android device. Then
+register Siri App Intents, Android App Actions, native share extensions, and
+the first HealthKit and Health Connect adapters.
