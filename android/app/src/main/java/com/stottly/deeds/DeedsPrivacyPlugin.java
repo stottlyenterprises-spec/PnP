@@ -27,7 +27,7 @@ public class DeedsPrivacyPlugin extends Plugin {
 
     @PluginMethod
     public void setEnabled(PluginCall call) {
-        boolean enabled = Boolean.TRUE.equals(call.getBool("enabled", false));
+        boolean enabled = Boolean.TRUE.equals(call.getBoolean("enabled", false));
         if (enabled && !isAvailable()) {
             call.reject("Device authentication is not available.");
             return;
