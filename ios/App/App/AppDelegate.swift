@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        routePendingVoiceTask()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -44,6 +44,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Feel free to add additional processing here, but if you want the App API to support
         // tracking app url opens, make sure to keep this call
         return ApplicationDelegateProxy.shared.application(application, continue: userActivity, restorationHandler: restorationHandler)
+    }
+
+    private func routePendingVoiceTask(attempt: Int = 0) {
+        guard let task = UserDefaults.standard.string(forKey: DeedsNativeCapture.pendingTaskKey),
+              !task.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
+
+        guard let bridgeController = window?.rootViewController as? CAPBridgeViewController,
+              let webView = bridgeController.bridge?.webView else {
+            if attempt < 8 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                    self.routePendingVoiceTask(attempt: attempt + 1)
+                }
+            }
+            return
+        }
+
+        var components = URLComponents(string: "https://p-n-p.vercel.app/")
+        components?.queryItems = [
+            URLQueryItem(name: "capture", value: "Task"),
+            URLQueryItem(name: "text", value: task),
+            URLQueryItem(name: "source", value: "siri")
+        ]
+        guard let url = components?.url else {
+            return
+        }
+
+        UserDefaults.standard.removeObject(forKey: DeedsNativeCapture.pendingTaskKey)
+        webView.load(URLRequest(url: url))
     }
 
 }

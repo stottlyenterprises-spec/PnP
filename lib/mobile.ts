@@ -93,7 +93,7 @@ export function consumeSharedCapture(url = window.location.href): NativeSharedCa
       parsed.searchParams.get("text")?.trim(),
       parsed.searchParams.get("url")?.trim(),
     ].filter(Boolean).join("\n\n");
-    if (!text) return null;
+    if (!text && !requestedKind) return null;
     const kind = requestedKind === "Journal" ? "Journal" : requestedKind === "Note" ? "Note" : "Task";
     return { kind, text };
   } catch {

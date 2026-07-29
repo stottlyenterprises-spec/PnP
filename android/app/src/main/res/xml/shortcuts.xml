@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <capability android:name="actions.intent.OPEN_APP_FEATURE">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.stottly.deeds.MainActivity"
+            android:targetPackage="com.stottly.deeds">
+            <parameter
+                android:key="feature"
+                android:name="feature" />
+        </intent>
+    </capability>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutId="create_deeds_task"
+        android:shortcutLongLabel="@string/shortcut_create_task_long"
+        android:shortcutShortLabel="@string/shortcut_create_task_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="deeds://open?capture=Task&amp;source=assistant"
+            android:targetClass="com.stottly.deeds.MainActivity"
+            android:targetPackage="com.stottly.deeds" />
+        <capability-binding android:key="actions.intent.OPEN_APP_FEATURE">
+            <parameter-binding
+                android:key="feature"
+                android:value="create task" />
+        </capability-binding>
+    </shortcut>
+</shortcuts>
