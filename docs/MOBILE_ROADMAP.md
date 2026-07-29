@@ -70,15 +70,22 @@ These features move D.E.E.D.S. beyond a repackaged website and should be complet
    Touch ID, Optic ID, or the device passcode. Android uses the system
    biometric or device-credential prompt where supported. The setting remains
    local to each device and requires real-device validation.
-6. Offline capture queue for tasks, interviews, health check-ins, and journal entries.
+6. Offline capture queue for tasks, interviews, health check-ins, and journal
+   entries. The first production slice is implemented for shared tasks: Android
+   stores incoming shared text in encrypted device storage before attempting to
+   open the hosted app. iOS and Android expose the same native queue contract.
+   D.E.E.D.S. presents one queued item at a time for review and removes it only
+   after the user saves it.
 
 ### Native privacy boundary
 
 The native lock is an app-access gate, not data encryption. D.E.E.D.S. never
 receives or stores biometric data; authentication is handled entirely by the
 operating system. Disabling the lock requires a successful authentication
-first. A future secure-storage layer will move native secrets and offline
-captures out of ordinary web storage.
+first. The secure-storage bridge now uses the iOS Keychain and Android encrypted
+preferences for device-only secrets and pending native captures. The main
+D.E.E.D.S. record still uses the existing browser and cloud data layers; this
+bridge does not yet encrypt that full record.
 
 ### Native capture contract
 
@@ -156,5 +163,7 @@ See [D.E.E.D.S. Task Packs Plan](./TASK_PACKS_PLAN.md) for the catalog, installa
 ## Immediate next build
 
 Validate the device-authentication lock on one iPhone and one Android device.
-Then add secure native storage and the offline capture queue before beginning
-the first HealthKit and Health Connect adapters.
+Validate the device-authentication lock and encrypted shared-task queue on one
+iPhone and one Android device. Then expand the same queue contract to interviews,
+health check-ins, and journal drafts before beginning the first HealthKit and
+Health Connect adapters.
