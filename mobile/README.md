@@ -40,7 +40,8 @@ The initial shell loads `https://p-n-p.vercel.app`. OAuth connections therefore 
 - Secure native storage using iOS Keychain and Android encrypted preferences:
   implemented
 - Offline shared-task queue with review-before-save behavior: implemented
-- Remote push notifications, HealthKit, Health Connect, and offline interview,
-  health, and journal queues: planned
+- Encrypted interview, health, and journal drafts with interruption recovery:
+  implemented
+- Remote push notifications, HealthKit, and Health Connect: planned
 
 See `docs/MOBILE_ROADMAP.md` for release gates and implementation order.
