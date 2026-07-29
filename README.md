@@ -33,6 +33,8 @@ A standalone, device-local personal operating system built around a real working
 - JSON backup and restore
 - Responsive phone and desktop layout
 - Installable iPhone Home Screen experience with notification permission support
+- Optional Face ID, Touch ID, Optic ID, biometric, or device-credential lock
+  in the native iOS and Android apps
 
 ## Run locally
 
