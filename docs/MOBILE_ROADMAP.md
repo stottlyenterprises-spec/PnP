@@ -65,8 +65,20 @@ These features move D.E.E.D.S. beyond a repackaged website and should be complet
 2. Siri/App Intents and Android App Actions for “create a task,” “open D.E.E.D.S.,” and “start my check-in.”
 3. Share target so text, links, and selected content can be sent into Tasks, Notes, or Journal. The shared capture contract and installable-app target are implemented; native share extensions remain to be registered after project generation.
 4. Haptic feedback for task completion and important actions.
-5. Biometric lock for health, journal, relationship, and connected-account data.
+5. Optional device authentication lock for the native app. The bridge and
+   Settings control are implemented for iOS and Android. iOS uses Face ID,
+   Touch ID, Optic ID, or the device passcode. Android uses the system
+   biometric or device-credential prompt where supported. The setting remains
+   local to each device and requires real-device validation.
 6. Offline capture queue for tasks, interviews, health check-ins, and journal entries.
+
+### Native privacy boundary
+
+The native lock is an app-access gate, not data encryption. D.E.E.D.S. never
+receives or stores biometric data; authentication is handled entirely by the
+operating system. Disabling the lock requires a successful authentication
+first. A future secure-storage layer will move native secrets and offline
+captures out of ordinary web storage.
 
 ### Native capture contract
 
@@ -143,6 +155,6 @@ See [D.E.E.D.S. Task Packs Plan](./TASK_PACKS_PLAN.md) for the catalog, installa
 
 ## Immediate next build
 
-Validate the generated projects on one iPhone and one Android device. Then
-register Siri App Intents, Android App Actions, native share extensions, and
+Validate the device-authentication lock on one iPhone and one Android device.
+Then add secure native storage and the offline capture queue before beginning
 the first HealthKit and Health Connect adapters.
