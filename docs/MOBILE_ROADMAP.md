@@ -77,6 +77,11 @@ These features move D.E.E.D.S. beyond a repackaged website and should be complet
    Unfinished interviews, health check-ins, and journal entries are encrypted
    on-device as they change, restored after interruption, and removed only when
    the record is completed or the day rolls over where appropriate.
+7. Read-only health connections for sleep and weight. Apple HealthKit and
+   Android Health Connect bridges are implemented with explicit permission
+   controls, source labels, automatic foreground refresh, and manual-entry
+   priority. App Store and Play Console health-data declarations, privacy URLs,
+   and real-device permission testing remain release requirements.
 
 ### Native privacy boundary
 
@@ -111,12 +116,12 @@ certificates are available.
 
 ## Phase 3: Health integration
 
-- iOS: HealthKit with explicit, granular permission requests
-- Android: Health Connect with equivalent permissions
-- Supported first: sleep duration, weight, steps/activity, heart rate, and workouts
+- iOS: HealthKit read-only sleep and weight bridge implemented
+- Android: Health Connect read-only sleep and weight bridge implemented
+- Next data types after real-device validation: steps/activity, heart rate, and workouts
 - Oura remains a connected source and is reconciled rather than blindly duplicated
-- Every imported value keeps its source and timestamp
-- Users can override imported values without destroying the original record
+- Imported sleep and weight retain their source
+- Manual values remain authoritative and are never silently replaced
 
 Health integrations require privacy disclosures, permission explanations, data deletion controls, and a written retention policy before public release.
 
