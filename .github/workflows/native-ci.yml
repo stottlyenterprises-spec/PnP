@@ -44,6 +44,9 @@ jobs:
       - name: Test encrypted native drafts
         run: pnpm test:mobile
 
+      - name: Test connected health merge rules
+        run: pnpm test:health
+
       - name: Build production web app
         run: pnpm build
 
