@@ -3,6 +3,11 @@ export type NativeSharedCapture = {
   kind: "Task" | "Note" | "Journal";
   text: string;
 };
+export type NativePrivacyState = {
+  available: boolean;
+  enabled: boolean;
+  biometricType?: string;
+};
 
 type PluginListenerHandle = {
   remove: () => Promise<void> | void;
@@ -34,6 +39,11 @@ type NativePlugins = {
       event: "localNotificationActionPerformed",
       listener: (event: { notification?: { extra?: { view?: string; period?: string } } }) => void,
     ) => Promise<PluginListenerHandle>;
+  };
+  DeedsPrivacy?: {
+    status: () => Promise<NativePrivacyState>;
+    setEnabled: (options: { enabled: boolean }) => Promise<NativePrivacyState>;
+    authenticate: (options: { reason: string }) => Promise<{ authenticated: boolean }>;
   };
 };
 
@@ -104,6 +114,24 @@ export function consumeSharedCapture(url = window.location.href): NativeSharedCa
 export async function taskCompletionHaptic(): Promise<void> {
   if (!isNativePnp()) return;
   await plugins()?.Haptics?.impact({ style: "MEDIUM" }).catch(() => undefined);
+}
+
+export async function nativePrivacyStatus(): Promise<NativePrivacyState> {
+  if (!isNativePnp()) return { available: false, enabled: false };
+  return plugins()?.DeedsPrivacy?.status().catch(() => ({ available: false, enabled: false }))
+    ?? { available: false, enabled: false };
+}
+
+export async function setNativePrivacyEnabled(enabled: boolean): Promise<NativePrivacyState> {
+  if (!isNativePnp()) return { available: false, enabled: false };
+  return plugins()?.DeedsPrivacy?.setEnabled({ enabled }).catch(() => ({ available: false, enabled: false }))
+    ?? { available: false, enabled: false };
+}
+
+export async function authenticateNativePrivacy(reason = "Unlock your private D.E.E.D.S. information"): Promise<boolean> {
+  if (!isNativePnp()) return true;
+  const result = await plugins()?.DeedsPrivacy?.authenticate({ reason }).catch(() => ({ authenticated: false }));
+  return !!result?.authenticated;
 }
 
 export async function enableNativeCheckInReminders(): Promise<boolean> {
