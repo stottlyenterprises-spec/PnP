@@ -190,7 +190,7 @@ public class DeedsHealthPlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     private func isAsleep(_ value: Int) -> Bool {
-        if value == HKCategoryValueSleepAnalysis.asleepUnspecified.rawValue { return true }
+        if value == HKCategoryValueSleepAnalysis.asleep.rawValue { return true }
         if #available(iOS 16.0, *) {
             return value == HKCategoryValueSleepAnalysis.asleepCore.rawValue
                 || value == HKCategoryValueSleepAnalysis.asleepDeep.rawValue
