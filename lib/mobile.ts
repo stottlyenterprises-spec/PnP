@@ -16,6 +16,20 @@ export type NativeDraft<T = unknown> = {
   updatedAt: string;
   payload: T;
 };
+export type NativeHealthDay = {
+  date: string;
+  sleepHours?: number;
+  weightPounds?: number;
+  sleepSource?: string;
+  weightSource?: string;
+};
+export type NativeHealthState = {
+  provider: "Apple Health" | "Health Connect";
+  available: boolean;
+  authorized: boolean;
+  message?: string;
+  days?: NativeHealthDay[];
+};
 
 type PluginListenerHandle = {
   remove: () => Promise<void> | void;
@@ -58,6 +72,12 @@ type NativePlugins = {
     queueCapture: (options: NativeSharedCapture) => Promise<{ pending: number }>;
     nextCapture: () => Promise<{ pending: number; capture: NativeSharedCapture | null }>;
     acknowledgeCapture: (options: { id: string }) => Promise<{ pending: number }>;
+  };
+  DeedsHealth?: {
+    status: () => Promise<NativeHealthState>;
+    requestAccess: () => Promise<NativeHealthState>;
+    readRecent: (options: { days: number }) => Promise<NativeHealthState>;
+    openSettings: () => Promise<void>;
   };
 };
 
@@ -184,6 +204,45 @@ export async function loadNativeDraft<T>(kind: NativeDraftKind): Promise<NativeD
 
 export async function clearNativeDraft(kind: NativeDraftKind): Promise<boolean> {
   return nativeSecureRemove(nativeDraftKey(kind));
+}
+
+export async function nativeHealthStatus(): Promise<NativeHealthState> {
+  const provider = getPnpPlatform() === "ios" ? "Apple Health" : "Health Connect";
+  if (!isNativePnp()) return { provider, available: false, authorized: false };
+  return plugins()?.DeedsHealth?.status().catch(error => ({
+    provider,
+    available: false,
+    authorized: false,
+    message: error instanceof Error ? error.message : "Connected health is unavailable.",
+  })) ?? { provider, available: false, authorized: false };
+}
+
+export async function requestNativeHealthAccess(): Promise<NativeHealthState> {
+  const provider = getPnpPlatform() === "ios" ? "Apple Health" : "Health Connect";
+  if (!isNativePnp()) return { provider, available: false, authorized: false };
+  return plugins()?.DeedsHealth?.requestAccess().catch(error => ({
+    provider,
+    available: true,
+    authorized: false,
+    message: error instanceof Error ? error.message : "Health access was not granted.",
+  })) ?? { provider, available: false, authorized: false };
+}
+
+export async function readNativeHealth(days = 14): Promise<NativeHealthState> {
+  const provider = getPnpPlatform() === "ios" ? "Apple Health" : "Health Connect";
+  if (!isNativePnp()) return { provider, available: false, authorized: false, days: [] };
+  return plugins()?.DeedsHealth?.readRecent({ days: Math.max(1, Math.min(30, days)) }).catch(error => ({
+    provider,
+    available: true,
+    authorized: false,
+    days: [],
+    message: error instanceof Error ? error.message : "Health data could not be read.",
+  })) ?? { provider, available: false, authorized: false, days: [] };
+}
+
+export async function openNativeHealthSettings(): Promise<void> {
+  if (!isNativePnp()) return;
+  await plugins()?.DeedsHealth?.openSettings().catch(() => undefined);
 }
 
 export async function queueNativeCapture(capture: NativeSharedCapture): Promise<number> {
