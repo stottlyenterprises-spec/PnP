@@ -2,6 +2,8 @@ export type PnpPlatform = "web" | "ios" | "android";
 export type NativeSharedCapture = {
   kind: "Task" | "Note" | "Journal";
   text: string;
+  queueId?: string;
+  createdAt?: string;
 };
 export type NativePrivacyState = {
   available: boolean;
@@ -44,6 +46,12 @@ type NativePlugins = {
     status: () => Promise<NativePrivacyState>;
     setEnabled: (options: { enabled: boolean }) => Promise<NativePrivacyState>;
     authenticate: (options: { reason: string }) => Promise<{ authenticated: boolean }>;
+    secureSet: (options: { key: string; value: string }) => Promise<void>;
+    secureGet: (options: { key: string }) => Promise<{ value: string | null }>;
+    secureRemove: (options: { key: string }) => Promise<void>;
+    queueCapture: (options: NativeSharedCapture) => Promise<{ pending: number }>;
+    nextCapture: () => Promise<{ pending: number; capture: NativeSharedCapture | null }>;
+    acknowledgeCapture: (options: { id: string }) => Promise<{ pending: number }>;
   };
 };
 
@@ -134,6 +142,39 @@ export async function authenticateNativePrivacy(reason = "Unlock your private D.
   return !!result?.authenticated;
 }
 
+export async function nativeSecureSet(key: string, value: string): Promise<boolean> {
+  if (!isNativePnp()) return false;
+  return plugins()?.DeedsPrivacy?.secureSet({ key, value }).then(() => true).catch(() => false) ?? false;
+}
+
+export async function nativeSecureGet(key: string): Promise<string | null> {
+  if (!isNativePnp()) return null;
+  return plugins()?.DeedsPrivacy?.secureGet({ key }).then(result => result.value).catch(() => null) ?? null;
+}
+
+export async function nativeSecureRemove(key: string): Promise<boolean> {
+  if (!isNativePnp()) return false;
+  return plugins()?.DeedsPrivacy?.secureRemove({ key }).then(() => true).catch(() => false) ?? false;
+}
+
+export async function queueNativeCapture(capture: NativeSharedCapture): Promise<number> {
+  if (!isNativePnp()) return 0;
+  const result = await plugins()?.DeedsPrivacy?.queueCapture(capture).catch(() => ({ pending: 0 }));
+  return result?.pending ?? 0;
+}
+
+export async function nextNativeCapture(): Promise<NativeSharedCapture | null> {
+  if (!isNativePnp()) return null;
+  const result = await plugins()?.DeedsPrivacy?.nextCapture().catch(() => ({ pending: 0, capture: null }));
+  return result?.capture ?? null;
+}
+
+export async function acknowledgeNativeCapture(id?: string): Promise<number> {
+  if (!isNativePnp() || !id) return 0;
+  const result = await plugins()?.DeedsPrivacy?.acknowledgeCapture({ id }).catch(() => ({ pending: 0 }));
+  return result?.pending ?? 0;
+}
+
 export async function enableNativeCheckInReminders(): Promise<boolean> {
   if (!isNativePnp()) return false;
   const notifications = plugins()?.LocalNotifications;
@@ -187,6 +228,10 @@ export async function installNativeBridge(handlers: {
   if (!isNativePnp()) return () => undefined;
   const native = plugins();
   const handles: PluginListenerHandle[] = [];
+  const deliverQueuedCapture = async () => {
+    const capture = await native?.DeedsPrivacy?.nextCapture().then(result => result.capture).catch(() => null);
+    if (capture) handlers.onSharedCapture(capture);
+  };
   const routeUrl = (url?: string) => {
     if (!url) return;
     const task = consumeVoiceTask(url);
@@ -199,7 +244,10 @@ export async function installNativeBridge(handlers: {
   if (native?.App) {
     handles.push(await native.App.addListener("appUrlOpen", event => routeUrl(event.url)));
     handles.push(await native.App.addListener("appStateChange", event => {
-      if (event.isActive) handlers.onResume();
+      if (event.isActive) {
+        void deliverQueuedCapture();
+        handlers.onResume();
+      }
     }));
   }
   if (native?.LocalNotifications) {
@@ -209,6 +257,7 @@ export async function installNativeBridge(handlers: {
       else if (extra?.view) handlers.onView(extra.view);
     }));
   }
+  void deliverQueuedCapture();
   return () => {
     handles.forEach(handle => void handle.remove());
   };

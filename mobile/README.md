@@ -37,7 +37,10 @@ The initial shell loads `https://p-n-p.vercel.app`. OAuth connections therefore 
 - Optional native app lock using system device authentication: ready for
   real-device validation
 - Native project folders: generated locally after dependencies are installed
-- Remote push notifications, HealthKit, Health Connect, secure native storage,
-  and the offline queue: planned
+- Secure native storage using iOS Keychain and Android encrypted preferences:
+  implemented
+- Offline shared-task queue with review-before-save behavior: implemented
+- Remote push notifications, HealthKit, Health Connect, and offline interview,
+  health, and journal queues: planned
 
 See `docs/MOBILE_ROADMAP.md` for release gates and implementation order.
