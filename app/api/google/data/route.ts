@@ -19,7 +19,8 @@ async function findFile(token: string) {
     spaces: "appDataFolder",
     q: `name='${FILE_NAME}' and trashed=false`,
     fields: "files(id,modifiedTime)",
-    pageSize: "1",
+    orderBy: "modifiedTime desc",
+    pageSize: "10",
   }).toString();
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${token}` },
