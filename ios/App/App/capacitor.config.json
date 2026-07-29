@@ -1,0 +1,37 @@
+{
+	"appId": "com.stottlyenterprises.progressnotperfection.deeds",
+	"appName": "D.E.E.D.S.",
+	"webDir": "public",
+	"server": {
+		"url": "https://p-n-p.vercel.app",
+		"cleartext": false,
+		"allowNavigation": [
+			"p-n-p.vercel.app",
+			"accounts.google.com",
+			"cloud.ouraring.com"
+		]
+	},
+	"ios": {
+		"contentInset": "automatic",
+		"preferredContentMode": "mobile"
+	},
+	"android": {
+		"allowMixedContent": false
+	},
+	"plugins": {
+		"LocalNotifications": {
+			"iconColor": "#4A8F90",
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"banner",
+				"list"
+			]
+		}
+	},
+	"packageClassList": [
+		"AppPlugin",
+		"HapticsPlugin",
+		"LocalNotificationsPlugin"
+	]
+}
