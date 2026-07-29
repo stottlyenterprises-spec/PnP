@@ -677,6 +677,8 @@ main[data-skin="midnight"] :is(.taskPanel button,.taskCategoryGroup button,.cate
 .categoryManager summary{padding:10px 12px;color:var(--skin-accent);font-size:11px;font-weight:800;cursor:pointer;list-style:none}.categoryManager summary::-webkit-details-marker{display:none}
 .categoryManager>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;padding:0 10px 8px}.categoryManager input{min-width:0;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:var(--skin-control);color:var(--skin-ink)}.categoryManager button{padding:9px 11px;border:1px solid color-mix(in srgb,var(--skin-accent) 28%,transparent);border-radius:9px;background:color-mix(in srgb,var(--skin-accent) 9%,var(--skin-control));color:var(--skin-accent);font-weight:800}.categoryManager small{display:block;padding:0 11px 10px;color:var(--skin-muted);font-size:9px;line-height:1.45}
 .taskCategoryTag{display:inline-block!important;margin:0 7px 2px 0;padding:3px 6px;border-radius:999px;background:color-mix(in srgb,var(--skin-accent) 10%,transparent);color:var(--skin-accent)!important;font-size:8px!important;font-style:normal;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.intensityAnchors{display:flex;justify-content:space-between;gap:12px;color:var(--skin-muted,var(--muted));font-size:9px;font-weight:700}
+.interviewIntensityAnchors{margin-top:9px}
 @media(max-width:800px){
  .taskCommandActions{width:100%;display:grid;grid-template-columns:1fr 1fr}
  .taskCommandActions button{width:100%;min-height:44px}
@@ -688,6 +690,7 @@ main[data-skin="midnight"] :is(.taskPanel button,.taskCategoryGroup button,.cate
  .swipeCommandHandle{position:fixed;z-index:45;left:50%;bottom:calc(4px + env(safe-area-inset-bottom));display:grid;place-items:center;width:72px;height:24px;padding:0;transform:translateX(-50%);border:0;background:transparent}
  .swipeCommandHandle span{display:block;width:38px;height:5px;border-radius:999px;background:color-mix(in srgb,var(--skin-ink) 36%,transparent);box-shadow:0 1px 8px var(--skin-shadow)}
 }
+@media(max-width:480px){.intensityAnchors{display:grid;gap:4px}}
 section.content:has(.connectionHub)>header{order:0}
 section.content:has(.connectionHub)>.appearanceSettings{order:1}
 section.content:has(.connectionHub)>.settingsIdentity{order:2}
