@@ -70,12 +70,13 @@ These features move D.E.E.D.S. beyond a repackaged website and should be complet
    Touch ID, Optic ID, or the device passcode. Android uses the system
    biometric or device-credential prompt where supported. The setting remains
    local to each device and requires real-device validation.
-6. Offline capture queue for tasks, interviews, health check-ins, and journal
-   entries. The first production slice is implemented for shared tasks: Android
-   stores incoming shared text in encrypted device storage before attempting to
-   open the hosted app. iOS and Android expose the same native queue contract.
-   D.E.E.D.S. presents one queued item at a time for review and removes it only
-   after the user saves it.
+6. Offline capture and draft protection for tasks, interviews, health check-ins,
+   and journal entries. Android stores incoming shared text in encrypted device
+   storage before attempting to open the hosted app. D.E.E.D.S. presents one
+   queued item at a time for review and removes it only after the user saves it.
+   Unfinished interviews, health check-ins, and journal entries are encrypted
+   on-device as they change, restored after interruption, and removed only when
+   the record is completed or the day rolls over where appropriate.
 
 ### Native privacy boundary
 
@@ -162,8 +163,6 @@ See [D.E.E.D.S. Task Packs Plan](./TASK_PACKS_PLAN.md) for the catalog, installa
 
 ## Immediate next build
 
-Validate the device-authentication lock on one iPhone and one Android device.
-Validate the device-authentication lock and encrypted shared-task queue on one
-iPhone and one Android device. Then expand the same queue contract to interviews,
-health check-ins, and journal drafts before beginning the first HealthKit and
-Health Connect adapters.
+Validate the device-authentication lock, shared-task queue, and restored drafts
+on one iPhone and one Android device. Then begin the first HealthKit and Health
+Connect adapters with source-aware sleep and weight imports.
