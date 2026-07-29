@@ -603,10 +603,12 @@ main[data-skin] .osLaunch .commandApp{border-color:color-mix(in srgb,var(--skin-
 }
 .taskCommandActions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}
 .taskImportStatus{grid-column:1/-1;margin:0;padding:10px 12px;border:1px solid color-mix(in srgb,var(--skin-accent) 30%,var(--skin-border));border-radius:11px;background:color-mix(in srgb,var(--skin-accent) 9%,transparent);color:var(--skin-ink);font-size:11px}
+.captureKinds{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
 .swipeCommandHandle{display:none}
 @media(max-width:800px){
  .taskCommandActions{width:100%;display:grid;grid-template-columns:1fr 1fr}
  .taskCommandActions button{width:100%;min-height:44px}
+ .captureKinds{grid-template-columns:repeat(2,minmax(0,1fr));flex-wrap:wrap}
  .swipeCommandHandle{position:fixed;z-index:45;left:50%;bottom:calc(4px + env(safe-area-inset-bottom));display:grid;place-items:center;width:72px;height:24px;padding:0;transform:translateX(-50%);border:0;background:transparent}
  .swipeCommandHandle span{display:block;width:38px;height:5px;border-radius:999px;background:color-mix(in srgb,var(--skin-ink) 36%,transparent);box-shadow:0 1px 8px var(--skin-shadow)}
 }
