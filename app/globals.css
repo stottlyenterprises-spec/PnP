@@ -607,12 +607,14 @@ main[data-skin] .osLaunch .commandApp{border-color:color-mix(in srgb,var(--skin-
  main:not(.reduced-motion) .command-deeds .commandIcon i{animation:commandRingClockwise 6s linear infinite!important}
 }
 .taskCommandActions{display:flex;align-items:center;justify-content:flex-end;gap:9px;flex-wrap:wrap}
-.taskImportStatus{grid-column:1/-1;margin:0;padding:10px 12px;border:1px solid color-mix(in srgb,var(--skin-accent) 30%,var(--skin-border));border-radius:11px;background:color-mix(in srgb,var(--skin-accent) 9%,transparent);color:var(--skin-ink);font-size:11px}
+.taskCommandIntro{flex-wrap:wrap}.taskCommandIntro>div:first-child{flex:1 1 540px}.taskImportFormats{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.taskImportFormats span{padding:7px 10px;border:1px solid color-mix(in srgb,var(--skin-muted) 24%,transparent);border-radius:999px;background:color-mix(in srgb,var(--skin-panel-strong) 70%,transparent);color:var(--skin-muted);font-size:10px}.taskImportFormats b{color:var(--skin-ink)}.taskImportHelp{display:block;max-width:720px;margin-top:9px;color:var(--skin-muted);font-size:10px;line-height:1.55}.taskImportStatus{flex:1 0 100%;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0;padding:10px 12px;border:1px solid color-mix(in srgb,var(--skin-accent) 30%,var(--skin-border));border-radius:11px;background:color-mix(in srgb,var(--skin-accent) 9%,transparent);color:var(--skin-ink);font-size:11px}.taskImportStatus button{min-height:36px;padding:7px 11px;border:1px solid color-mix(in srgb,var(--skin-accent) 35%,var(--skin-border));border-radius:9px;background:var(--skin-control);color:var(--skin-accent);font-weight:800;white-space:nowrap}
 .captureKinds{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
 .swipeCommandHandle{display:none}
 @media(max-width:800px){
  .taskCommandActions{width:100%;display:grid;grid-template-columns:1fr 1fr}
  .taskCommandActions button{width:100%;min-height:44px}
+ .taskImportFormats{display:grid;grid-template-columns:1fr}.taskImportFormats span{border-radius:10px}
+ .taskImportStatus{align-items:stretch}.taskImportStatus button{min-height:44px}
  .captureKinds{grid-template-columns:repeat(2,minmax(0,1fr));flex-wrap:wrap}
  .swipeCommandHandle{position:fixed;z-index:45;left:50%;bottom:calc(4px + env(safe-area-inset-bottom));display:grid;place-items:center;width:72px;height:24px;padding:0;transform:translateX(-50%);border:0;background:transparent}
  .swipeCommandHandle span{display:block;width:38px;height:5px;border-radius:999px;background:color-mix(in srgb,var(--skin-ink) 36%,transparent);box-shadow:0 1px 8px var(--skin-shadow)}
@@ -641,7 +643,7 @@ section.content:has(.connectionHub)>.buildInfo{order:14}
 }
 
 /* D.E.E.D.S. decision standard */
-.deedsWorkspaceStatus .decisionGuideButton{border-color:color-mix(in srgb,var(--skin-accent) 38%,transparent);background:var(--skin-accent);color:var(--skin-on-accent);font-weight:800}
+main[data-skin] .deedsWorkspaceStatus .decisionGuideButton{border-color:color-mix(in srgb,var(--skin-accent) 38%,transparent);background:var(--skin-accent);color:var(--skin-on-accent)!important;font-weight:800}
 .decisionSignalCard{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px;overflow:hidden;padding:21px 23px;border:1px solid color-mix(in srgb,var(--skin-accent) 32%,var(--skin-border));border-radius:20px;background:radial-gradient(circle at 92% 5%,color-mix(in srgb,var(--skin-accent-2) 22%,transparent),transparent 34%),linear-gradient(145deg,color-mix(in srgb,var(--skin-accent) 11%,var(--skin-panel-strong)),var(--skin-panel));box-shadow:inset 0 1px 0 #ffffffa3,0 22px 55px var(--skin-shadow)}
 .decisionSignalMark{position:relative;display:grid;place-items:center;width:54px;height:54px;border:1px solid color-mix(in srgb,var(--skin-accent) 35%,transparent);border-radius:18px;background:linear-gradient(145deg,color-mix(in srgb,var(--skin-accent) 90%,#fff 10%),var(--skin-side-b));color:var(--skin-dark-copy);box-shadow:0 12px 30px color-mix(in srgb,var(--skin-accent) 28%,transparent)}
 .decisionSignalMark:before{content:"";position:absolute;inset:6px;border:1px solid #ffffff4f;border-radius:13px}.decisionSignalMark svg{width:24px;height:24px}
