@@ -14,6 +14,7 @@
 		7D4545442C5B000100DEED51 /* AddDeedsTaskIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4545432C5B000100DEED51 /* AddDeedsTaskIntent.swift */; };
 		7D4545462C5B000100DEED51 /* DeedsPrivacyPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4545452C5B000100DEED51 /* DeedsPrivacyPlugin.swift */; };
 		7D4545482C5B000100DEED51 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4545472C5B000100DEED51 /* MainViewController.swift */; };
+		7D4545502C5B000100DEED51 /* DeedsHealthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D45454F2C5B000100DEED51 /* DeedsHealthPlugin.swift */; };
 		504EC30D1FED79650016851F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
 		504EC30F1FED79650016851F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30E1FED79650016851F /* Assets.xcassets */; };
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
@@ -28,6 +29,8 @@
 		7D4545432C5B000100DEED51 /* AddDeedsTaskIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeedsTaskIntent.swift; sourceTree = "<group>"; };
 		7D4545452C5B000100DEED51 /* DeedsPrivacyPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeedsPrivacyPlugin.swift; sourceTree = "<group>"; };
 		7D4545472C5B000100DEED51 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		7D45454F2C5B000100DEED51 /* DeedsHealthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeedsHealthPlugin.swift; sourceTree = "<group>"; };
+		7D4545512C5B000100DEED51 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		504EC30C1FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		504EC30E1FED79650016851F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		504EC3111FED79650016851F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -72,7 +75,9 @@
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				7D4545432C5B000100DEED51 /* AddDeedsTaskIntent.swift */,
 				7D4545452C5B000100DEED51 /* DeedsPrivacyPlugin.swift */,
+				7D45454F2C5B000100DEED51 /* DeedsHealthPlugin.swift */,
 				7D4545472C5B000100DEED51 /* MainViewController.swift */,
+				7D4545512C5B000100DEED51 /* App.entitlements */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
@@ -167,6 +172,7 @@
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
 				7D4545442C5B000100DEED51 /* AddDeedsTaskIntent.swift in Sources */,
 				7D4545462C5B000100DEED51 /* DeedsPrivacyPlugin.swift in Sources */,
+				7D4545502C5B000100DEED51 /* DeedsHealthPlugin.swift in Sources */,
 				7D4545482C5B000100DEED51 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,6 +313,7 @@
 			baseConfigurationReference = 958DCC722DB07C7200EA8C5F /* debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = App/Info.plist;
@@ -329,6 +336,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = App/Info.plist;
