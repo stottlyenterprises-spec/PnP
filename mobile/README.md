@@ -42,6 +42,10 @@ The initial shell loads `https://p-n-p.vercel.app`. OAuth connections therefore 
 - Offline shared-task queue with review-before-save behavior: implemented
 - Encrypted interview, health, and journal drafts with interruption recovery:
   implemented
-- Remote push notifications, HealthKit, and Health Connect: planned
+- Apple HealthKit read-only sleep and weight connection: implemented, pending
+  real-device permission validation and Apple capability approval
+- Android Health Connect read-only sleep and weight connection: implemented,
+  pending real-device permission validation and Play Console declaration
+- Remote push notifications: planned
 
 See `docs/MOBILE_ROADMAP.md` for release gates and implementation order.
