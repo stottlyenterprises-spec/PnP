@@ -34,7 +34,10 @@ The initial shell loads `https://p-n-p.vercel.app`. OAuth connections therefore 
 - Shared capture routing for tasks, notes, and journal entries: ready to sync
 - Installed-app shortcuts for task capture, check-in, and Journal: ready
 - Haptic feedback for completed tasks: ready to sync
+- Optional native app lock using system device authentication: ready for
+  real-device validation
 - Native project folders: generated locally after dependencies are installed
-- Remote push notifications, Siri/App Actions, HealthKit, Health Connect, biometric lock, and offline queue: planned
+- Remote push notifications, HealthKit, Health Connect, secure native storage,
+  and the offline queue: planned
 
 See `docs/MOBILE_ROADMAP.md` for release gates and implementation order.
