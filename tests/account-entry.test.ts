@@ -43,3 +43,9 @@ test("the interview can still be opened manually after sign-in",()=>{
  const manual={...base,connected:true,cloudReady:true,cloudRecordStatus:"populated" as const,onboardingOpen:true};
  assert.equal(shouldShowFirstConversation(manual),true);
 });
+
+test("the app contains a blocking recovery state for a connected empty account",()=>{
+ assert.match(page,/const accountNeedsRecovery=/);
+ assert.match(page,/Use a different Google account/);
+ assert.match(page,/D\.E\.E\.D\.S\. will not open a blank account or create a blank cloud record/);
+});
