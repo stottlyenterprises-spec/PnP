@@ -72,6 +72,24 @@ test("reported compact-layout controls keep explicit app styling",()=>{
  assert.match(css,/\.stockTicker article\.down[\s\S]+#d85864/);
 });
 
+test("selected controls never rely on a subtle color shift alone",()=>{
+ const selection=css.slice(css.indexOf("/* High-clarity selection language"));
+ assert.ok(selection.length>0,"Missing shared selection language");
+ for(const signal of [
+  "border:2px solid",
+  "background:var(--skin-accent)!important",
+  "color:var(--skin-on-accent)!important",
+  "0 0 0 3px",
+  'content:"●"',
+  "font-weight:800",
+ ]){
+  assert.ok(selection.includes(signal),`Selected controls are missing ${signal}`);
+ }
+ for(const selector of [".modeSwitch button.active",".calendarToolbar>div button.active",".tap.selected",".skinGallery button.selected"]){
+  assert.ok(selection.includes(selector),`${selector} is outside the shared selected-state treatment`);
+ }
+});
+
 test("semantic phase variation survives the shared surface system",()=>{
  const atmosphere=css.slice(css.indexOf("/* Semantic atmosphere"));
  for(const phase of ["direction","explore","enable","drive","sustain"]){

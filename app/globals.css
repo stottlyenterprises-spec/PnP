@@ -1323,3 +1323,75 @@ main[data-skin="velvet"] :is(.card,.deedsSection,.taskPanel,.reportHeader,.appea
  backdrop-filter:blur(29px) saturate(135%);
 }
 main[data-skin="velvet"] :is(h1,h2,h3){letter-spacing:-.022em}
+
+/* High-clarity selection language
+   Selected controls use fill, ring, weight, and a state marker so no
+   atmosphere has to communicate selection through color alone. */
+main[data-skin] :is(
+ .modeSwitch button,.calendarToolbar>div button,.providerSwitch button,
+ .reportRange button,.relationshipMode button,.taskSortControl button,
+ .captureKinds button,.repeatDays button,.surveyChoices button,
+ .advisorChoices button,.mailAccountSwitch button
+){
+ border:1px solid color-mix(in srgb,var(--skin-muted) 34%,transparent);
+ background:color-mix(in srgb,var(--skin-panel-elevated) 72%,transparent);
+ color:var(--skin-muted);
+ box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 18%,transparent);
+ transition:background .16s ease,color .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+}
+
+main[data-skin] :is(
+ .modeSwitch button.active,.calendarToolbar>div button.active,
+ .providerSwitch button.active,.reportRange button.active,
+ .relationshipMode button.active,.taskSortControl button.active,
+ .captureKinds button.active,.repeatDays button.active,
+ .surveyChoices button.selected,.advisorChoices button.selected,
+ .mailAccountSwitch button.active,.tap.selected,.chips button.selected,
+ .scale button.selected,.relationshipActions button.selected,
+ .skinGallery button.selected
+){
+ border:2px solid color-mix(in srgb,var(--skin-accent) 72%,#fff 28%)!important;
+ background:var(--skin-accent)!important;
+ color:var(--skin-on-accent)!important;
+ box-shadow:inset 0 0 0 1px color-mix(in srgb,#fff 34%,transparent),0 0 0 3px color-mix(in srgb,var(--skin-accent) 38%,transparent),0 8px 19px color-mix(in srgb,var(--skin-shadow) 58%,transparent)!important;
+ font-weight:800;
+ transform:translateY(-1px);
+}
+
+main[data-skin] :is(
+ .modeSwitch button.active,.calendarToolbar>div button.active,
+ .providerSwitch button.active,.reportRange button.active,
+ .relationshipMode button.active,.taskSortControl button.active,
+ .captureKinds button.active,.mailAccountSwitch button.active
+)::after{
+ content:"●";
+ display:inline-block;
+ margin-left:7px;
+ color:currentColor;
+ font-size:7px;
+ line-height:1;
+ vertical-align:middle;
+}
+
+main[data-skin] :is(
+ .tap.selected,.chips button.selected,.scale button.selected,
+ .relationshipActions button.selected,.skinGallery button.selected
+) :is(b,small,span,em){
+ color:inherit!important;
+}
+
+main[data-skin] .interviewButtons button.complete{
+ border:2px solid color-mix(in srgb,var(--skin-accent) 72%,#fff 28%)!important;
+ background:var(--skin-accent)!important;
+ color:var(--skin-on-accent)!important;
+ box-shadow:0 0 0 3px color-mix(in srgb,var(--skin-accent) 38%,transparent),0 8px 19px color-mix(in srgb,var(--skin-shadow) 58%,transparent)!important;
+ font-weight:800;
+}
+
+main[data-skin] .interviewButtons button.current:not(.complete){
+ border:2px solid var(--skin-accent)!important;
+ background:color-mix(in srgb,var(--skin-accent) 16%,var(--skin-panel-elevated))!important;
+ color:var(--skin-ink)!important;
+ box-shadow:0 0 0 3px color-mix(in srgb,var(--skin-accent) 30%,transparent)!important;
+ font-weight:800;
+}
