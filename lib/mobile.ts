@@ -369,6 +369,7 @@ export async function installNativeBridge(handlers: {
   onVoiceTask: (task: string) => void;
   onSharedCapture: (capture: NativeSharedCapture) => void;
   onInterview: (period: string) => void;
+  onAccountCallback: (url: string) => void;
   onResume: () => void;
 }): Promise<() => void> {
   if (!isNativePnp()) return () => undefined;
@@ -380,6 +381,10 @@ export async function installNativeBridge(handlers: {
   };
   const routeUrl = (url?: string) => {
     if (!url) return;
+    if (url.startsWith("deeds://open") && /(?:access_token|error(?:_description)?)=/.test(url)) {
+      handlers.onAccountCallback(url);
+      return;
+    }
     const task = consumeVoiceTask(url);
     const capture = consumeSharedCapture(url);
     const view = requestedView(url);

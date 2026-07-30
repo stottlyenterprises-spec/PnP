@@ -7,12 +7,14 @@ const read = (path: string) => readFileSync(join(process.cwd(), path), "utf8");
 const page = read("app/page.tsx");
 const accountData = read("app/api/account/data/route.ts");
 const accountConfig = read("app/api/account/config/route.ts");
+const accountClient = read("lib/deeds-account.ts");
+const mobile = read("lib/mobile.ts");
 const migration = read("supabase/migrations/001_deeds_accounts.sql");
 
 test("D.E.E.D.S. offers three account identities while connections stay separate", () => {
   assert.match(page, /Continue with Apple/);
   assert.match(page, /Continue with Google/);
-  assert.match(page, /Email me a code/);
+  assert.match(page, /Email me a sign-in link/);
   assert.match(page, /Mail, Calendar, Oura, and Google Drive are optional connections afterward/);
 });
 
@@ -37,4 +39,10 @@ test("Google Drive remains an independent backup", () => {
   assert.match(page, /Update Drive backup/);
   assert.match(page, /Google Drive backup/);
   assert.match(page, /\/api\/google\/data/);
+});
+
+test("native account links return to the installed app", () => {
+  assert.match(accountClient, /isNativePnp\(\) \? "deeds:\/\/open"/);
+  assert.match(mobile, /handlers\.onAccountCallback\(url\)/);
+  assert.match(page, /onAccountCallback:url/);
 });

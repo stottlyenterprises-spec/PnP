@@ -13,6 +13,7 @@ remain optional data connections after sign-in.
 4. In **Authentication → URL Configuration**, set:
    - Site URL: `https://p-n-p.vercel.app`
    - Redirect URL: `https://p-n-p.vercel.app/`
+   - Native redirect URL: `deeds://open`
    - Add the local development URL when needed.
 
 ## 2. Add Vercel environment variables
@@ -30,12 +31,9 @@ or give it a `NEXT_PUBLIC_` prefix.
 
 Email authentication is enabled by default in Supabase.
 
-Edit the sign-in email template so it includes the one-time code:
-
-`{{ .Token }}`
-
-The app also accepts the secure link from the same email. Entering the code
-directly is the most reliable path inside installed iPhone and Android builds.
+The default secure magic link works on the web and returns directly to the
+installed iPhone or Android app through `deeds://open`. If custom SMTP is added
+later, the template may also include `{{ .Token }}` to offer direct code entry.
 
 ## 4. Enable Google account sign-in
 

@@ -14,7 +14,7 @@ test("the first conversation always offers account recovery when disconnected",(
  assert.match(unifiedEntry,/!deedsAccount\.connected&&<section className="onboardingAccountAccess">/);
  assert.match(unifiedEntry,/Continue with Apple/);
  assert.match(unifiedEntry,/Continue with Google/);
- assert.match(unifiedEntry,/Email me a code/);
+ assert.match(unifiedEntry,/Email me a sign-in link/);
  assert.doesNotMatch(unifiedEntry,/showAccountGateway&&<section className="onboardingAccountAccess">/);
 });
 

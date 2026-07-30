@@ -1,3 +1,5 @@
+import { isNativePnp } from "@/lib/mobile";
+
 export const ACCOUNT_SESSION_KEY = "deeds-account-session-v1";
 
 export type DeedsAccountUser = {
@@ -81,6 +83,10 @@ async function accountConfig() {
   return response.json() as Promise<{ configured: boolean; url?: string; publishableKey?: string }>;
 }
 
+function accountRedirectUrl() {
+  return isNativePnp() ? "deeds://open" : `${window.location.origin}/`;
+}
+
 async function fetchUser(accessToken: string, url: string, publishableKey: string) {
   const response = await fetch(`${url}/auth/v1/user`, {
     headers: { apikey: publishableKey, Authorization: `Bearer ${accessToken}` },
@@ -133,7 +139,7 @@ export async function restoreAccountSession(): Promise<{ configured: boolean; se
 export async function accountAuthorizationUrl(provider: "apple" | "google") {
   const config = await accountConfig();
   if (!config.configured || !config.url) throw new Error("D.E.E.D.S. accounts are not configured yet.");
-  const redirectTo = `${window.location.origin}/`;
+  const redirectTo = accountRedirectUrl();
   return `${config.url}/auth/v1/authorize?provider=${provider}&redirect_to=${encodeURIComponent(redirectTo)}`;
 }
 
@@ -143,7 +149,7 @@ export async function emailSignInCode(email: string) {
   const response = await fetch(`${config.url}/auth/v1/otp`, {
     method: "POST",
     headers: { apikey: config.publishableKey, "Content-Type": "application/json" },
-    body: JSON.stringify({ email, create_user: true, email_redirect_to: `${window.location.origin}/` }),
+    body: JSON.stringify({ email, create_user: true, email_redirect_to: accountRedirectUrl() }),
   });
   if (!response.ok) {
     const body = await response.json().catch(() => ({})) as { msg?: string; error_description?: string };
