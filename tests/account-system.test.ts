@@ -16,6 +16,9 @@ test("D.E.E.D.S. offers three account identities while connections stay separate
   assert.match(page, /Continue with Google/);
   assert.match(page, /Email me a sign-in link/);
   assert.match(page, /Mail, Calendar, Oura, and Google Drive are optional connections afterward/);
+  assert.match(accountConfig, /\/auth\/v1\/settings/);
+  assert.match(page, /Apple setup pending/);
+  assert.match(page, /Google setup pending/);
 });
 
 test("a blank device cannot replace a populated account", () => {

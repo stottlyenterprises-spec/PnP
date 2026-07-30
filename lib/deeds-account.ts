@@ -23,6 +23,13 @@ export type DeedsAccountState = {
   connected: boolean;
   session: DeedsAccountSession | null;
   error: string;
+  providers: DeedsAccountProviders;
+};
+
+export type DeedsAccountProviders = {
+  apple: boolean;
+  google: boolean;
+  email: boolean;
 };
 
 type SupabaseUser = {
@@ -80,7 +87,12 @@ export function consumeAccountCallback() {
 
 async function accountConfig() {
   const response = await fetch("/api/account/config", { cache: "no-store" });
-  return response.json() as Promise<{ configured: boolean; url?: string; publishableKey?: string }>;
+  return response.json() as Promise<{
+    configured: boolean;
+    url?: string;
+    publishableKey?: string;
+    providers?: DeedsAccountProviders;
+  }>;
 }
 
 function accountRedirectUrl() {
@@ -113,26 +125,31 @@ async function refreshSession(session: DeedsAccountSession, url: string, publish
   });
 }
 
-export async function restoreAccountSession(): Promise<{ configured: boolean; session: DeedsAccountSession | null }> {
+export async function restoreAccountSession(): Promise<{
+  configured: boolean;
+  session: DeedsAccountSession | null;
+  providers: DeedsAccountProviders;
+}> {
   const config = await accountConfig();
-  if (!config.configured || !config.url || !config.publishableKey) return { configured: false, session: null };
+  const providers = config.providers || { apple: false, google: false, email: false };
+  if (!config.configured || !config.url || !config.publishableKey) return { configured: false, session: null, providers };
   const callback = consumeAccountCallback();
   let session = readAccountSession();
   if (callback) {
     const user = await fetchUser(callback.accessToken, config.url, config.publishableKey);
     session = saveAccountSession({ ...callback, user });
   }
-  if (!session) return { configured: true, session: null };
+  if (!session) return { configured: true, session: null, providers };
   try {
     if (session.expiresAt < Date.now() + 60_000) session = await refreshSession(session, config.url, config.publishableKey);
     else {
       const user = await fetchUser(session.accessToken, config.url, config.publishableKey);
       session = saveAccountSession({ ...session, user });
     }
-    return { configured: true, session };
+    return { configured: true, session, providers };
   } catch {
     clearAccountSession();
-    return { configured: true, session: null };
+    return { configured: true, session: null, providers };
   }
 }
 
