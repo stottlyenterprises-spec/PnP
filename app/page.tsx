@@ -36,7 +36,7 @@ type Review={id:string;date:string;moved:string;money:string;stalled:string;drai
 type Capture={id:string;date:string;kind:"Task"|"Idea"|"Opportunity"|"Note"|"Journal";text:string;processed:boolean};
 type JournalEntry={id:string;date:string;title:string;body:string;tags:string};
 type StockQuote={symbol:string;price:number;change:number;percent:number;currency:string;marketState:string};
-type SkinId="signature"|"forest"|"midnight"|"coastal"|"stage"|"focus";
+type SkinId="signature"|"forest"|"midnight"|"coastal"|"stage"|"focus"|"aurora"|"solstice"|"nebula"|"kintsugi"|"blueprint"|"velvet";
 type State={tasks:Task[];taskSortMode:"date"|"manual";taskCategories:TaskCategory[];health:Health[];mentalRecords:MentalRecord[];revenue:{date:string;amount:number;source:string}[];mornings:Morning[];medNames:string[];hiddenMedNames:string[];hygieneItems:string[];hiddenHygieneItems:string[];customEmotions:string[];customHelpfulActions:string[];relationships:Relationship[];relationshipProfiles:RelationshipProfile[];profileName:string;journal:JournalEntry[];lastDailyReset:string;dailyHistory:{date:string;completed:string[]}[];interviewReminders:boolean;bigThree:string[];monthlyRevenueTarget:number;dailyTaskGoal:number;hydrationCupOunces:number;hydrationTargetMode:"automatic"|"custom";hydrationCustomOunces:number;outcomes:Outcome[];opportunities:Opportunity[];decisions:Decision[];reviews:Review[];captures:Capture[];watchSymbols:string[];businessSections:string[];taskListTitles:Partial<Record<Section,string>>;hiddenTaskLists:Section[];customTaskLists:TaskListDefinition[];migrations:string[];onboardingComplete:boolean;onboardingVersion:number;skin:SkinId;adaptiveSkin:boolean;reducedMotion:boolean};
 type OnboardingDraft={name:string;workRoles:string[];workDescription:string;workDays:string[];recoveryDays:string[];exercise:string[];fun:string[];priorities:string[];relationshipName:string;relationshipKind:RelationshipProfile["kind"];dailyTaskGoal:number};
 type View="launch"|"home"|"today"|"tasks"|"week"|"calendar"|"business"|"strategy"|"review"|"health"|"relationship"|"journal"|"google"|"kpi"|"data";
@@ -72,7 +72,13 @@ const skins:{id:SkinId;name:string;description:string}[]=[
  {id:"midnight",name:"Midnight",description:"Black glass, graphite, and quiet silver"},
  {id:"coastal",name:"Coastal",description:"Sea glass, sky, and clean blue light"},
  {id:"stage",name:"Stage",description:"Burgundy, charcoal, and warm gold"},
- {id:"focus",name:"Focus",description:"Quiet contrast with minimal visual noise"}
+ {id:"focus",name:"Focus",description:"Quiet contrast with minimal visual noise"},
+ {id:"aurora",name:"Aurora",description:"Polar light moving through arctic glass"},
+ {id:"solstice",name:"Solstice",description:"Sunlit amber, clay, and radiant warmth"},
+ {id:"nebula",name:"Nebula",description:"Violet space glass with electric blue depth"},
+ {id:"kintsugi",name:"Kintsugi",description:"Porcelain, ink, and restrained golden seams"},
+ {id:"blueprint",name:"Blueprint",description:"Precision cobalt with a luminous technical grid"},
+ {id:"velvet",name:"Velvet",description:"Deep plum glass, rose light, and champagne"}
 ];
 const taskPackIdeas=[
  {id:"household",name:"Household routines",description:"Room-by-room cleaning, supplies, and recurring home maintenance.",contents:"30 repeating tasks · 9 categories"},

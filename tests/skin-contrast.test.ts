@@ -4,7 +4,8 @@ import {join} from "node:path";
 import test from "node:test";
 
 const css=readFileSync(join(process.cwd(),"app/globals.css"),"utf8");
-const skins=["signature","forest","midnight","coastal","stage","focus"] as const;
+const page=readFileSync(join(process.cwd(),"app/page.tsx"),"utf8");
+const skins=["signature","forest","midnight","coastal","stage","focus","aurora","solstice","nebula","kintsugi","blueprint","velvet"] as const;
 
 function declarations(selector:string){
  const start=css.indexOf(`${selector}{`);
@@ -68,5 +69,15 @@ test("semantic phase variation survives the shared surface system",()=>{
  for(const phase of ["direction","explore","enable","drive","sustain"]){
   assert.ok(atmosphere.includes(`--phase-${phase}`),`Missing ${phase} tone`);
   assert.ok(atmosphere.includes(`.${phase}Section`),`Missing ${phase} D.E.E.D.S. surface`);
+ }
+});
+
+test("every selectable skin has tokens, artwork, launch treatment, and a preview",()=>{
+ for(const skin of skins){
+  assert.ok(page.includes(`{id:"${skin}"`),`${skin} is missing from the selector`);
+  if(skin!=="signature")assert.ok(css.includes(`main[data-skin="${skin}"]{`),`${skin} is missing theme tokens`);
+  assert.ok(css.includes(`main[data-skin="${skin}"]:before`),`${skin} is missing backdrop artwork`);
+  if(skin!=="signature")assert.ok(css.includes(`main[data-skin="${skin}"] .osLaunch`),`${skin} is missing command center artwork`);
+  if(skin!=="signature")assert.ok(css.includes(`.skin-${skin} .skinPreview`),`${skin} is missing its gallery preview`);
  }
 });
