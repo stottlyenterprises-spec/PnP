@@ -41,6 +41,10 @@
 	<string>Use Face ID to protect private health, journal, relationship, and account information in D.E.E.D.S.</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>D.E.E.D.S. reads sleep and weight so your private health check-ins can start with information already recorded on this device.</string>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>D.E.E.D.S. reads the calendars connected to this device, including iCloud, so your day and week stay current.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>D.E.E.D.S. reads the calendars connected to this device, including iCloud, so your day and week stay current.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

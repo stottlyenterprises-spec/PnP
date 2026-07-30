@@ -30,6 +30,22 @@ export type NativeHealthState = {
   message?: string;
   days?: NativeHealthDay[];
 };
+export type NativeAppleCalendarEvent = {
+  id: string;
+  summary: string;
+  start: string;
+  end: string;
+  htmlLink: string;
+  calendar?: string;
+  allDay?: boolean;
+};
+export type NativeAppleState = {
+  provider: "Apple iCloud";
+  available: boolean;
+  authorized: boolean;
+  message?: string;
+  events?: NativeAppleCalendarEvent[];
+};
 
 type PluginListenerHandle = {
   remove: () => Promise<void> | void;
@@ -77,6 +93,12 @@ type NativePlugins = {
     status: () => Promise<NativeHealthState>;
     requestAccess: () => Promise<NativeHealthState>;
     readRecent: (options: { days: number }) => Promise<NativeHealthState>;
+    openSettings: () => Promise<void>;
+  };
+  DeedsApple?: {
+    status: () => Promise<NativeAppleState>;
+    requestCalendarAccess: () => Promise<NativeAppleState>;
+    readCalendar: (options: { start: string; end: string }) => Promise<NativeAppleState>;
     openSettings: () => Promise<void>;
   };
 };
@@ -243,6 +265,42 @@ export async function readNativeHealth(days = 14): Promise<NativeHealthState> {
 export async function openNativeHealthSettings(): Promise<void> {
   if (!isNativePnp()) return;
   await plugins()?.DeedsHealth?.openSettings().catch(() => undefined);
+}
+
+const unavailableAppleState = (message?: string): NativeAppleState => ({
+  provider: "Apple iCloud",
+  available: false,
+  authorized: false,
+  message,
+  events: [],
+});
+
+export async function nativeAppleStatus(): Promise<NativeAppleState> {
+  if (getPnpPlatform() !== "ios") return unavailableAppleState("Apple iCloud is available in the iPhone and iPad app.");
+  return plugins()?.DeedsApple?.status().catch(error => unavailableAppleState(
+    error instanceof Error ? error.message : "Apple iCloud is unavailable.",
+  )) ?? unavailableAppleState("Update the native app to connect Apple iCloud.");
+}
+
+export async function requestNativeAppleCalendarAccess(): Promise<NativeAppleState> {
+  if (getPnpPlatform() !== "ios") return unavailableAppleState("Apple iCloud is available in the iPhone and iPad app.");
+  return plugins()?.DeedsApple?.requestCalendarAccess().catch(error => ({
+    ...unavailableAppleState(error instanceof Error ? error.message : "Calendar access was not granted."),
+    available: true,
+  })) ?? unavailableAppleState("Update the native app to connect Apple iCloud.");
+}
+
+export async function readNativeAppleCalendar(start: string, end: string): Promise<NativeAppleState> {
+  if (getPnpPlatform() !== "ios") return unavailableAppleState("Apple iCloud is available in the iPhone and iPad app.");
+  return plugins()?.DeedsApple?.readCalendar({ start, end }).catch(error => ({
+    ...unavailableAppleState(error instanceof Error ? error.message : "Apple Calendar could not be refreshed."),
+    available: true,
+  })) ?? unavailableAppleState("Update the native app to connect Apple iCloud.");
+}
+
+export async function openNativeAppleSettings(): Promise<void> {
+  if (getPnpPlatform() !== "ios") return;
+  await plugins()?.DeedsApple?.openSettings().catch(() => undefined);
 }
 
 export async function queueNativeCapture(capture: NativeSharedCapture): Promise<number> {

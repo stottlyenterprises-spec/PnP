@@ -21,6 +21,7 @@ final class MainViewController: CAPBridgeViewController {
     override func capacitorDidLoad() {
         bridge?.registerPluginInstance(DeedsPrivacyPlugin())
         bridge?.registerPluginInstance(DeedsHealthPlugin())
+        bridge?.registerPluginInstance(DeedsApplePlugin())
         bridge?.webView?.isOpaque = false
         bridge?.webView?.backgroundColor = deedsBackground
         bridge?.webView?.scrollView.backgroundColor = deedsBackground

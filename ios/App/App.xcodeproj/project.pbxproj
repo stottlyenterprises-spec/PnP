@@ -19,6 +19,7 @@
 		7D4545462C5B000100DEED51 /* DeedsPrivacyPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4545452C5B000100DEED51 /* DeedsPrivacyPlugin.swift */; };
 		7D4545482C5B000100DEED51 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4545472C5B000100DEED51 /* MainViewController.swift */; };
 		7D4545502C5B000100DEED51 /* DeedsHealthPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D45454F2C5B000100DEED51 /* DeedsHealthPlugin.swift */; };
+		7D4545522C5B000100DEED51 /* DeedsApplePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4545532C5B000100DEED51 /* DeedsApplePlugin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		7D4545452C5B000100DEED51 /* DeedsPrivacyPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeedsPrivacyPlugin.swift; sourceTree = "<group>"; };
 		7D4545472C5B000100DEED51 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		7D45454F2C5B000100DEED51 /* DeedsHealthPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeedsHealthPlugin.swift; sourceTree = "<group>"; };
+		7D4545532C5B000100DEED51 /* DeedsApplePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeedsApplePlugin.swift; sourceTree = "<group>"; };
 		7D4545512C5B000100DEED51 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		958DCC722DB07C7200EA8C5F /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = debug.xcconfig; path = ../debug.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -76,6 +78,7 @@
 				7D4545432C5B000100DEED51 /* AddDeedsTaskIntent.swift */,
 				7D4545452C5B000100DEED51 /* DeedsPrivacyPlugin.swift */,
 				7D45454F2C5B000100DEED51 /* DeedsHealthPlugin.swift */,
+				7D4545532C5B000100DEED51 /* DeedsApplePlugin.swift */,
 				7D4545472C5B000100DEED51 /* MainViewController.swift */,
 				7D4545512C5B000100DEED51 /* App.entitlements */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
@@ -173,6 +176,7 @@
 				7D4545442C5B000100DEED51 /* AddDeedsTaskIntent.swift in Sources */,
 				7D4545462C5B000100DEED51 /* DeedsPrivacyPlugin.swift in Sources */,
 				7D4545502C5B000100DEED51 /* DeedsHealthPlugin.swift in Sources */,
+				7D4545522C5B000100DEED51 /* DeedsApplePlugin.swift in Sources */,
 				7D4545482C5B000100DEED51 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
