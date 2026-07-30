@@ -1,5 +1,5 @@
-const SHELL_CACHE = "deeds-shell-v4";
-const RUNTIME_CACHE = "deeds-runtime-v4";
+const SHELL_CACHE = "deeds-shell-v5";
+const RUNTIME_CACHE = "deeds-runtime-v5";
 const SHELL = ["/", "/manifest.webmanifest", "/deeds-native-icon.png", "/favicon.svg"];
 
 self.addEventListener("install", event => {
