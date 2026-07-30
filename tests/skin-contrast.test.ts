@@ -51,3 +51,14 @@ test("legacy feature surfaces are covered by the atmosphere contract",()=>{
  }
  assert.match(contract,/\.onboardingInterview[\s\S]+fixed light/i);
 });
+
+test("the app defines one cohesive surface hierarchy",()=>{
+ for(const token of ["--surface-line","--surface-radius","--surface-inset-radius","--surface-shadow","--surface-inset-shadow"]){
+  assert.ok(css.includes(token),`Missing shared surface token ${token}`);
+ }
+ const hierarchy=css.slice(css.indexOf("/* Cohesive surface hierarchy"));
+ for(const selector of [".card",".reportHeader",".relationshipIntro",".dataProtectionCard",".relationshipActions button",".taskCategoryGroup"]){
+  assert.ok(hierarchy.includes(selector),`${selector} is outside the shared surface hierarchy`);
+ }
+ assert.match(hierarchy,/border:1px solid var\(--surface-line\)!important/);
+});
