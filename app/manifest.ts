@@ -51,9 +51,15 @@ export default function manifest(): MetadataRoute.Manifest {
     },
     icons: [
       {
-        src: "/deeds-icon.svg",
-        sizes: "any",
-        type: "image/svg+xml",
+        src: "/deeds-native-icon.png",
+        sizes: "1024x1024",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/deeds-native-icon.png",
+        sizes: "1024x1024",
+        type: "image/png",
         purpose: "maskable",
       },
     ],

@@ -15,9 +15,9 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
   },
   icons: {
-    icon: "/deeds-icon.svg",
-    shortcut: "/deeds-icon.svg",
-    apple: "/deeds-icon.svg",
+    icon: "/deeds-native-icon.png",
+    shortcut: "/deeds-native-icon.png",
+    apple: "/deeds-native-icon.png",
   },
   formatDetection: {
     telephone: false,
