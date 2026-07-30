@@ -58,6 +58,17 @@ function toEnvelope(payload: unknown): Envelope | null {
   return null;
 }
 
+function recordItemCount(data: unknown) {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return 0;
+  const record = data as Record<string, unknown>;
+  const collections = [
+    "tasks", "taskCategories", "health", "mentalRecords", "revenue", "mornings",
+    "relationships", "relationshipProfiles", "journal", "dailyHistory", "outcomes",
+    "opportunities", "decisions", "reviews", "captures", "customTaskLists",
+  ];
+  return collections.reduce((total, key) => total + (Array.isArray(record[key]) ? record[key].length : 0), 0);
+}
+
 export async function GET() {
   const token = await googleAccessToken(0);
   if (!token) return NextResponse.json({ error: "Connect Google first." }, { status: 401 });
@@ -80,6 +91,14 @@ export async function POST(req: Request) {
     const current = file ? toEnvelope(await readFile(token, file.id)) : null;
     const currentRevision = current?.revision || 0;
     const baseRevision = Number(request.baseRevision) || 0;
+    if (current && recordItemCount(current.data) > 0 && recordItemCount(request.data) === 0) {
+      return NextResponse.json({
+        error: "A blank profile cannot replace a populated D.E.E.D.S. record.",
+        conflict: true,
+        protected: true,
+        payload: current,
+      }, { status: 409 });
+    }
     if (file && !request.force && currentRevision !== baseRevision) {
       return NextResponse.json({
         error: "Cloud data changed on another device.",

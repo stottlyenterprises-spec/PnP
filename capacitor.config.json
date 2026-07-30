@@ -2,6 +2,7 @@
   "appId": "com.stottlyenterprises.progressnotperfection.deeds",
   "appName": "D.E.E.D.S.",
   "webDir": "public",
+  "backgroundColor": "#0e2019",
   "server": {
     "url": "https://p-n-p.vercel.app",
     "cleartext": false,
