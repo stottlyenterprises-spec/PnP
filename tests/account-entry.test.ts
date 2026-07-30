@@ -37,6 +37,10 @@ test("signing in restores the account instead of launching the interview",()=>{
   assert.equal(shouldRestoreAccount(restored),false);
   assert.equal(shouldShowFirstConversation(restored),false);
  }
+
+ const protectedEmpty={...checking,cloudReady:false,cloudRecordStatus:"empty" as const};
+ assert.equal(shouldRestoreAccount(protectedEmpty),false);
+ assert.equal(shouldShowFirstConversation(protectedEmpty),false);
 });
 
 test("the interview can still be opened manually after sign-in",()=>{

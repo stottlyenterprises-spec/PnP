@@ -91,6 +91,14 @@ export async function POST(req: Request) {
     const current = file ? toEnvelope(await readFile(token, file.id)) : null;
     const currentRevision = current?.revision || 0;
     const baseRevision = Number(request.baseRevision) || 0;
+    if (current && currentRevision > 0 && recordItemCount(current.data) > 0 && baseRevision === 0) {
+      return NextResponse.json({
+        error: "This device must restore the current D.E.E.D.S. record before it can save.",
+        conflict: true,
+        protected: true,
+        payload: current,
+      }, { status: 409 });
+    }
     if (current && recordItemCount(current.data) > 0 && recordItemCount(request.data) === 0) {
       return NextResponse.json({
         error: "A blank profile cannot replace a populated D.E.E.D.S. record.",

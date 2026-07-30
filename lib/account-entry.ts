@@ -10,7 +10,7 @@ export type AccountEntryState={
 };
 
 export function shouldRestoreAccount(state:AccountEntryState){
- return state.ready&&state.identityChecked&&state.connected&&(!state.cloudReady||state.cloudRecordStatus==="unknown");
+ return state.ready&&state.identityChecked&&state.connected&&state.cloudRecordStatus==="unknown";
 }
 
 export function shouldShowFirstConversation(state:AccountEntryState){
