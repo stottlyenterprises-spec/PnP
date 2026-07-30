@@ -62,3 +62,11 @@ test("the app defines one cohesive surface hierarchy",()=>{
  }
  assert.match(hierarchy,/border:1px solid var\(--surface-line\)!important/);
 });
+
+test("semantic phase variation survives the shared surface system",()=>{
+ const atmosphere=css.slice(css.indexOf("/* Semantic atmosphere"));
+ for(const phase of ["direction","explore","enable","drive","sustain"]){
+  assert.ok(atmosphere.includes(`--phase-${phase}`),`Missing ${phase} tone`);
+  assert.ok(atmosphere.includes(`.${phase}Section`),`Missing ${phase} D.E.E.D.S. surface`);
+ }
+});

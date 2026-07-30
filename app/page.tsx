@@ -711,11 +711,11 @@ const taskPanelDefinitions=[{title:"High priorities",priorities:true as const,zo
     <summary><span><i>Direction</i><b>What’s Next</b></span><small>{directionPick?.title||"Nothing urgent"}</small><em>＋</em></summary>
     <div className="deedsSectionBody">{directionPick?<div className="deedsLead"><p className="eyebrow">{directionPick.kind}</p><h2>{directionPick.title}</h2><p>{directionPick.detail}</p><button className="primary" onClick={()=>runButler(directionPick)}>Open this</button></div>:<p className="empty">Nothing urgent is demanding your attention. Choose rest, connection, curiosity, or a useful next move.</p>}</div>
    </details>
-   <details className="deedsSection">
+   <details className="deedsSection exploreSection">
     <summary><span><i>Explore</i><b>Today’s List</b></span><small>{todayTasks.filter(task=>!task.done).length} available</small><em>＋</em></summary>
     <div className="deedsSectionBody">{TaskRows({list:todayTasks})}{!todayTasks.length&&<p className="empty">Nothing is assigned to today.</p>}<button className="add" onClick={()=>setAdding("today")}>＋ Add to today</button></div>
    </details>
-   <details className="deedsSection">
+   <details className="deedsSection enableSection">
     <summary><span><i>Enable</i><b>Ask D.E.E.D.S.</b></span><small>{actionable.length} recommendation{actionable.length===1?"":"s"}</small><em>＋</em></summary>
     <div className="deedsSectionBody"><div className="deedsSectionActions"><p>Recommendations are ordered using your time, energy, priorities, schedule, and current D.E.E.D.S. data.</p><button onClick={()=>setDeedsRefineOpen(true)}>Refine list</button></div><section className="advisorRanked deedsRanked">{actionable.slice(0,7).map((suggestion,index)=><Suggestion suggestion={suggestion} index={index+1} key={suggestion.id}/>)}{!actionable.length&&<p className="empty">Nothing urgent right now.</p>}</section></div>
    </details>

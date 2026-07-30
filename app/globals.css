@@ -1163,3 +1163,61 @@ main[data-skin] :is(
 ){
  border-radius:999px!important;
 }
+
+/* Semantic atmosphere
+   Geometry stays shared, while each D.E.E.D.S. phase contributes a quiet
+   tonal family. Related pages reuse those families where their purpose fits. */
+main[data-skin]{
+ --phase-direction:#4fae9a;
+ --phase-explore:#718fc2;
+ --phase-enable:#9a7caf;
+ --phase-drive:#d08d55;
+ --phase-sustain:#72a184;
+}
+main[data-skin] :is(.directionSection,.todayIntent,.calendarIntro,.strategyIntro,.reportHeader){
+ background:radial-gradient(circle at 88% 2%,color-mix(in srgb,var(--phase-direction) 18%,transparent),transparent 36%),linear-gradient(145deg,color-mix(in srgb,var(--phase-direction) 7%,var(--skin-panel-strong)),var(--skin-panel))!important;
+}
+main[data-skin] :is(.exploreSection,.journalIntro,.relationshipIntro,.reviewIntro){
+ background:radial-gradient(circle at 88% 2%,color-mix(in srgb,var(--phase-explore) 17%,transparent),transparent 36%),linear-gradient(145deg,color-mix(in srgb,var(--phase-explore) 7%,var(--skin-panel-strong)),var(--skin-panel))!important;
+}
+main[data-skin] :is(.enableSection,.healthInterviewBridge,.settingsIdentity,.appearanceSettings,.providerCatalog,.dataProtectionCard){
+ background:radial-gradient(circle at 88% 2%,color-mix(in srgb,var(--phase-enable) 16%,transparent),transparent 36%),linear-gradient(145deg,color-mix(in srgb,var(--phase-enable) 6%,var(--skin-panel-strong)),var(--skin-panel))!important;
+}
+main[data-skin] :is(.driveSection,.businessIntro,.taskCommandIntro,.goalSettingCard,.taskImportPanel,.decisionSignalCard){
+ background:radial-gradient(circle at 88% 2%,color-mix(in srgb,var(--phase-drive) 18%,transparent),transparent 36%),linear-gradient(145deg,color-mix(in srgb,var(--phase-drive) 7%,var(--skin-panel-strong)),var(--skin-panel))!important;
+}
+main[data-skin] :is(.sustainSection,.relationshipRecommendation,.weeklyDecisionReflection,.cloudRecoveryCard,.nativePrivacyCard){
+ background:radial-gradient(circle at 88% 2%,color-mix(in srgb,var(--phase-sustain) 17%,transparent),transparent 36%),linear-gradient(145deg,color-mix(in srgb,var(--phase-sustain) 7%,var(--skin-panel-strong)),var(--skin-panel))!important;
+}
+
+main[data-skin] .deedsSection summary i{
+ color:var(--phase-direction);
+}
+main[data-skin] .exploreSection summary i{
+ color:var(--phase-explore);
+}
+main[data-skin] .enableSection summary i{
+ color:var(--phase-enable);
+}
+main[data-skin] .driveSection summary i{
+ color:var(--phase-drive);
+}
+main[data-skin] .sustainSection summary i{
+ color:var(--phase-sustain);
+}
+
+main[data-skin] .deedsPhases article:nth-child(1){
+ background:color-mix(in srgb,var(--phase-direction) 8%,var(--skin-panel-elevated))!important;
+}
+main[data-skin] .deedsPhases article:nth-child(2){
+ background:color-mix(in srgb,var(--phase-explore) 8%,var(--skin-panel-elevated))!important;
+}
+main[data-skin] .deedsPhases article:nth-child(3){
+ background:color-mix(in srgb,var(--phase-enable) 8%,var(--skin-panel-elevated))!important;
+}
+main[data-skin] .deedsPhases article:nth-child(4){
+ background:color-mix(in srgb,var(--phase-drive) 8%,var(--skin-panel-elevated))!important;
+}
+main[data-skin] .deedsPhases article:nth-child(5){
+ background:color-mix(in srgb,var(--phase-sustain) 8%,var(--skin-panel-elevated))!important;
+}
