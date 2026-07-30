@@ -9,6 +9,7 @@
     "test:recurrence": "node --experimental-strip-types --test tests/task-recurrence.test.ts",
     "test:mobile": "node --experimental-strip-types --test tests/mobile-drafts.test.ts",
     "test:health": "node --experimental-strip-types --test tests/health-data.test.ts",
+    "test:contrast": "node --experimental-strip-types --test tests/skin-contrast.test.ts",
     "mobile:sync": "cap sync",
     "mobile:ios": "cap open ios",
     "mobile:android": "cap open android",
