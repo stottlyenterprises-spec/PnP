@@ -26,8 +26,11 @@ test("account rows are user-owned and revision writes are server-only", () => {
   assert.match(migration, /alter table public\.deeds_snapshots enable row level security/);
   assert.match(migration, /auth\.uid\(\) = user_id/);
   assert.match(migration, /No client insert policy is intentionally/);
+  assert.match(accountData, /SUPABASE_SECRET_KEY/);
   assert.match(accountData, /SUPABASE_SERVICE_ROLE_KEY/);
+  assert.match(accountData, /serviceKey\.startsWith\("sb_secret_"\)/);
   assert.doesNotMatch(accountConfig, /SERVICE_ROLE/);
+  assert.doesNotMatch(accountConfig, /SECRET_KEY/);
 });
 
 test("Google Drive remains an independent backup", () => {

@@ -6,7 +6,8 @@ remain optional data connections after sign-in.
 
 ## 1. Create the account project
 
-1. Create a Supabase project.
+1. Open the existing D.E.E.D.S. Supabase project:
+   `aaporxufmmljejqnloqv`.
 2. Open its SQL editor.
 3. Run `supabase/migrations/001_deeds_accounts.sql`.
 4. In **Authentication → URL Configuration**, set:
@@ -20,9 +21,9 @@ Add these to Production, Preview, and Development as appropriate:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
+- `SUPABASE_SECRET_KEY`
 
-The service-role key must remain server-only. Never expose it in browser code
+The secret key must remain server-only. Never expose it in browser code
 or give it a `NEXT_PUBLIC_` prefix.
 
 ## 3. Enable email sign-in
@@ -43,7 +44,7 @@ This is separate from the existing Google Mail, Calendar, and Drive connector.
 
 Use the callback URL displayed on the Supabase Google provider page, normally:
 
-`https://YOUR_PROJECT.supabase.co/auth/v1/callback`
+`https://aaporxufmmljejqnloqv.supabase.co/auth/v1/callback`
 
 Add the Google client ID and secret to the Supabase Google provider.
 

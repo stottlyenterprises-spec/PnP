@@ -21,8 +21,15 @@ type SnapshotRow = {
 function environment() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const serviceKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
   return { url, key, serviceKey };
+}
+
+function serviceHeaders(serviceKey: string) {
+  return {
+    apikey: serviceKey,
+    ...(serviceKey.startsWith("sb_secret_") ? {} : { Authorization: `Bearer ${serviceKey}` }),
+  };
 }
 
 function bearer(request: Request) {
@@ -118,8 +125,7 @@ export async function POST(request: Request) {
       const archiveResponse = await fetch(`${account.url}/rest/v1/deeds_snapshot_revisions?on_conflict=user_id,revision`, {
         method: "POST",
         headers: {
-          apikey: account.serviceKey,
-          Authorization: `Bearer ${account.serviceKey}`,
+          ...serviceHeaders(account.serviceKey),
           "Content-Type": "application/json",
           Prefer: "resolution=ignore-duplicates",
         },
