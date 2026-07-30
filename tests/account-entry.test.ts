@@ -11,8 +11,10 @@ test("the first conversation always offers account recovery when disconnected",(
  const entryEnd=page.indexOf("</section></div>}",entryStart);
  assert.ok(entryStart>=0&&entryEnd>entryStart,"Unified account and onboarding entry is missing");
  const unifiedEntry=page.slice(entryStart,entryEnd);
- assert.match(unifiedEntry,/!google\.connected&&<section className="onboardingAccountAccess">/);
+ assert.match(unifiedEntry,/!deedsAccount\.connected&&<section className="onboardingAccountAccess">/);
+ assert.match(unifiedEntry,/Continue with Apple/);
  assert.match(unifiedEntry,/Continue with Google/);
+ assert.match(unifiedEntry,/Email me a code/);
  assert.doesNotMatch(unifiedEntry,/showAccountGateway&&<section className="onboardingAccountAccess">/);
 });
 
@@ -50,6 +52,7 @@ test("the interview can still be opened manually after sign-in",()=>{
 
 test("the app contains a blocking recovery state for a connected empty account",()=>{
  assert.match(page,/const accountNeedsRecovery=/);
- assert.match(page,/Use a different Google account/);
- assert.match(page,/D\.E\.E\.D\.S\. will not open a blank account or create a blank cloud record/);
+ assert.match(page,/Use a different account/);
+ assert.match(page,/Use this device’s protected data/);
+ assert.match(page,/D\.E\.E\.D\.S\. will not open a blank account or replace protected local data/);
 });

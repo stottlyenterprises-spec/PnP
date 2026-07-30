@@ -17,7 +17,9 @@ A standalone, device-local personal operating system built around a real working
 - Priority-only Executive page plus a separate All Tasks command view
 - Clear maintenance versus one-time task behavior
 - Google and Microsoft Outlook mail/calendar connections with multiple accounts
-- Private Google Drive app-data synchronization across devices
+- A real D.E.E.D.S. account with Apple, Google, or passwordless email sign-in
+- Account-owned cross-device synchronization with protected recovery history
+- Independent private Google Drive app-data backup and revision recovery
 - Editable, reorderable, completable tasks
 - Task editor for moving work between Personal and Business groups
 - Breakfast, lunch, and dinner interviews with optional browser reminders
@@ -66,7 +68,26 @@ the bundle identifier `com.stottlyenterprises.progressnotperfection.deeds`.
 
 ## Deploy to Vercel
 
-Import this GitHub repository in Vercel. It is a standard Next.js app and requires no external database. Environment variables enable the optional Oura, Google, and Outlook connections.
+Import this GitHub repository in Vercel. It is a standard Next.js app. Supabase provides D.E.E.D.S. account identity and account-owned data storage. Oura, Google, Outlook, and Apple device services remain optional connections.
+
+### D.E.E.D.S. accounts
+
+Create a Supabase project, run `supabase/migrations/001_deeds_accounts.sql`
+in its SQL editor, and add:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+The service-role key is server-only. It is used solely to archive recovery
+copies after the signed-in user has been verified. It must never use a
+`NEXT_PUBLIC_` prefix.
+
+Configure the Supabase Site URL as `https://p-n-p.vercel.app` and allow
+`https://p-n-p.vercel.app/` as a redirect URL. Enable Google and Apple in
+Supabase Auth. Email sign-in uses a one-time code; the email template must
+include `{{ .Token }}`. Full provider instructions are in
+`docs/DEEDS_ACCOUNT_SETUP.md`.
 
 ### Oura connection
 
@@ -93,7 +114,7 @@ Add these Vercel environment variables:
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
 
-The existing `APP_URL` is reused. D.E.E.D.S. requests Calendar, Gmail read/send, and access only to its private Google Drive application-data folder. D.E.E.D.S. cannot see or alter the user’s normal Drive files.
+The existing `APP_URL` is reused. D.E.E.D.S. requests Calendar, Gmail read/send, and access only to its private Google Drive application-data folder. D.E.E.D.S. cannot see or alter the user’s normal Drive files. Google Drive is retained as an independent backup, even when the user signs into D.E.E.D.S. with Apple or email.
 
 ### Microsoft Outlook
 
@@ -110,4 +131,8 @@ The existing `APP_URL` is reused. D.E.E.D.S. requests delegated access to the co
 
 ## Data
 
-The current record is cached in the browser for fast and offline use. When Google is connected, D.E.E.D.S. automatically saves the record to the private Google Drive application-data folder and links it across devices. JSON export and import remain available in Settings.
+The current record is cached on the device for fast and offline use. A signed-in
+D.E.E.D.S. account owns the primary cross-device record. A blank device is
+blocked from overwriting a populated account, and account switching quarantines
+the device copy until the user chooses what to do with it. Google Drive and
+JSON export remain independent backup and recovery options in Settings.

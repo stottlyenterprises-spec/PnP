@@ -474,6 +474,10 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,i
 .onboardingAccountIdentity{display:grid;grid-template-columns:48px minmax(0,1fr);align-items:center;gap:13px}.onboardingAccountIdentity .googleAccountGlyph{width:48px;height:48px}.onboardingAccountIdentity h2{margin:3px 0 4px;font:500 23px Georgia}.onboardingAccountIdentity p:last-child{max-width:500px;margin:0;color:#5d7067;font-size:12px;line-height:1.5}
 .onboardingAccountAccess>.accountGatewayPrimary{min-width:210px;min-height:58px;display:flex;align-items:center;padding:12px 15px;border-radius:14px;text-align:left}.onboardingAccountAccess>.accountGatewayPrimary>span{display:grid;gap:3px}.onboardingAccountAccess>.accountGatewayPrimary small{color:inherit;opacity:.72;font-size:10px;line-height:1.35}
 .onboardingAccountTrust{grid-column:1/-1;display:flex;align-items:center;gap:8px;padding-top:12px;border-top:1px solid #cfddd6;color:#60736a;font-size:11px;line-height:1.45}.onboardingAccountTrust svg{flex:0 0 17px}
+.accountProviderGlyph{flex:0 0 48px;width:48px;height:48px;display:grid;place-items:center;border:1px solid #ffffff82;border-radius:16px;background:linear-gradient(145deg,#276d59,#153f34);color:#f4fff9;font:800 16px Arial;box-shadow:inset 0 1px 0 #ffffff45,0 8px 18px #12382a2c}
+.accountProviderChoices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.accountProvider{min-height:58px;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border:1px solid #becdc5;border-radius:14px;font:700 13px Arial;cursor:pointer}.accountProvider.apple{background:#111;color:#fff;border-color:#111}.accountProvider.google{background:#fff;color:#24352e}.accountProvider span{font-size:18px}.accountProvider:disabled{opacity:.58}
+.accountEmailChoice{display:grid;gap:8px}.accountEmailChoice>span{display:flex;align-items:center;gap:9px;color:#6b7b74;font-size:10px;text-transform:uppercase;letter-spacing:.12em}.accountEmailChoice>span:before,.accountEmailChoice>span:after{content:"";height:1px;flex:1;background:#cfdbd5}.accountEmailChoice>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.accountEmailChoice input{min-width:0;padding:12px;border:1px solid #c5d2cb;border-radius:12px;background:#ffffffd9;color:#173128}.accountEmailChoice button{padding:12px 15px;border:1px solid #185542;border-radius:12px;background:#205f4c;color:#fff;font-weight:700}.accountEmailChoice p{margin:0;font-size:11px}.accountSetupPending{display:grid;gap:4px;padding:14px;border:1px solid #d3c29f;border-radius:13px;background:#fff8e8;color:#594a2c}.accountSetupPending small{line-height:1.45}
+.accountEmailChoice .accountEmailCode{padding-top:2px}.accountEmailChoice .accountEmailCode input{letter-spacing:.22em;font-weight:800}
 .onboardingInterview>header{display:flex;align-items:start;justify-content:space-between;gap:24px;margin:0 0 16px}
 .onboardingInterview>header h2{margin:5px 0 0;font:500 clamp(27px,4vw,39px)/1.08 Georgia}
 .onboardingInterview>header>span{display:grid;place-items:center;min-width:54px;height:35px;border-radius:100px;background:#17372e;color:#eaf7f2;font-size:12px;font-weight:800}
@@ -508,6 +512,7 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,i
  .accountGatewayLayer{place-items:end center;padding:0}.accountGateway{padding:28px 18px calc(22px + env(safe-area-inset-bottom));border-radius:27px 27px 0 0}.accountGatewayMark{width:72px;height:72px;border-radius:23px}.accountGatewayLead{font-size:14px}.accountGatewayChoices :is(a,button){min-height:73px;padding:12px 13px}.googleAccountGlyph{flex-basis:41px;width:41px;height:41px}
  .onboardingInterview{max-height:94dvh;padding:23px 18px calc(20px + env(safe-area-inset-bottom));border-radius:24px 24px 0 0}
  .onboardingAccountAccess{grid-template-columns:1fr;margin:0 0 22px;padding:16px}.onboardingAccountAccess>.accountGatewayPrimary{width:100%;min-width:0;justify-content:center;text-align:center}.onboardingAccountTrust{grid-column:auto}
+ .accountProviderChoices{grid-template-columns:1fr}.accountEmailChoice>div{grid-template-columns:1fr}.accountEmailChoice button{min-height:48px}
  .onboardingPage{min-height:0}
  .surveyChoices.days{grid-template-columns:repeat(4,1fr)}
  .surveyRelationship{grid-template-columns:1fr}
@@ -793,10 +798,11 @@ main[data-skin] :is(.taskPanel,.taskCategoryGroup,.categoryManager,.listManager,
 main[data-skin] :is(.taskPanel,.taskCategoryGroup,.categoryManager,.listManager,.taskImportPanel) :is(h2,h3,b,input,button){text-shadow:none}
 .taskImportPanel{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;margin-top:4px;padding:22px;border:1px solid var(--skin-border);border-radius:18px;background:linear-gradient(145deg,var(--skin-panel-strong),var(--skin-panel));box-shadow:0 18px 44px var(--skin-shadow)}.taskImportPanel h2{margin:4px 0 6px;font:500 23px Georgia}.taskImportPanel p:not(.eyebrow){margin:0;color:var(--skin-muted);font-size:12px;line-height:1.5}.taskImportPanel>button{min-height:44px;padding:10px 15px;border:1px solid color-mix(in srgb,var(--skin-accent) 34%,var(--skin-border));border-radius:11px;background:var(--skin-control);color:var(--skin-accent);font-weight:800}.taskImportPanel>.taskImportStatus{grid-column:1/-1}
 @media(max-width:800px){
- .content{padding-top:12px;padding-bottom:calc(56px + env(safe-area-inset-bottom))}
+ .content{padding-top:12px;padding-bottom:calc(92px + env(safe-area-inset-bottom))}
  .taskImportPanel{grid-template-columns:1fr;padding:18px}
  .taskImportPanel>button{width:100%}
  .taskImportPanel>.taskImportStatus{grid-column:auto}
+ .journalForm>.primary{position:sticky;z-index:4;bottom:calc(88px + env(safe-area-inset-bottom));min-height:50px;box-shadow:0 14px 30px var(--skin-shadow)}
 }
 
 /* Surface and type must switch together in every atmosphere */
@@ -840,8 +846,8 @@ main[data-skin] .meal input{
 
 /* Private cloud revision recovery */
 .cloudRecoveryCard{display:grid;gap:14px;margin-top:16px;padding:23px;border:1px solid var(--skin-border);border-radius:20px;background:linear-gradient(145deg,var(--skin-panel-strong),var(--skin-panel));box-shadow:0 20px 50px var(--skin-shadow)}
-.cloudRecoveryHeading{display:flex;align-items:center;justify-content:space-between;gap:24px}.cloudRecoveryHeading h2{margin:4px 0 6px;font:500 26px Georgia}.cloudRecoveryHeading p:last-child{max-width:760px;margin:0;color:var(--skin-muted);font-size:12px;line-height:1.55}.cloudRecoveryHeading>button,.cloudRevisionList button{flex:0 0 auto;min-height:42px;padding:10px 14px;border:1px solid color-mix(in srgb,var(--skin-accent) 34%,var(--skin-border));border-radius:10px;background:var(--skin-control);color:var(--skin-accent);font-weight:800}.cloudRecoveryStatus{margin:0;padding:11px 13px;border-radius:11px;background:color-mix(in srgb,var(--skin-accent) 9%,var(--skin-panel-strong));color:var(--skin-ink);font-size:11px}.cloudRevisionList{display:grid;gap:7px}.cloudRevisionList article{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px 13px;border:1px solid color-mix(in srgb,var(--skin-muted) 20%,transparent);border-radius:12px;background:color-mix(in srgb,var(--skin-panel-strong) 76%,transparent)}.cloudRevisionList article>div{display:grid;gap:4px}.cloudRevisionList b{font:500 16px Georgia}.cloudRevisionList small{color:var(--skin-muted);font-size:10px;line-height:1.45}
-@media(max-width:800px){.cloudRecoveryHeading{display:grid}.cloudRecoveryHeading>button{width:100%}.cloudRevisionList article{grid-template-columns:1fr}.cloudRevisionList button{width:100%}}
+.cloudRecoveryHeading{display:flex;align-items:center;justify-content:space-between;gap:24px}.cloudRecoveryHeading h2{margin:4px 0 6px;font:500 26px Georgia}.cloudRecoveryHeading p:last-child{max-width:760px;margin:0;color:var(--skin-muted);font-size:12px;line-height:1.55}.recoverySources{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.recoverySources button,.cloudRevisionList button{flex:0 0 auto;min-height:42px;padding:10px 14px;border:1px solid color-mix(in srgb,var(--skin-accent) 34%,var(--skin-border));border-radius:10px;background:var(--skin-control);color:var(--skin-accent);font-weight:800}.cloudRecoveryStatus{margin:0;padding:11px 13px;border-radius:11px;background:color-mix(in srgb,var(--skin-accent) 9%,var(--skin-panel-strong));color:var(--skin-ink);font-size:11px}.cloudRevisionList{display:grid;gap:7px}.cloudRevisionList article{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px 13px;border:1px solid color-mix(in srgb,var(--skin-muted) 20%,transparent);border-radius:12px;background:color-mix(in srgb,var(--skin-panel-strong) 76%,transparent)}.cloudRevisionList article>div{display:grid;gap:4px}.cloudRevisionList b{font:500 16px Georgia}.cloudRevisionList small{color:var(--skin-muted);font-size:10px;line-height:1.45}
+@media(max-width:800px){.cloudRecoveryHeading{display:grid}.recoverySources{display:grid;grid-template-columns:1fr;width:100%}.recoverySources button{width:100%}.cloudRevisionList article{grid-template-columns:1fr}.cloudRevisionList button{width:100%}}
 
 /* Settings spacing and resilient native edges */
 section.content:has(.connectionHub){gap:18px}
@@ -1083,7 +1089,7 @@ main[data-skin] .relationshipActions button.selected{
 }
 
 /* Settings utilities are compact glass controls, not large boxed calls to action. */
-main[data-skin] :is(.dataProtectionHeading>button,.cloudRecoveryHeading>button,.cloudRevisionList button,.recoveryList button){
+main[data-skin] :is(.dataProtectionHeading>button,.recoverySources button,.cloudRevisionList button,.recoveryList button){
  min-height:38px;
  padding:9px 14px;
  border:1px solid color-mix(in srgb,var(--skin-accent) 36%,var(--skin-border));
@@ -1095,7 +1101,7 @@ main[data-skin] :is(.dataProtectionHeading>button,.cloudRecoveryHeading>button,.
  font-size:11px;
  font-weight:800;
 }
-main[data-skin] :is(.dataProtectionHeading>button,.cloudRecoveryHeading>button,.cloudRevisionList button,.recoveryList button):hover{
+main[data-skin] :is(.dataProtectionHeading>button,.recoverySources button,.cloudRevisionList button,.recoveryList button):hover{
  border-color:var(--skin-accent);
  transform:translateY(-1px);
 }
@@ -1184,7 +1190,7 @@ main[data-skin] :is(
 }
 
 main[data-skin] :is(
- .primary,.warm,.dataProtectionHeading>button,.cloudRecoveryHeading>button,
+ .primary,.warm,.dataProtectionHeading>button,.recoverySources button,
  .cloudRevisionList button,.recoveryList button,.taskSortControl,
  .modeSwitch,.reportRange,.relationshipMode
 ){

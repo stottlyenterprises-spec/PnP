@@ -11,6 +11,7 @@
     "test:health": "node --experimental-strip-types --test tests/health-data.test.ts",
     "test:contrast": "node --experimental-strip-types --test tests/skin-contrast.test.ts",
     "test:account-entry": "node --experimental-strip-types --test tests/account-entry.test.ts",
+    "test:account-system": "node --experimental-strip-types --test tests/account-system.test.ts",
     "test:cloud-bootstrap": "node --experimental-strip-types --test tests/cloud-bootstrap.test.ts",
     "mobile:sync": "cap sync",
     "mobile:ios": "cap open ios",
