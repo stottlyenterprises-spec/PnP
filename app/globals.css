@@ -702,9 +702,9 @@ section.content:has(.connectionHub)>.accountManager{order:7}
 section.content:has(.connectionHub)>.cloudSaveCard{order:8}
 section.content:has(.connectionHub)>.syncConflictCard{order:9}
 section.content:has(.connectionHub)>.dataProtectionCard{order:10}
-section.content:has(.connectionHub)>.nativePrivacyCard{order:11}
-section.content:has(.connectionHub)>.dataTools{order:12}
-section.content:has(.connectionHub)>.voiceSettings{order:13}
+section.content:has(.connectionHub)>.cloudRecoveryCard{order:11}
+section.content:has(.connectionHub)>.nativePrivacyCard{order:12}
+section.content:has(.connectionHub)>.dataTools{order:13}
 section.content:has(.connectionHub)>.feedbackCard{order:14}
 section.content:has(.connectionHub)>.buildInfo{order:15}
 @media(max-width:1050px){.skinGallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -804,3 +804,8 @@ main[data-skin] .meal input{
  background:var(--skin-control);
  color:var(--skin-ink)
 }
+
+/* Private cloud revision recovery */
+.cloudRecoveryCard{display:grid;gap:14px;margin-top:16px;padding:23px;border:1px solid var(--skin-border);border-radius:20px;background:linear-gradient(145deg,var(--skin-panel-strong),var(--skin-panel));box-shadow:0 20px 50px var(--skin-shadow)}
+.cloudRecoveryHeading{display:flex;align-items:center;justify-content:space-between;gap:24px}.cloudRecoveryHeading h2{margin:4px 0 6px;font:500 26px Georgia}.cloudRecoveryHeading p:last-child{max-width:760px;margin:0;color:var(--skin-muted);font-size:12px;line-height:1.55}.cloudRecoveryHeading>button,.cloudRevisionList button{flex:0 0 auto;min-height:42px;padding:10px 14px;border:1px solid color-mix(in srgb,var(--skin-accent) 34%,var(--skin-border));border-radius:10px;background:var(--skin-control);color:var(--skin-accent);font-weight:800}.cloudRecoveryStatus{margin:0;padding:11px 13px;border-radius:11px;background:color-mix(in srgb,var(--skin-accent) 9%,var(--skin-panel-strong));color:var(--skin-ink);font-size:11px}.cloudRevisionList{display:grid;gap:7px}.cloudRevisionList article{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px 13px;border:1px solid color-mix(in srgb,var(--skin-muted) 20%,transparent);border-radius:12px;background:color-mix(in srgb,var(--skin-panel-strong) 76%,transparent)}.cloudRevisionList article>div{display:grid;gap:4px}.cloudRevisionList b{font:500 16px Georgia}.cloudRevisionList small{color:var(--skin-muted);font-size:10px;line-height:1.45}
+@media(max-width:800px){.cloudRecoveryHeading{display:grid}.cloudRecoveryHeading>button{width:100%}.cloudRevisionList article{grid-template-columns:1fr}.cloudRevisionList button{width:100%}}
