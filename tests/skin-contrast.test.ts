@@ -43,7 +43,7 @@ test("every atmosphere has readable primary, supporting, and button text",()=>{
 
 test("legacy feature surfaces are covered by the atmosphere contract",()=>{
  const contract=css.slice(css.indexOf("/* Atmosphere contrast contracts"));
- for(const selector of [".reportHeader",".journalIntro",".taskCommandIntro",".relationshipRecommendation",".deedsWorkspaceStatus"]){
+ for(const selector of [".reportHeader",".journalIntro",".taskCommandIntro",".relationshipRecommendation",".deedsWorkspaceStatus",".priorityEmpty",".listManager",".repeatBuilder",".deedsRefineOverlay"]){
   assert.ok(contract.includes(selector),`${selector} is not protected by the atmosphere contrast contract`);
  }
  assert.match(contract,/\.onboardingInterview[\s\S]+fixed light/i);

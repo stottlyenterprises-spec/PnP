@@ -992,3 +992,49 @@ main[data-skin] .onboardingInterview>footer button:not(.primary){
   box-shadow:none!important;
  }
 }
+
+/* Nested and empty-state surfaces use the same palette contract as their
+   parent. These are deliberately explicit because they previously carried
+   fixed light backgrounds inside dark atmospheres. */
+main[data-skin] :is(
+ .priorityEmpty,.listManager,.repeatBuilder,.deedsRefineOverlay,
+ .hydrationTracker,.revenueProgress,.briefSignals,.capacityDays div,
+ .newsBlock,.cloudSaveCard,.syncConflictCard,.permissionNote,
+ .stockTicker article,.relationshipEvidence,.interviewTop,
+ .quickAddActions,.taskEditorActions,.interviewNav,pre,.affirm
+){
+ background:color-mix(in srgb,var(--skin-panel-solid) 92%,transparent)!important;
+ border-color:color-mix(in srgb,var(--skin-muted) 28%,transparent)!important;
+ color:var(--skin-ink)!important;
+ text-shadow:none!important;
+}
+main[data-skin] :is(
+ .priorityEmpty,.listManager,.repeatBuilder,.deedsRefineOverlay,
+ .hydrationTracker,.revenueProgress,.briefSignals,.capacityDays div,
+ .newsBlock,.cloudSaveCard,.syncConflictCard,.permissionNote,
+ .stockTicker article,.relationshipEvidence,.interviewTop,
+ .quickAddActions,.taskEditorActions,.interviewNav,pre,.affirm
+) :is(h1,h2,h3,h4,b,strong){
+ color:var(--skin-ink)!important;
+ text-shadow:none!important;
+}
+main[data-skin] :is(
+ .priorityEmpty,.listManager,.repeatBuilder,.deedsRefineOverlay,
+ .hydrationTracker,.revenueProgress,.briefSignals,.capacityDays div,
+ .newsBlock,.cloudSaveCard,.syncConflictCard,.permissionNote,
+ .stockTicker article,.relationshipEvidence,.interviewTop,
+ .quickAddActions,.taskEditorActions,.interviewNav,pre,.affirm
+) :is(p,small,span,label,.eyebrow,.hint,.micro){
+ color:var(--skin-muted)!important;
+ text-shadow:none!important;
+}
+main[data-skin] .listManager input{
+ background:var(--skin-control);
+ border-color:color-mix(in srgb,var(--skin-muted) 30%,transparent);
+ color:var(--skin-ink);
+}
+main[data-skin] .priorityOnly .focusMini{
+ background:var(--skin-control);
+ border-color:color-mix(in srgb,var(--skin-muted) 30%,transparent);
+ color:var(--skin-accent);
+}
