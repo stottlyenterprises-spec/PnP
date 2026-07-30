@@ -6,6 +6,7 @@ import { acceptCloudEnvelope, CloudEnvelope, coerceCloudEnvelope, createRecovery
 import { mergeNativeHealthDays, NativeHealthDay } from "@/lib/health-data";
 import { acknowledgeNativeCapture, authenticateNativePrivacy, clearNativeDraft, consumeSharedCapture, consumeVoiceTask, enableNativeCheckInReminders, installNativeBridge, isNativePnp, loadNativeDraft, nativeHealthStatus, nativePrivacyStatus, nextNativeCapture, openNativeHealthSettings, readNativeHealth, requestNativeHealthAccess, requestedView, saveNativeDraft, setNativePrivacyEnabled, taskCompletionHaptic } from "@/lib/mobile";
 import { nextDueAfterCompletion, reactivateRecurringTaskIfDue, taskOccursOn } from "@/lib/task-recurrence";
+import { shouldRestoreAccount, shouldShowFirstConversation } from "@/lib/account-entry";
 
 type Section="notes"|"today"|"patrols"|"projects"|"stottly"|"businessLong"|"week"|"watch"|"month"|"long"|"custom";
 type RepeatUnit="day"|"week"|"month"|"year";
@@ -446,8 +447,9 @@ useEffect(()=>{if(!editingTask)return;const timer=window.setTimeout(()=>setData(
  const greeting=()=>{const h=new Date().getHours();return h<12?"Good morning":h<18?"Good afternoon":"Good evening"};
  const hasMeaningfulLocalData=recordItemCount(data)>0||Boolean(data.profileName.trim());
  const showAccountGateway=ready&&identityChecked&&!google.connected&&!accountGateDismissed&&!hasMeaningfulLocalData;
- const restoringAccount=ready&&identityChecked&&google.connected&&(!cloudReady||cloudRecordStatus==="unknown")&&!hasMeaningfulLocalData;
- const onboardingAllowed=hasMeaningfulLocalData||accountGateDismissed||google.connected&&cloudReady&&cloudRecordStatus==="empty";
+ const accountEntryState={ready,identityChecked,connected:google.connected,cloudReady,cloudRecordStatus,onboardingOpen,onboardingComplete:data.onboardingComplete,showAccountGateway};
+ const restoringAccount=shouldRestoreAccount(accountEntryState);
+ const showFirstConversation=shouldShowFirstConversation(accountEntryState);
  const activeGoogleAccount=google.accounts.find(account=>account.slot===google.activeSlot)||google.accounts[0];
  const activeOutlookAccount=outlook.accounts.find(account=>account.slot===outlook.activeSlot)||outlook.accounts[0];
  const activeMailAccount=mailProvider==="outlook"?activeOutlookAccount:activeGoogleAccount;
@@ -830,7 +832,7 @@ const taskPanelDefinitions=[{title:"High priorities",priorities:true as const,zo
   </section>
   {ready&&view!=="launch"&&<button className="swipeCommandHandle" onClick={goBack} aria-label="Go back"><ArrowLeft strokeWidth={1.7}/></button>}
   {restoringAccount&&<div className="accountGatewayLayer restoring" role="status" aria-live="polite"><section className="accountGateway accountRestoring"><div className="accountRestoreOrbit"><Cloud strokeWidth={1.35}/></div><p className="eyebrow">Account connected</p><h2>Restoring your D.E.E.D.S.</h2><p>{cloud.message||"Checking your private cloud record before opening the app…"}</p></section></div>}
-  {ready&&identityChecked&&!restoringAccount&&(showAccountGateway||onboardingAllowed&&(!data.onboardingComplete||onboardingOpen))&&<div className="onboardingLayer" role="dialog" aria-modal="true" aria-label="D.E.E.D.S. account access and setup interview"><section className="onboardingInterview unifiedEntry">
+  {showFirstConversation&&<div className="onboardingLayer" role="dialog" aria-modal="true" aria-label="D.E.E.D.S. account access and setup interview"><section className="onboardingInterview unifiedEntry">
    {!google.connected&&<section className="onboardingAccountAccess"><div className="onboardingAccountIdentity"><span className="googleAccountGlyph">G</span><div><p className="eyebrow">Already use D.E.E.D.S.?</p><h2>Sign in before starting over.</h2><p>Use the Google account already linked to D.E.E.D.S. Your private record will restore before anything new is created.</p></div></div>{google.configured?<a className="accountGatewayPrimary" href="/api/google/connect?slot=0"><span><b>Continue with Google</b><small>Restore tasks, health, goals, journal, and settings</small></span></a>:<button className="accountGatewayPrimary" disabled><span><b>Google connection unavailable</b><small>Google credentials must be configured first</small></span></button>}<div className="onboardingAccountTrust"><Cloud strokeWidth={1.5}/><span>Returning users sign in here. New users continue with the conversation below.</span></div></section>}
    <header><div><p className="eyebrow">Your first conversation</p><h2>Let’s shape D.E.E.D.S. around your real life.</h2></div><span>{onboardingStep+1} / 5</span></header><div className="onboardingProgress"><i style={{width:`${(onboardingStep+1)*20}%`}}/></div>
    {onboardingStep===0&&<div className="onboardingPage"><p className="onboardingPrompt">First, what does your working life look like?</p><label>Your name<input autoFocus={google.connected} value={onboardingDraft.name} onChange={event=>setOnboardingDraft({...onboardingDraft,name:event.target.value})} placeholder="What should D.E.E.D.S. call you?"/></label><fieldset><legend>I am currently…</legend><div className="surveyChoices">{["Employed","Business owner","Job searching","Student","Caregiver","Creative work"].map(item=><button className={onboardingDraft.workRoles.includes(item)?"selected":""} onClick={()=>toggleOnboardingChoice("workRoles",item)} key={item}>{item}</button>)}</div></fieldset><label>What kind of work do you do or want to do?<textarea value={onboardingDraft.workDescription} onChange={event=>setOnboardingDraft({...onboardingDraft,workDescription:event.target.value})} placeholder="A short answer is enough."/></label></div>}
