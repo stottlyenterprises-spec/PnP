@@ -35,8 +35,11 @@ test("every atmosphere has readable primary, supporting, and button text",()=>{
  for(const skin of skins){
   const tokens={...defaults,...(skin==="signature"?{}:declarations(`main[data-skin="${skin}"]`))};
   assert.ok(tokens["--skin-panel-solid"],`${skin} needs an opaque contrast reference`);
+  assert.ok(tokens["--skin-panel-elevated"],`${skin} needs an elevated contrast layer`);
   assert.ok(contrast(tokens["--skin-ink"],tokens["--skin-panel-solid"])>=4.5,`${skin} primary copy fails WCAG AA`);
   assert.ok(contrast(tokens["--skin-muted"],tokens["--skin-panel-solid"])>=4.5,`${skin} supporting copy fails WCAG AA`);
+  assert.ok(contrast(tokens["--skin-ink"],tokens["--skin-panel-elevated"])>=4.5,`${skin} primary copy fails on elevated cards`);
+  assert.ok(contrast(tokens["--skin-muted"],tokens["--skin-panel-elevated"])>=4.5,`${skin} supporting copy fails on elevated cards`);
   assert.ok(contrast(tokens["--skin-accent"],tokens["--skin-on-accent"])>=4.5,`${skin} accent button copy fails WCAG AA`);
  }
 });

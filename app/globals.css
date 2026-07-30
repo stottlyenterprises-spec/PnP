@@ -514,17 +514,17 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,i
 }
 
 /* Appearance skins */
-main[data-skin]{--skin-ink:#17251f;--skin-muted:#586a61;--skin-accent:#315f4b;--skin-accent-2:#d7a47f;--skin-warm-text:#92543f;--skin-on-accent:#fff;--skin-dark-copy:#f7fbf9;--skin-dark-muted:#d1dfd8;--skin-side-a:#183126;--skin-side-b:#0e2019;--skin-panel:#fffefa9e;--skin-panel-strong:#fffdf8df;--skin-panel-solid:#fffdf8;--skin-border:#ffffffa8;--skin-control:#ffffffd6;--skin-shadow:#273d3424;--ink:var(--skin-ink);--muted:var(--skin-muted);--green:var(--skin-accent);--coral:var(--skin-warm-text);--line:color-mix(in srgb,var(--skin-muted) 24%,transparent);--card:var(--skin-panel-strong);color:var(--skin-ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+main[data-skin]{--skin-ink:#17251f;--skin-muted:#586a61;--skin-accent:#315f4b;--skin-accent-2:#d7a47f;--skin-warm-text:#92543f;--skin-on-accent:#fff;--skin-dark-copy:#f7fbf9;--skin-dark-muted:#d1dfd8;--skin-side-a:#183126;--skin-side-b:#0e2019;--skin-panel:#fffefa9e;--skin-panel-strong:#fffdf8df;--skin-panel-solid:#fffdf8;--skin-panel-elevated:#e8ece8;--skin-border:#ffffffa8;--skin-control:#ffffffd6;--skin-shadow:#273d3424;--ink:var(--skin-ink);--muted:var(--skin-muted);--green:var(--skin-accent);--coral:var(--skin-warm-text);--line:color-mix(in srgb,var(--skin-muted) 24%,transparent);--card:var(--skin-panel-strong);color:var(--skin-ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 main[data-skin="signature"]:before{background:radial-gradient(circle at 84% 4%,#f3c7a5b8 0,transparent 27%),radial-gradient(circle at 16% 86%,#9dcdbbaa 0,transparent 39%),linear-gradient(145deg,#f7f2e8,#e8eeea 58%,#dce7e2)}
-main[data-skin="forest"]{--skin-ink:#edf8f5;--skin-muted:#b5cdc7;--skin-accent:#52c9c6;--skin-accent-2:#8be8df;--skin-warm-text:#f0bc88;--skin-on-accent:#031b1a;--skin-dark-copy:#f2fffc;--skin-dark-muted:#c0d8d3;--skin-side-a:#071513;--skin-side-b:#020807;--skin-panel:#0b201ed1;--skin-panel-strong:#102a27e8;--skin-panel-solid:#102a27;--skin-border:#94fff52e;--skin-control:#102b28e8;--skin-shadow:#00000075}
+main[data-skin="forest"]{--skin-ink:#edf8f5;--skin-muted:#b5cdc7;--skin-accent:#52c9c6;--skin-accent-2:#8be8df;--skin-warm-text:#f0bc88;--skin-on-accent:#031b1a;--skin-dark-copy:#f2fffc;--skin-dark-muted:#c0d8d3;--skin-side-a:#071513;--skin-side-b:#020807;--skin-panel:#0b201ed1;--skin-panel-strong:#102a27e8;--skin-panel-solid:#102a27;--skin-panel-elevated:#29413d;--skin-border:#94fff52e;--skin-control:#102b28e8;--skin-shadow:#00000075}
 main[data-skin="forest"]:before{background:radial-gradient(circle at 82% 2%,#1ed7d63b 0,transparent 30%),radial-gradient(circle at 12% 92%,#3765a438 0,transparent 36%),linear-gradient(145deg,#07110f,#0b1b1a 55%,#081421)}
-main[data-skin="midnight"]{--skin-ink:#f2f3f5;--skin-muted:#b8bdc6;--skin-accent:#c6cbd3;--skin-accent-2:#858c98;--skin-warm-text:#e0b67e;--skin-on-accent:#111318;--skin-dark-copy:#fafafa;--skin-dark-muted:#c8ccd2;--skin-side-a:#111318;--skin-side-b:#050608;--skin-panel:#111318d9;--skin-panel-strong:#191b20ed;--skin-panel-solid:#191b20;--skin-border:#ffffff26;--skin-control:#24272ee8;--skin-shadow:#0000008a}
+main[data-skin="midnight"]{--skin-ink:#f2f3f5;--skin-muted:#b8bdc6;--skin-accent:#c6cbd3;--skin-accent-2:#858c98;--skin-warm-text:#e0b67e;--skin-on-accent:#111318;--skin-dark-copy:#fafafa;--skin-dark-muted:#c8ccd2;--skin-side-a:#111318;--skin-side-b:#050608;--skin-panel:#111318d9;--skin-panel-strong:#191b20ed;--skin-panel-solid:#191b20;--skin-panel-elevated:#34373d;--skin-border:#ffffff26;--skin-control:#24272ee8;--skin-shadow:#0000008a}
 main[data-skin="midnight"]:before{background:radial-gradient(circle at 82% 4%,#7f879525 0,transparent 28%),radial-gradient(circle at 10% 92%,#33384442 0,transparent 35%),linear-gradient(145deg,#050608,#111318 58%,#08090c)}
-main[data-skin="coastal"]{--skin-ink:#18333e;--skin-muted:#486874;--skin-accent:#176d7a;--skin-accent-2:#e6a86f;--skin-warm-text:#8d5127;--skin-on-accent:#fff;--skin-dark-copy:#f4fdff;--skin-dark-muted:#c6e1e5;--skin-side-a:#103943;--skin-side-b:#08232b;--skin-panel:#f5feffc2;--skin-panel-strong:#f7ffffe8;--skin-panel-solid:#f7ffff;--skin-border:#ffffffbd;--skin-control:#ffffffdf;--skin-shadow:#173d4b29}
+main[data-skin="coastal"]{--skin-ink:#18333e;--skin-muted:#486874;--skin-accent:#176d7a;--skin-accent-2:#e6a86f;--skin-warm-text:#8d5127;--skin-on-accent:#fff;--skin-dark-copy:#f4fdff;--skin-dark-muted:#c6e1e5;--skin-side-a:#103943;--skin-side-b:#08232b;--skin-panel:#f5feffc2;--skin-panel-strong:#f7ffffe8;--skin-panel-solid:#f7ffff;--skin-panel-elevated:#e4eef0;--skin-border:#ffffffbd;--skin-control:#ffffffdf;--skin-shadow:#173d4b29}
 main[data-skin="coastal"]:before{background:radial-gradient(circle at 88% 6%,#ffd2a394 0,transparent 25%),radial-gradient(circle at 15% 88%,#4dc4d278 0,transparent 38%),linear-gradient(150deg,#edf8fa,#cfe8ed 57%,#a9ced8)}
-main[data-skin="stage"]{--skin-ink:#382520;--skin-muted:#684f49;--skin-accent:#7b2f36;--skin-accent-2:#c5964d;--skin-warm-text:#805020;--skin-on-accent:#fff;--skin-dark-copy:#fff8f1;--skin-dark-muted:#ead5ca;--skin-side-a:#35161c;--skin-side-b:#170a0e;--skin-panel:#fff8efb5;--skin-panel-strong:#fff9f1e6;--skin-panel-solid:#fff9f1;--skin-border:#ffeac29c;--skin-control:#fffaf2e3;--skin-shadow:#4e182b38}
+main[data-skin="stage"]{--skin-ink:#382520;--skin-muted:#684f49;--skin-accent:#7b2f36;--skin-accent-2:#c5964d;--skin-warm-text:#805020;--skin-on-accent:#fff;--skin-dark-copy:#fff8f1;--skin-dark-muted:#ead5ca;--skin-side-a:#35161c;--skin-side-b:#170a0e;--skin-panel:#fff8efb5;--skin-panel-strong:#fff9f1e6;--skin-panel-solid:#fff9f1;--skin-panel-elevated:#eadfd8;--skin-border:#ffeac29c;--skin-control:#fffaf2e3;--skin-shadow:#4e182b38}
 main[data-skin="stage"]:before{background:radial-gradient(circle at 78% 3%,#e8b95d80 0,transparent 27%),radial-gradient(circle at 13% 90%,#7d263f70 0,transparent 39%),linear-gradient(145deg,#ead9cf,#d6b9b5 56%,#9d6974)}
-main[data-skin="focus"]{--skin-ink:#191d1b;--skin-muted:#59615d;--skin-accent:#2e5550;--skin-accent-2:#7e8b86;--skin-warm-text:#56635e;--skin-on-accent:#fff;--skin-dark-copy:#fbfdfc;--skin-dark-muted:#d0d8d4;--skin-side-a:#202725;--skin-side-b:#111514;--skin-panel:#ffffffeb;--skin-panel-strong:#fffffff7;--skin-panel-solid:#fff;--skin-border:#ffffff;--skin-control:#fff;--skin-shadow:#27312d1c}
+main[data-skin="focus"]{--skin-ink:#191d1b;--skin-muted:#59615d;--skin-accent:#2e5550;--skin-accent-2:#7e8b86;--skin-warm-text:#56635e;--skin-on-accent:#fff;--skin-dark-copy:#fbfdfc;--skin-dark-muted:#d0d8d4;--skin-side-a:#202725;--skin-side-b:#111514;--skin-panel:#ffffffeb;--skin-panel-strong:#fffffff7;--skin-panel-solid:#fff;--skin-panel-elevated:#e7ebe8;--skin-border:#ffffff;--skin-control:#fff;--skin-shadow:#27312d1c}
 main[data-skin="focus"]:before{background:linear-gradient(145deg,#f5f6f4,#e8ebe8 58%,#dfe4e1)}
 main[data-skin] aside{background:linear-gradient(165deg,var(--skin-side-a),var(--skin-side-b) 74%)}
 main[data-skin] nav button.active{background:color-mix(in srgb,var(--skin-accent) 62%,var(--skin-side-a));color:var(--skin-dark-copy)}
@@ -889,7 +889,7 @@ main[data-skin] :is(
  .decisionMetrics article,.decisionReviews,.decisionReviews article,
  .decisionArchive,.decisionArchive article
 ){
- background:color-mix(in srgb,var(--skin-panel-solid) 88%,transparent)!important;
+ background:color-mix(in srgb,var(--skin-panel-elevated) 90%,transparent)!important;
  border-color:color-mix(in srgb,var(--skin-muted) 28%,transparent)!important;
  color:var(--skin-ink)!important;
  text-shadow:none;
@@ -1003,7 +1003,7 @@ main[data-skin] :is(
  .stockTicker article,.relationshipEvidence,.interviewTop,
  .quickAddActions,.taskEditorActions,.interviewNav,pre,.affirm
 ){
- background:color-mix(in srgb,var(--skin-panel-solid) 92%,transparent)!important;
+ background:color-mix(in srgb,var(--skin-panel-elevated) 92%,transparent)!important;
  border-color:color-mix(in srgb,var(--skin-muted) 28%,transparent)!important;
  color:var(--skin-ink)!important;
  text-shadow:none!important;
@@ -1037,4 +1037,38 @@ main[data-skin] .priorityOnly .focusMini{
  background:var(--skin-control);
  border-color:color-mix(in srgb,var(--skin-muted) 30%,transparent);
  color:var(--skin-accent);
+}
+
+/* Secondary cards sit above the glass panels without becoming white boxes. */
+main[data-skin] .relationshipActions button{
+ background:color-mix(in srgb,var(--skin-panel-elevated) 92%,transparent)!important;
+ border-color:color-mix(in srgb,var(--skin-muted) 32%,transparent)!important;
+ color:var(--skin-ink)!important;
+ box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 20%,transparent),0 9px 24px color-mix(in srgb,var(--skin-shadow) 55%,transparent);
+}
+main[data-skin] .relationshipActions button small{
+ color:var(--skin-muted)!important;
+}
+main[data-skin] .relationshipActions button.selected{
+ background:color-mix(in srgb,var(--skin-accent) 18%,var(--skin-panel-elevated))!important;
+ border-color:var(--skin-accent)!important;
+ color:var(--skin-ink)!important;
+}
+
+/* Settings utilities are compact glass controls, not large boxed calls to action. */
+main[data-skin] :is(.dataProtectionHeading>button,.cloudRecoveryHeading>button,.cloudRevisionList button,.recoveryList button){
+ min-height:38px;
+ padding:9px 14px;
+ border:1px solid color-mix(in srgb,var(--skin-accent) 36%,var(--skin-border));
+ border-radius:999px;
+ background:color-mix(in srgb,var(--skin-panel-elevated) 76%,transparent);
+ color:var(--skin-accent);
+ box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 28%,transparent),0 7px 20px color-mix(in srgb,var(--skin-shadow) 45%,transparent);
+ backdrop-filter:blur(16px) saturate(125%);
+ font-size:11px;
+ font-weight:800;
+}
+main[data-skin] :is(.dataProtectionHeading>button,.cloudRecoveryHeading>button,.cloudRevisionList button,.recoveryList button):hover{
+ border-color:var(--skin-accent);
+ transform:translateY(-1px);
 }
