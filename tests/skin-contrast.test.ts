@@ -90,6 +90,16 @@ test("selected controls never rely on a subtle color shift alone",()=>{
  }
 });
 
+test("the signed-in restoring screen follows the active atmosphere",()=>{
+ const restore=css.slice(css.indexOf("/* Account restoration belongs to the active atmosphere"));
+ assert.ok(restore.length>0,"Missing themed account restoration");
+ for(const token of ["--skin-side-a","--skin-side-b","--skin-panel-strong","--skin-panel-solid","--skin-ink","--skin-muted","--skin-accent"]){
+  assert.ok(restore.includes(`var(${token})`),`Restore screen does not use ${token}`);
+ }
+ assert.ok(restore.includes(".accountGatewayLayer.restoring"));
+ assert.ok(restore.includes(".accountRestoreOrbit"));
+});
+
 test("semantic phase variation survives the shared surface system",()=>{
  const atmosphere=css.slice(css.indexOf("/* Semantic atmosphere"));
  for(const phase of ["direction","explore","enable","drive","sustain"]){
