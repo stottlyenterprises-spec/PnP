@@ -64,6 +64,14 @@ test("the app defines one cohesive surface hierarchy",()=>{
  assert.match(hierarchy,/border:1px solid var\(--surface-line\)!important/);
 });
 
+test("reported compact-layout controls keep explicit app styling",()=>{
+ for(const selector of [".accountAccessActions",".calendarIntro>.primary",".goalMeasureRow",".goalCheckIn"]){
+  assert.ok(css.includes(selector),`${selector} is missing its compact-layout treatment`);
+ }
+ assert.match(css,/\.stockTicker article\.up[\s\S]+#39a56e/);
+ assert.match(css,/\.stockTicker article\.down[\s\S]+#d85864/);
+});
+
 test("semantic phase variation survives the shared surface system",()=>{
  const atmosphere=css.slice(css.indexOf("/* Semantic atmosphere"));
  for(const phase of ["direction","explore","enable","drive","sustain"]){
