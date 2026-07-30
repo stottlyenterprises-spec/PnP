@@ -62,7 +62,7 @@ before the first Android compile.
 These features move D.E.E.D.S. beyond a repackaged website and should be complete before App Store submission:
 
 1. Native local notifications with deep links into D.E.E.D.S., interviews, and weekly review. The bridge is implemented and ready for real-device validation. Remote push remains a later server-backed step.
-2. Siri/App Intents and Android App Actions for “create a task,” “open D.E.E.D.S.,” and “start my check-in.”
+2. Siri/App Intents and Android App Actions for “create a task,” “open D.E.E.D.S.,” and “start my check-in.” Add an account-linked Alexa Skill in the next version so Alexa can send dictated tasks and supported commands into the same review-first capture flow.
 3. Share target so text, links, and selected content can be sent into Tasks, Notes, or Journal. The shared capture contract and installable-app target are implemented; native share extensions remain to be registered after project generation.
 4. Haptic feedback for task completion and important actions.
 5. Optional device authentication lock for the native app. The bridge and

@@ -297,6 +297,7 @@ The goal is one product with shared behavior, not three drifting implementations
 - haptics
 - offline database
 - widgets and quick actions
+- Alexa Skill support for account-linked task capture and D.E.E.D.S. commands
 - native calendar presentation where it materially improves the experience
 - Apple Health and Android Health Connect access
 
@@ -443,6 +444,7 @@ The product should not hardcode personal names, relationship assumptions, health
 - on-device language capabilities where supported
 - Capacitor iOS and Android applications
 - native notifications and secure storage
+- Alexa integration for reviewed voice capture
 - HealthKit and Health Connect
 - source-aware reporting
 - privacy controls, export, and account deletion
