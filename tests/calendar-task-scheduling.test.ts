@@ -19,10 +19,19 @@ test("calendar task cards support mouse and long-press touch dragging", () => {
   assert.match(page, /CalendarTaskItem/);
   assert.match(page, /draggable onDragStart/);
   assert.match(page, /calendarLongPressRef\.current=window\.setTimeout/);
+  assert.match(page, /setPointerCapture\(event\.pointerId\)/);
   assert.match(page, /data-calendar-drop-date/);
   assert.match(page, /Math\.round\(\(\(clientY-rect\.top\)\/60\*60\)\/15\)\*15/);
   assert.match(css, /\.calendarTaskDraggable\{[^}]*touch-action:none/);
   assert.match(css, /\.calendarDropZone\.dropActive/);
+});
+
+test("dragging one recurring occurrence persists an exception without moving the series", () => {
+  assert.match(page, /calendarOverrides\?:Record<string,CalendarOccurrenceOverride>/);
+  assert.match(page, /currentTask\.recurring&&!moveSeries/);
+  assert.match(page, /\[sourceKey\]:\{date,time:nextTime\}/);
+  assert.match(page, /calendarOccurrenceSource:source/);
+  assert.match(page, /!task\.calendarOverrides\?\.\[date\]/);
 });
 
 test("calendar moves are recoverable and connected events remain read-only", () => {

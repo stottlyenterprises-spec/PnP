@@ -16,6 +16,20 @@ test("every feedback lens is a tappable disclosure with underlying records",()=>
  assert.match(page,/function TrendChart/);
  assert.match(css,/\.reportLenses button\.active/);
  assert.match(css,/\.reportDetail/);
+ assert.match(page,/function Metric\(\{label,value,note,onClick\}/);
+ assert.match(page,/onClick=\{\(\)=>openReportLens\("health"\)\}/);
+ assert.match(page,/onClick=\{\(\)=>openReportLens\("work"\)\}/);
+ assert.match(page,/onClick=\{\(\)=>openReportLens\("emotional"\)\}/);
+ assert.match(page,/onClick=\{\(\)=>openReportLens\("relationships"\)\}/);
+ assert.match(page,/onClick=\{\(\)=>openReportLens\("awareness"\)\}/);
+});
+
+test("health and emotional drill-downs expose the supporting context",()=>{
+ for(const field of ["hydration","exercise","yoga","oura","regulated","helped","trigger","response"]){
+  assert.ok(page.includes(field),`${field} is not available to reporting`);
+ }
+ assert.match(page,/Daily physical detail/);
+ assert.match(page,/Check-in context/);
 });
 
 test("feedback averages and trends use only explicitly logged days",()=>{
@@ -29,4 +43,11 @@ test("native connection setup never renders as a dead disabled control",()=>{
  assert.match(page,/setGoogle\(g=>\(\{\.\.\.g,\.\.\.x,configured:true/);
  assert.match(page,/setOutlook\(o=>\(\{\.\.\.o,\.\.\.x,configured:true/);
  assert.match(page,/setOura\(o=>\(\{\.\.\.o,\.\.\.x,configured:true/);
+});
+
+test("market watch belongs to D.E.E.D.S. and native Oura opens the return-aware flow",()=>{
+ assert.match(page,/view==="home"&&deedsTab==="assistant"&&<section className="dailyExtras deedsMarketWatch"/);
+ assert.match(page,/view==="google"&&<section className="dailyExtras mailNewsOnly"/);
+ assert.match(page,/\/api\/oura\/connect\?native=1/);
+ assert.match(page,/openNativeOura/);
 });
