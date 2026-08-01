@@ -15,6 +15,5 @@ export function shouldRestoreAccount(state:AccountEntryState){
 
 export function shouldShowFirstConversation(state:AccountEntryState){
  if(!state.ready||!state.identityChecked||shouldRestoreAccount(state))return false;
- if(state.onboardingOpen)return true;
- return !state.connected&&(state.showAccountGateway||!state.onboardingComplete);
+ return state.connected&&state.cloudReady&&state.onboardingOpen;
 }

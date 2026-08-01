@@ -53,6 +53,13 @@ test("native account links return to the installed app", () => {
   assert.match(page, /onAccountCallback:url/);
 });
 
+test("native account bootstrap does not depend on the packaged request shim", () => {
+  assert.match(accountClient, /NATIVE_ACCOUNT_CONFIG/);
+  assert.match(accountClient, /https:\/\/aaporxufmmljejqnloqv\.supabase\.co/);
+  assert.match(accountClient, /PRODUCTION_API_ORIGIN/);
+  assert.match(accountClient, /isNativePnp\(\) && path\.startsWith\("\/api\/"\)/);
+});
+
 test("existing accounts can add sign-in methods without merging connected services", () => {
   assert.match(accountClient, /accountIdentityLinkUrl/);
   assert.match(accountClient, /linkedProviders/);

@@ -1,6 +1,13 @@
 import { isNativePnp } from "@/lib/mobile";
 
 export const ACCOUNT_SESSION_KEY = "deeds-account-session-v1";
+const PRODUCTION_API_ORIGIN = "https://p-n-p.vercel.app";
+const NATIVE_ACCOUNT_CONFIG = {
+  configured: true,
+  url: "https://aaporxufmmljejqnloqv.supabase.co",
+  publishableKey: "sb_publishable_Fn0pl7Wk86uK3ttcaERLqw_wtiiDIs1",
+  providers: { apple: false, google: true, email: true },
+};
 
 export type DeedsAccountUser = {
   id: string;
@@ -92,6 +99,7 @@ export function consumeAccountCallback() {
 }
 
 async function accountConfig() {
+  if (isNativePnp()) return NATIVE_ACCOUNT_CONFIG;
   const response = await fetch("/api/account/config", { cache: "no-store" });
   return response.json() as Promise<{
     configured: boolean;
@@ -213,7 +221,8 @@ export async function verifyEmailSignInCode(email: string, token: string) {
 }
 
 export async function accountFetch(path: string, session: DeedsAccountSession, init?: RequestInit) {
-  return fetch(path, {
+  const target = isNativePnp() && path.startsWith("/api/") ? `${PRODUCTION_API_ORIGIN}${path}` : path;
+  return fetch(target, {
     ...init,
     headers: {
       ...(init?.headers || {}),
