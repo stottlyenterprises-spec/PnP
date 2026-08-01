@@ -49,6 +49,8 @@ test("Google Drive remains an independent backup", () => {
 
 test("native account links return to the installed app", () => {
   assert.match(accountClient, /isNativePnp\(\) \? "deeds:\/\/open"/);
+  assert.match(accountClient, /completeAccountCallback/);
+  assert.match(accountClient, /accountCallbackTokens\(url\)/);
   assert.match(mobile, /handlers\.onAccountCallback\(url\)/);
   assert.match(page, /onAccountCallback:url/);
 });

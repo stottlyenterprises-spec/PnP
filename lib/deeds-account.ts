@@ -87,15 +87,22 @@ export function clearAccountSession() {
   localStorage.removeItem(ACCOUNT_SESSION_KEY);
 }
 
-export function consumeAccountCallback() {
-  if (typeof window === "undefined" || !window.location.hash) return null;
-  const values = new URLSearchParams(window.location.hash.slice(1));
+function accountCallbackTokens(url: string) {
+  const parsed = new URL(url, typeof window === "undefined" ? "https://p-n-p.vercel.app/" : window.location.href);
+  const values = new URLSearchParams(parsed.hash.slice(1));
   const accessToken = values.get("access_token");
   if (!accessToken) return null;
   const refreshToken = values.get("refresh_token") || "";
   const expiresIn = Number(values.get("expires_in")) || 3600;
-  history.replaceState({}, "", `${window.location.pathname}${window.location.search}`);
   return { accessToken, refreshToken, expiresAt: Date.now() + expiresIn * 1000 };
+}
+
+export function consumeAccountCallback() {
+  if (typeof window === "undefined") return null;
+  const callback = accountCallbackTokens(window.location.href);
+  if (!callback) return null;
+  history.replaceState({}, "", `${window.location.pathname}${window.location.search}`);
+  return callback;
 }
 
 async function accountConfig() {
@@ -120,6 +127,15 @@ async function fetchUser(accessToken: string, url: string, publishableKey: strin
   });
   if (!response.ok) throw new Error("Your D.E.E.D.S. session has expired.");
   return accountUser(await response.json() as SupabaseUser);
+}
+
+export async function completeAccountCallback(url: string) {
+  const config = await accountConfig();
+  if (!config.configured || !config.url || !config.publishableKey) throw new Error("D.E.E.D.S. accounts are not configured yet.");
+  const callback = accountCallbackTokens(url);
+  if (!callback) throw new Error("Google returned without a usable D.E.E.D.S. session.");
+  const user = await fetchUser(callback.accessToken, config.url, config.publishableKey);
+  return saveAccountSession({ ...callback, user });
 }
 
 async function refreshSession(session: DeedsAccountSession, url: string, publishableKey: string) {

@@ -27,6 +27,12 @@ test("native OAuth connections return to the installed application", () => {
   assert.match(text("app/api/outlook/[...action]/route.ts"), /deeds:\/\/open\?view=data&outlook=connected/);
 });
 
+test("native account callbacks survive an iOS cold start", () => {
+  const mobile = text("lib/mobile.ts");
+  assert.match(mobile, /getLaunchUrl/);
+  assert.match(mobile, /routeUrl\(event\?\.url\)/);
+});
+
 test("native builds do not follow the website version redirect", () => {
   const page = text("app/page.tsx");
   assert.match(page, /__DEEDS_NATIVE_BUILD__/);

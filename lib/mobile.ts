@@ -53,6 +53,7 @@ type PluginListenerHandle = {
 
 type NativePlugins = {
   App?: {
+    getLaunchUrl: () => Promise<{ url?: string }>;
     addListener: (
       event: "appUrlOpen" | "appStateChange",
       listener: (event: { url?: string; isActive?: boolean }) => void,
@@ -467,6 +468,7 @@ export async function installNativeBridge(handlers: {
         handlers.onResume();
       }
     }));
+    void native.App.getLaunchUrl().then(event => routeUrl(event?.url)).catch(() => undefined);
   }
   if (native?.LocalNotifications) {
     handles.push(await native.LocalNotifications.addListener("localNotificationActionPerformed", event => {
