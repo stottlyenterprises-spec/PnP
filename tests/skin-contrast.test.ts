@@ -110,6 +110,16 @@ test("reported compact-layout controls keep explicit app styling",()=>{
  assert.match(css,/\.stockTicker article\.down[\s\S]+#d85864/);
 });
 
+test("the mobile journal keeps every entry field in normal document flow",()=>{
+ assert.match(css,/\.journalForm>\.primary\{position:static;[\s\S]+min-height:50px/);
+ assert.match(css,/@media\(max-width:600px\)\{\.journalForm\{[^}]*padding-bottom:18px\}\.journalForm textarea\{min-height:170px\}/);
+ const journal=page.slice(page.indexOf('{view==="journal"'));
+ const body=journal.indexOf('What is here today?');
+ const tags=journal.indexOf('>Tags<input');
+ const save=journal.indexOf('Save journal entry');
+ assert.ok(body>=0&&tags>body&&save>tags,"Journal fields must render body, tags, then Save");
+});
+
 test("selected controls never rely on a subtle color shift alone",()=>{
  const selection=css.slice(css.indexOf("/* High-clarity selection language"));
  assert.ok(selection.length>0,"Missing shared selection language");
