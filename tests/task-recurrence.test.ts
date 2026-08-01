@@ -5,6 +5,7 @@ import {
   nextDueAfterCompletion,
   nextTaskOccurrence,
   reactivateRecurringTaskIfDue,
+  taskAppearsToday,
   taskOccursOn,
 } from "../lib/task-recurrence.ts";
 
@@ -97,4 +98,29 @@ test("daily intervals reactivate on or after the next due date", () => {
   const task = recurringTask("day", 3, "2026-07-29");
   assert.equal(nextTaskOccurrence(task, "2026-07-29"), "2026-08-01");
   assert.equal(reactivateRecurringTaskIfDue(task, "2026-08-03").done, false);
+});
+
+test("tasks with today's date or weekday always appear in Today", () => {
+  const base = {
+    created: "2026-08-01T12:00:00.000Z",
+    section: "patrols",
+  };
+  assert.equal(taskAppearsToday({ ...base, scheduledDate: "2026-08-01" }, "2026-08-01"), true);
+  assert.equal(taskAppearsToday({ ...base, day: "Saturday" }, "2026-08-01"), true);
+  assert.equal(taskAppearsToday({ ...base, scheduledDate: "2026-08-02" }, "2026-08-01"), false);
+});
+
+test("maintenance recurrence still respects weekly and biweekly cadence", () => {
+  const weeklyMaintenance = {
+    created: "2026-07-27T12:00:00.000Z",
+    section: "patrols",
+    recurring: true,
+    repeatUnit: "week" as const,
+    repeatInterval: 1,
+    repeatAnchor: "2026-07-27",
+    recurringDays: ["Saturday"],
+  };
+  assert.equal(taskAppearsToday(weeklyMaintenance, "2026-08-01"), true);
+  assert.equal(taskAppearsToday({ ...weeklyMaintenance, repeatInterval: 2 }, "2026-08-08"), false);
+  assert.equal(taskAppearsToday({ ...weeklyMaintenance, repeatInterval: 2 }, "2026-08-15"), true);
 });

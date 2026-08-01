@@ -15,6 +15,11 @@ export type CompletableRecurringTask = RecurringTaskSchedule & {
   completed?: string;
 };
 
+export type TodayTaskSchedule = RecurringTaskSchedule & {
+  section: string;
+  day?: string;
+};
+
 export const recurrenceDays = [
   "Monday",
   "Tuesday",
@@ -89,6 +94,14 @@ export function taskOccursOn(task: RecurringTaskSchedule, date: string): boolean
     month === anchorMonth &&
     day === Math.min(anchorDay, lastDay)
   );
+}
+
+export function taskAppearsToday(task: TodayTaskSchedule, date: string): boolean {
+  if (task.scheduledDate === date) return true;
+  if (task.recurring) return taskOccursOn(task, date);
+  if (task.day === weekdayForDate(date)) return true;
+  if (task.scheduledDate) return false;
+  return task.section === "today";
 }
 
 export function nextTaskOccurrence(

@@ -5,7 +5,7 @@ import { ArrowLeft, BarChart3, BriefcaseBusiness, CalendarRange, Cloud, Handshak
 import { acceptCloudEnvelope, clearLocalDeedsData, CloudEnvelope, coerceCloudEnvelope, createRecoveryPoint, deleteRecoveryPoint, getDeviceId, LEGACY_DATA_KEY, LOCAL_DATA_KEY, LocalEnvelope, markLocalChange, readLocalEnvelope, readRecoveryPoints, RecoveryPoint } from "@/lib/data-engine";
 import { mergeNativeHealthDays, NativeHealthDay } from "@/lib/health-data";
 import { acknowledgeNativeCapture, authenticateNativePrivacy, clearNativeDraft, consumeSharedCapture, consumeVoiceTask, enableNativeCheckInReminders, installNativeBridge, isNativePnp, loadNativeDraft, nativeAppleStatus, nativeHealthStatus, nativePrivacyStatus, nextNativeCapture, openNativeAppleSettings, openNativeHealthSettings, readNativeAppleCalendar, readNativeHealth, requestNativeAppleCalendarAccess, requestNativeHealthAccess, requestedView, restoreNativeWebStorageSnapshot, saveNativeDraft, saveNativeWebStorageSnapshot, setNativePrivacyEnabled, taskCompletionHaptic } from "@/lib/mobile";
-import { nextDueAfterCompletion, reactivateRecurringTaskIfDue, taskOccursOn } from "@/lib/task-recurrence";
+import { nextDueAfterCompletion, reactivateRecurringTaskIfDue, taskAppearsToday, taskOccursOn } from "@/lib/task-recurrence";
 import { shouldRestoreAccount, shouldShowFirstConversation } from "@/lib/account-entry";
 import { cloudBootstrapAction } from "@/lib/cloud-bootstrap";
 import { resetCompletedTasksForNewDay } from "@/lib/daily-reset";
@@ -515,11 +515,7 @@ useEffect(()=>{if(!editingTask)return;const timer=window.setTimeout(()=>setData(
  const weekday=days[(new Date().getDay()+6)%7];
  const activeMedNames=data.medNames.filter(name=>!data.hiddenMedNames.includes(name)&&medicationIsActive(name,health.date));
  const activeHygieneItems=data.hygieneItems.filter(name=>!data.hiddenHygieneItems.includes(name));
- const taskIsToday=(t:Task)=>t.recurring
-  ?taskOccursOn(t,today())
-  :t.scheduledDate
-   ?t.scheduledDate===today()
-   :t.section==="today"||t.section==="week"&&t.day===weekday;
+ const taskIsToday=(task:Task)=>taskAppearsToday(task,today());
  const todayTasks=data.tasks.filter(taskIsToday);
  const calendarDates=useMemo(()=>{const anchor=new Date(`${calendarAnchor}T12:00:00`),start=new Date(anchor),count=calendarMode==="day"?1:calendarMode==="week"?7:calendarMode==="list"?14:42;if(calendarMode==="week"){start.setDate(anchor.getDate()-((anchor.getDay()+6)%7))}else if(calendarMode==="month"){start.setDate(1);start.setDate(start.getDate()-((start.getDay()+6)%7))}return Array.from({length:count},(_,i)=>{const d=new Date(start);d.setDate(start.getDate()+i);const z=d.getTimezoneOffset()*60000;return new Date(d.getTime()-z).toISOString().slice(0,10)})},[calendarAnchor,calendarMode]);
  const shiftCalendar=(direction:number)=>{const d=new Date(`${calendarAnchor}T12:00:00`);if(calendarMode==="month")d.setMonth(d.getMonth()+direction);else d.setDate(d.getDate()+direction*(calendarMode==="week"?7:calendarMode==="list"?14:1));setCalendarAnchor(d.toISOString().slice(0,10))};
