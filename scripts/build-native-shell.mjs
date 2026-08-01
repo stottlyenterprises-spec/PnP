@@ -31,6 +31,9 @@ await writeFile(path.join(output, "manifest.webmanifest"), await readFile(path.j
 await writeFile(path.join(output, "native-build.json"), JSON.stringify({ version, builtAt: new Date().toISOString() }, null, 2));
 
 const runtimePath = path.join(output, "native-runtime.js");
-const runtime = (await readFile(runtimePath, "utf8")).replaceAll("__DEEDS_NATIVE_BUILD__", version);
+const runtime = (await readFile(runtimePath, "utf8")).replace(
+  '"__DEEDS_NATIVE_BUILD__"',
+  JSON.stringify(version),
+);
 await writeFile(runtimePath, runtime);
 console.log(`Packaged D.E.E.D.S. native shell ${version.slice(0, 12)} in native-dist/.`);

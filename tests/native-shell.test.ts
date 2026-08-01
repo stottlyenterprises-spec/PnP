@@ -45,8 +45,10 @@ test("native account callbacks survive an iOS cold start", () => {
 
 test("native builds do not follow the website version redirect", () => {
   const page = text("app/page.tsx");
+  const builder = text("scripts/build-native-shell.mjs");
   assert.match(page, /__DEEDS_NATIVE_BUILD__/);
   assert.match(page, /if\(nativeBuild\).*setVersionReady\(true\)/);
+  assert.match(builder, /replace\(\s*'"__DEEDS_NATIVE_BUILD__"',\s*JSON\.stringify\(version\)/);
 });
 
 test("native shell carries local records and the account session across its origin change", () => {
