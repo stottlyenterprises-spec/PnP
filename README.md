@@ -50,11 +50,25 @@ deployments do not require an interactive build-script approval.
 
 The Capacitor projects are included in `ios/` and `android/`.
 
-After changing web assets, Capacitor plugins, or native configuration:
+The installed applications now package a fixed copy of the D.E.E.D.S. interface.
+Vercel remains the production API and Supabase remains the account and data
+service, but a web deployment no longer changes an already installed native
+build. After changing the interface, Capacitor plugins, or native configuration:
 
 ```bash
 pnpm mobile:sync
 ```
+
+`mobile:sync` first makes a fresh optimized Next.js build, creates
+`native-dist/`, and then copies that versioned interface into both native
+projects.
+
+For an existing test install that still loads the hosted interface, deploy this
+transition once and open that installed app before replacing it. D.E.E.D.S.
+stores a chunked, encrypted device snapshot of the local record and account
+session. The packaged build restores that snapshot before account or cloud
+bootstrap runs, preventing the storage-origin change from presenting a blank
+profile.
 
 Open the projects:
 

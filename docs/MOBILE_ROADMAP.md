@@ -6,12 +6,13 @@ Progress, Not Perfection
 
 D.E.E.D.S. will remain one product across the web, iPhone, iPad, and Android. The Next.js app continues to own the interface and server integrations. Capacitor provides native iOS and Android containers plus access to device capabilities.
 
-The first native build intentionally points at the production D.E.E.D.S. application. This makes it possible to validate navigation, authentication, safe areas, keyboard behavior, and real-device usability before maintaining packaged web assets. It is a development milestone, not the App Store submission architecture.
+The first native milestone pointed directly at the production D.E.E.D.S. application. The current build packages the optimized interface in each installed app while retaining Vercel for remote APIs and Supabase for account-owned data. This keeps device tests pinned to an identifiable native build instead of changing whenever the website deploys.
 
 ## Phase 1: Native shell
 
 - Capacitor 8 configuration for iOS and Android
-- D.E.E.D.S. production environment loaded over HTTPS
+- Versioned D.E.E.D.S. interface packaged with the native application
+- Production APIs loaded over HTTPS with an explicit native CORS boundary
 - Mobile viewport and safe-area support
 - Stable app identity: `com.stottlyenterprises.progressnotperfection.deeds`
 - Native iOS and Android projects generated and synchronized
@@ -46,7 +47,7 @@ Xcode is required for iOS. Android Studio and the Android SDK are required for A
 2. Open the `android/` directory in Android Studio. Confirm that Android SDK
    Platform 36, Build Tools, Platform Tools, and Command-line Tools are
    installed, then run the debug build on an emulator or connected device.
-3. Confirm the hosted production app loads, safe areas are correct, external
+3. Confirm the packaged interface loads, safe areas are correct, external
    account authentication returns to D.E.E.D.S., haptics fire, and local
    notification permission can be granted.
 4. Test notification routing from a cold launch and a background launch.
@@ -138,7 +139,7 @@ The current Google-backed save is useful for personal testing, but a public prod
 
 ## Phase 5: Store readiness
 
-- Replace the hosted development shell with packaged web assets plus remote APIs
+- Packaged web assets plus remote APIs (implemented; complete release-device validation)
 - Production app icons and splash assets for every required size
 - Universal Links and Android App Links
 - Notification certificates and Firebase configuration

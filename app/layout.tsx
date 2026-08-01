@@ -40,7 +40,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <script src="/native-runtime.js" data-deeds-native-runtime />
+        {children}
+      </body>
     </html>
   );
 }

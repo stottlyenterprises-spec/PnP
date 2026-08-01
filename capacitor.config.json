@@ -1,11 +1,11 @@
 {
   "appId": "com.stottlyenterprises.progressnotperfection.deeds",
   "appName": "D.E.E.D.S.",
-  "webDir": "public",
+  "webDir": "native-dist",
   "backgroundColor": "#0e2019",
   "server": {
-    "url": "https://p-n-p.vercel.app",
     "cleartext": false,
+    "hostname": "localhost",
     "allowNavigation": [
       "p-n-p.vercel.app",
       "accounts.google.com",

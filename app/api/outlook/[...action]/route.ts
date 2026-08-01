@@ -18,6 +18,7 @@ async function connect(req:NextRequest){
  const accounts=await readOutlookAccounts(),jar=await cookies(),legacyConnected=Boolean(jar.get(outlookCookie("access",0))?.value||jar.get(outlookCookie("refresh",0))?.value),requested=Number(req.nextUrl.searchParams.get("slot")),slot=Number.isInteger(requested)&&requested>=0&&requested<=4?requested:([0,1,2,3,4].find(value=>!accounts.some(account=>account.slot===value)&&!(value===0&&legacyConnected))??0),state=crypto.randomUUID();
  jar.set("outlook_state",state,{httpOnly:true,secure:true,sameSite:"lax",maxAge:600,path:"/"});
  jar.set("outlook_connect_slot",String(slot),{httpOnly:true,secure:true,sameSite:"lax",maxAge:600,path:"/"});
+ if(req.nextUrl.searchParams.get("native")==="1")jar.set("outlook_native_return","1",{httpOnly:true,secure:true,sameSite:"lax",maxAge:600,path:"/"});
  const url=new URL("https://login.microsoftonline.com/common/oauth2/v2.0/authorize");
  url.search=new URLSearchParams({client_id:id,response_type:"code",redirect_uri:`${app}/api/outlook/callback`,response_mode:"query",scope:outlookScopes,state,prompt:"select_account"}).toString();
  return NextResponse.redirect(url);
@@ -29,12 +30,12 @@ async function callback(req:NextRequest){
  const slot=Math.max(0,Math.min(4,Number(jar.get("outlook_connect_slot")?.value)||0)),redirect=`${app}/api/outlook/callback`;
  const token=await fetch("https://login.microsoftonline.com/common/oauth2/v2.0/token",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({code,client_id:process.env.OUTLOOK_CLIENT_ID||"",client_secret:process.env.OUTLOOK_CLIENT_SECRET||"",redirect_uri:redirect,grant_type:"authorization_code",scope:outlookScopes})});
  if(!token.ok)return NextResponse.redirect(new URL("/?outlook=error",app));
- const body=await token.json(),profileResponse=await fetch("https://graph.microsoft.com/v1.0/me?$select=displayName,mail,userPrincipalName",{headers:{Authorization:`Bearer ${body.access_token}`},cache:"no-store"}),profile=profileResponse.ok?await profileResponse.json():{},storedAccounts=await readOutlookAccounts(),email=String(profile.mail||profile.userPrincipalName||`Outlook account ${slot+1}`),name=String(profile.displayName||"").trim()||undefined,nextAccounts=[...storedAccounts.filter(account=>account.slot!==slot),{slot,email,name}].sort((a,b)=>a.slot-b.slot),res=NextResponse.redirect(new URL("/?outlook=connected",app));
+ const body=await token.json(),profileResponse=await fetch("https://graph.microsoft.com/v1.0/me?$select=displayName,mail,userPrincipalName",{headers:{Authorization:`Bearer ${body.access_token}`},cache:"no-store"}),profile=profileResponse.ok?await profileResponse.json():{},storedAccounts=await readOutlookAccounts(),email=String(profile.mail||profile.userPrincipalName||`Outlook account ${slot+1}`),name=String(profile.displayName||"").trim()||undefined,nextAccounts=[...storedAccounts.filter(account=>account.slot!==slot),{slot,email,name}].sort((a,b)=>a.slot-b.slot),nativeReturn=jar.get("outlook_native_return")?.value==="1",res=NextResponse.redirect(nativeReturn?"deeds://open?view=data&outlook=connected":new URL("/?outlook=connected",app));
  res.cookies.set(outlookCookie("access",slot),body.access_token,{httpOnly:true,secure:true,sameSite:"lax",maxAge:body.expires_in||3600,path:"/"});
  if(body.refresh_token)res.cookies.set(outlookCookie("refresh",slot),body.refresh_token,{httpOnly:true,secure:true,sameSite:"lax",maxAge:31536000,path:"/"});
  res.cookies.set("outlook_active",String(slot),{httpOnly:true,secure:true,sameSite:"lax",maxAge:31536000,path:"/"});
  res.cookies.set("outlook_accounts",encodeURIComponent(JSON.stringify(nextAccounts)),{httpOnly:true,secure:true,sameSite:"lax",maxAge:31536000,path:"/"});
- res.cookies.delete("outlook_state");res.cookies.delete("outlook_connect_slot");
+ res.cookies.delete("outlook_state");res.cookies.delete("outlook_connect_slot");res.cookies.delete("outlook_native_return");
  return res;
 }
 
@@ -44,7 +45,7 @@ async function status(){
 }
 
 async function disconnect(req:NextRequest){
- const requested=Number(req.nextUrl.searchParams.get("slot")),active=await activeOutlookSlot(),slot=Number.isInteger(requested)&&requested>=0&&requested<=4?requested:active,accounts=await readOutlookAccounts(),remaining=accounts.filter(account=>account.slot!==slot),nextActive=remaining[0]?.slot??0,res=NextResponse.redirect(new URL("/?outlook=disconnected",req.nextUrl.origin));
+ const requested=Number(req.nextUrl.searchParams.get("slot")),active=await activeOutlookSlot(),slot=Number.isInteger(requested)&&requested>=0&&requested<=4?requested:active,accounts=await readOutlookAccounts(),remaining=accounts.filter(account=>account.slot!==slot),nextActive=remaining[0]?.slot??0,res=NextResponse.redirect(req.nextUrl.searchParams.get("native")==="1"?"deeds://open?view=data&outlook=disconnected":new URL("/?outlook=disconnected",req.nextUrl.origin));
  res.cookies.delete(outlookCookie("access",slot));res.cookies.delete(outlookCookie("refresh",slot));res.cookies.set("outlook_active",String(nextActive),{httpOnly:true,secure:true,sameSite:"lax",maxAge:31536000,path:"/"});res.cookies.set("outlook_accounts",encodeURIComponent(JSON.stringify(remaining)),{httpOnly:true,secure:true,sameSite:"lax",maxAge:31536000,path:"/"});res.cookies.delete("outlook_state");
  return res;
 }

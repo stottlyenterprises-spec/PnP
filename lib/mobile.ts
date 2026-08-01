@@ -205,6 +205,69 @@ export async function nativeSecureRemove(key: string): Promise<boolean> {
   return plugins()?.DeedsPrivacy?.secureRemove({ key }).then(() => true).catch(() => false) ?? false;
 }
 
+const nativeWebSnapshotManifestKey = "deeds.web-storage-snapshot.manifest";
+const nativeWebSnapshotChunkKey = (index: number) => `deeds.web-storage-snapshot.${index}`;
+const nativeWebSnapshotChunkSize = 20_000;
+
+type NativeWebSnapshotManifest = { chunks: number; updatedAt: string };
+
+function safeSnapshotManifest(raw: string): NativeWebSnapshotManifest | null {
+  try {
+    const value = JSON.parse(raw) as Partial<NativeWebSnapshotManifest>;
+    const chunks = Number(value.chunks);
+    return Number.isInteger(chunks) && chunks > 0 && chunks <= 500
+      ? { chunks, updatedAt: String(value.updatedAt || "") }
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function saveNativeWebStorageSnapshot(keys: string[]): Promise<boolean> {
+  if (!isNativePnp() || typeof localStorage === "undefined") return false;
+  const values = Object.fromEntries(keys.map(key => [key, localStorage.getItem(key)]));
+  const serialized = JSON.stringify({ updatedAt: new Date().toISOString(), values });
+  const chunks = Array.from(
+    { length: Math.ceil(serialized.length / nativeWebSnapshotChunkSize) },
+    (_, index) => serialized.slice(index * nativeWebSnapshotChunkSize, (index + 1) * nativeWebSnapshotChunkSize),
+  );
+  const previousRaw = await nativeSecureGet(nativeWebSnapshotManifestKey);
+  const previous = previousRaw ? safeSnapshotManifest(previousRaw) : null;
+  const saved = await Promise.all(chunks.map((chunk, index) => nativeSecureSet(nativeWebSnapshotChunkKey(index), chunk)));
+  if (saved.some(result => !result)) return false;
+  const manifest: NativeWebSnapshotManifest = { chunks: chunks.length, updatedAt: new Date().toISOString() };
+  if (!await nativeSecureSet(nativeWebSnapshotManifestKey, JSON.stringify(manifest))) return false;
+  if (previous && previous.chunks > chunks.length) {
+    await Promise.all(Array.from({ length: previous.chunks - chunks.length }, (_, index) =>
+      nativeSecureRemove(nativeWebSnapshotChunkKey(chunks.length + index))));
+  }
+  return true;
+}
+
+export async function restoreNativeWebStorageSnapshot(keys: string[]): Promise<boolean> {
+  if (!isNativePnp() || typeof localStorage === "undefined") return false;
+  const manifestRaw = await nativeSecureGet(nativeWebSnapshotManifestKey);
+  const manifest = manifestRaw ? safeSnapshotManifest(manifestRaw) : null;
+  if (!manifest?.chunks) return false;
+  const chunks = await Promise.all(Array.from({ length: manifest.chunks }, (_, index) =>
+    nativeSecureGet(nativeWebSnapshotChunkKey(index))));
+  if (chunks.some(chunk => chunk == null)) return false;
+  try {
+    const snapshot = JSON.parse(chunks.join("")) as { values?: Record<string, string | null> };
+    let restored = false;
+    keys.forEach(key => {
+      const value = snapshot.values?.[key];
+      if (typeof value === "string" && !localStorage.getItem(key)) {
+        localStorage.setItem(key, value);
+        restored = true;
+      }
+    });
+    return restored;
+  } catch {
+    return false;
+  }
+}
+
 const nativeDraftKey = (kind: NativeDraftKind) => `deeds.draft.${kind}`;
 
 export async function saveNativeDraft<T>(kind: NativeDraftKind, payload: T): Promise<boolean> {
@@ -383,6 +446,10 @@ export async function installNativeBridge(handlers: {
     if (!url) return;
     if (url.startsWith("deeds://open") && /(?:access_token|error(?:_description)?)=/.test(url)) {
       handlers.onAccountCallback(url);
+      return;
+    }
+    if (url.startsWith("deeds://open") && /(?:google|outlook|oura)=(?:connected|disconnected)/.test(url)) {
+      window.location.reload();
       return;
     }
     const task = consumeVoiceTask(url);
