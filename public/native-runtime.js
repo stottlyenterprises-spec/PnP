@@ -28,7 +28,9 @@
     event.preventDefault();
     var target = new URL(apiOrigin + href);
     target.searchParams.set("native", "1");
-    var opened = window.open(target.toString(), "_blank", "noopener,noreferrer");
-    if (!opened) location.href = target.toString();
+    // Keep OAuth inside the Capacitor web view. This preserves the provider
+    // cookies used by the packaged app and avoids iOS silently blocking a
+    // popup before Google, Oura, or Microsoft can open.
+    location.assign(target.toString());
   }, true);
 })();

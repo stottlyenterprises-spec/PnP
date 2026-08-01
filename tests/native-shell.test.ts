@@ -16,9 +16,17 @@ test("native API calls have an explicit production boundary", () => {
   const proxy = text("proxy.ts");
   assert.match(runtime, /https:\/\/p-n-p\.vercel\.app/);
   assert.match(runtime, /credentials: "include"/);
-  assert.match(runtime, /window\.open\(target\.toString\(\), "_blank"/);
+  assert.match(runtime, /location\.assign\(target\.toString\(\)\)/);
+  assert.doesNotMatch(runtime, /window\.open\(target\.toString\(\), "_blank"/);
   assert.match(proxy, /capacitor:\/\/localhost/);
   assert.match(proxy, /Access-Control-Allow-Credentials/);
+});
+
+test("native OAuth navigation allows every supported provider", () => {
+  const config = JSON.parse(text("capacitor.config.json"));
+  assert.ok(config.server.allowNavigation.includes("accounts.google.com"));
+  assert.ok(config.server.allowNavigation.includes("moi.ouraring.com"));
+  assert.ok(config.server.allowNavigation.includes("login.microsoftonline.com"));
 });
 
 test("native OAuth connections return to the installed application", () => {

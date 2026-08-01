@@ -9,7 +9,9 @@
     "allowNavigation": [
       "p-n-p.vercel.app",
       "accounts.google.com",
-      "cloud.ouraring.com"
+      "cloud.ouraring.com",
+      "moi.ouraring.com",
+      "login.microsoftonline.com"
     ]
   },
   "ios": {
