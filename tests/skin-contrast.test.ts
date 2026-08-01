@@ -31,18 +31,44 @@ function contrast(first:string,second:string){
  return (light+.05)/(dark+.05);
 }
 
-test("every atmosphere has readable primary, supporting, and button text",()=>{
+test("every atmosphere has readable text across panels, controls, navigation, and semantic states",()=>{
  const defaults=declarations("main[data-skin]");
  for(const skin of skins){
   const tokens={...defaults,...(skin==="signature"?{}:declarations(`main[data-skin="${skin}"]`))};
-  assert.ok(tokens["--skin-panel-solid"],`${skin} needs an opaque contrast reference`);
-  assert.ok(tokens["--skin-panel-elevated"],`${skin} needs an elevated contrast layer`);
-  assert.ok(contrast(tokens["--skin-ink"],tokens["--skin-panel-solid"])>=4.5,`${skin} primary copy fails WCAG AA`);
-  assert.ok(contrast(tokens["--skin-muted"],tokens["--skin-panel-solid"])>=4.5,`${skin} supporting copy fails WCAG AA`);
-  assert.ok(contrast(tokens["--skin-ink"],tokens["--skin-panel-elevated"])>=4.5,`${skin} primary copy fails on elevated cards`);
-  assert.ok(contrast(tokens["--skin-muted"],tokens["--skin-panel-elevated"])>=4.5,`${skin} supporting copy fails on elevated cards`);
+  for(const token of ["--skin-panel-solid","--skin-panel-elevated","--skin-control-solid","--skin-side-a","--skin-side-b"]){
+   assert.ok(tokens[token],`${skin} needs ${token} as an opaque contrast reference`);
+  }
+  for(const surface of ["--skin-panel-solid","--skin-panel-elevated","--skin-control-solid"]){
+   assert.ok(contrast(tokens["--skin-ink"],tokens[surface])>=4.5,`${skin} primary copy fails on ${surface}`);
+   assert.ok(contrast(tokens["--skin-muted"],tokens[surface])>=4.5,`${skin} supporting copy fails on ${surface}`);
+  }
+  for(const surface of ["--skin-panel-solid","--skin-panel-elevated"]){
+   assert.ok(contrast(tokens["--skin-accent"],tokens[surface])>=4.5,`${skin} linked/accent copy fails on ${surface}`);
+   assert.ok(contrast(tokens["--skin-warm-text"],tokens[surface])>=4.5,`${skin} warm/status copy fails on ${surface}`);
+  }
+  for(const surface of ["--skin-side-a","--skin-side-b"]){
+   assert.ok(contrast(tokens["--skin-dark-copy"],tokens[surface])>=4.5,`${skin} navigation copy fails on ${surface}`);
+   assert.ok(contrast(tokens["--skin-dark-muted"],tokens[surface])>=4.5,`${skin} supporting navigation copy fails on ${surface}`);
+  }
   assert.ok(contrast(tokens["--skin-accent"],tokens["--skin-on-accent"])>=4.5,`${skin} accent button copy fails WCAG AA`);
  }
+});
+
+test("adaptive atmosphere stages are all represented by audited skins",()=>{
+ const adaptive=page.match(/const adaptiveSkin:SkinId=([^;]+);/)?.[1]||"";
+ for(const skin of ["midnight","coastal","signature","stage"]){
+  assert.ok(adaptive.includes(`"${skin}"`),`${skin} is missing from the adaptive atmosphere schedule`);
+  assert.ok(skins.includes(skin),`${skin} is not included in the contrast matrix`);
+ }
+});
+
+test("placeholders, disabled controls, focus, and navigation use readable theme tokens",()=>{
+ const contract=css.slice(css.indexOf("/* Readability contract"));
+ assert.ok(contract.length>0,"Missing final readability contract");
+ assert.match(contract,/::placeholder[\s\S]+var\(--skin-muted\)!important[\s\S]+opacity:1!important/);
+ assert.match(contract,/button:disabled[\s\S]+var\(--skin-muted\)!important[\s\S]+opacity:1!important/);
+ assert.match(contract,/nav button[\s\S]+var\(--skin-dark-muted\)/);
+ assert.match(contract,/:focus-visible[\s\S]+outline:3px solid/);
 });
 
 test("legacy feature surfaces are covered by the atmosphere contract",()=>{
