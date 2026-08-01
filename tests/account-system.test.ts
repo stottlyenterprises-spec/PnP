@@ -8,6 +8,9 @@ const page = read("app/page.tsx");
 const accountData = read("app/api/account/data/route.ts");
 const accountConfig = read("app/api/account/config/route.ts");
 const accountClient = read("lib/deeds-account.ts");
+const accountIdentityLink = read("app/api/account/identity/link/route.ts");
+const accountDelete = read("app/api/account/delete/route.ts");
+const dataEngine = read("lib/data-engine.ts");
 const mobile = read("lib/mobile.ts");
 const migration = read("supabase/migrations/001_deeds_accounts.sql");
 
@@ -48,4 +51,31 @@ test("native account links return to the installed app", () => {
   assert.match(accountClient, /isNativePnp\(\) \? "deeds:\/\/open"/);
   assert.match(mobile, /handlers\.onAccountCallback\(url\)/);
   assert.match(page, /onAccountCallback:url/);
+});
+
+test("existing accounts can add sign-in methods without merging connected services", () => {
+  assert.match(accountClient, /accountIdentityLinkUrl/);
+  assert.match(accountClient, /linkedProviders/);
+  assert.match(accountIdentityLink, /\/auth\/v1\/user\/identities\/authorize/);
+  assert.match(accountIdentityLink, /manual_linking_disabled/);
+  assert.match(page, /Sign-in methods/);
+  assert.match(page, /Connect Google services/);
+  assert.match(page, /Mail, Calendar, and Drive permissions remain separate and optional/);
+  assert.match(page, /Import my JSON backup/);
+  assert.match(page, /recoverAccountFromJson/);
+});
+
+test("account and data deletion require an authenticated explicit confirmation", () => {
+  assert.match(accountDelete, /\/auth\/v1\/user/);
+  assert.match(accountDelete, /SUPABASE_SECRET_KEY/);
+  assert.match(accountDelete, /DELETE MY DATA/);
+  assert.match(accountDelete, /acknowledgePermanent/);
+  assert.match(accountDelete, /\/auth\/v1\/admin\/users\//);
+  assert.match(accountDelete, /deeds_snapshot_revisions/);
+  assert.match(accountDelete, /deeds_snapshots/);
+  assert.match(page, /Delete my data/);
+  assert.match(page, /Delete my account/);
+  assert.match(page, /Export JSON before deleting/);
+  assert.match(dataEngine, /clearLocalDeedsData/);
+  assert.match(migration, /on delete cascade/);
 });

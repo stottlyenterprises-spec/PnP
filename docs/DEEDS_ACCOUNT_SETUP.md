@@ -72,3 +72,39 @@ Test with disposable accounts before migrating a real profile:
    choice rather than uploaded automatically.
 5. Connect Google and use **Back up to Drive**. Confirm the independent Drive
    copy and revision history remain available.
+
+## 7. Enable safe identity linking
+
+In Supabase Authentication settings, enable **Manual identity linking**. This
+allows a signed-in user to add Google or Apple as another way to open the same
+D.E.E.D.S. account, including when the provider uses a different email address.
+
+Identity linking is deliberately separate from connected-service consent.
+Adding Google as a sign-in method does not grant Gmail, Calendar, or Drive
+access. The user approves those permissions afterward from Settings.
+
+## 8. Verify account and data deletion
+
+Settings offers two deliberately separate permanent actions:
+
+- **Delete my data** removes the account's synced D.E.E.D.S. snapshot,
+  revision history, local browser copy, native drafts, and connected-service
+  session cookies. The D.E.E.D.S. sign-in identity remains available.
+- **Delete my account** permanently deletes the Supabase Auth user. The
+  database foreign keys use `on delete cascade`, so the owned snapshot and
+  revision history are removed with the account. Local data and
+  connected-service session cookies are also cleared.
+
+Both actions require a current authenticated session and explicit typed
+confirmation. Account deletion also requires a separate permanent-action
+acknowledgement. The browser clears local data only after the server confirms
+success.
+
+Google Drive backups are user-owned Drive files and are not deleted by either
+action. The confirmation screen tells the user to remove those separately in
+Google Drive if desired.
+
+The deletion endpoint requires `SUPABASE_SECRET_KEY` or the legacy
+`SUPABASE_SERVICE_ROLE_KEY`. Keep that credential server-only. Before launch,
+test both actions with disposable users and confirm that a failed server
+request leaves the device copy untouched.

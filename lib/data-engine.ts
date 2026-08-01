@@ -310,3 +310,8 @@ export function deleteRecoveryPoint<T>(id: string) {
   localStorage.setItem(RECOVERY_KEY, JSON.stringify(points));
   return points;
 }
+
+export function clearLocalDeedsData() {
+  if (typeof window === "undefined") return;
+  [LOCAL_DATA_KEY, LEGACY_DATA_KEY, RECOVERY_KEY, LAST_RECOVERY_KEY, DEVICE_KEY].forEach(key => localStorage.removeItem(key));
+}

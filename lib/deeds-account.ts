@@ -8,6 +8,7 @@ export type DeedsAccountUser = {
   name: string;
   avatarUrl?: string;
   provider?: string;
+  linkedProviders: string[];
 };
 
 export type DeedsAccountSession = {
@@ -42,16 +43,21 @@ type SupabaseUser = {
     avatar_url?: string;
     picture?: string;
   };
+  identities?: Array<{ provider?: string }>;
 };
 
 function accountUser(user: SupabaseUser): DeedsAccountUser {
   const email = String(user.email || "");
+  const linkedProviders = [...new Set((user.identities || []).map(identity => String(identity.provider || "")).filter(Boolean))];
+  const primaryProvider = String(user.app_metadata?.provider || "");
+  if (primaryProvider && !linkedProviders.includes(primaryProvider)) linkedProviders.push(primaryProvider);
   return {
     id: String(user.id || ""),
     email,
     name: String(user.user_metadata?.full_name || user.user_metadata?.name || email.split("@")[0] || "D.E.E.D.S. user"),
     avatarUrl: String(user.user_metadata?.avatar_url || user.user_metadata?.picture || "") || undefined,
-    provider: String(user.app_metadata?.provider || "") || undefined,
+    provider: primaryProvider || undefined,
+    linkedProviders,
   };
 }
 
@@ -158,6 +164,17 @@ export async function accountAuthorizationUrl(provider: "apple" | "google") {
   if (!config.configured || !config.url) throw new Error("D.E.E.D.S. accounts are not configured yet.");
   const redirectTo = accountRedirectUrl();
   return `${config.url}/auth/v1/authorize?provider=${provider}&redirect_to=${encodeURIComponent(redirectTo)}`;
+}
+
+export async function accountIdentityLinkUrl(provider: "apple" | "google", session: DeedsAccountSession) {
+  const response = await accountFetch("/api/account/identity/link", session, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ provider, redirectTo: accountRedirectUrl() }),
+  });
+  const body = await response.json().catch(() => ({})) as { url?: string; error?: string };
+  if (!response.ok || !body.url) throw new Error(body.error || "That sign-in method could not be linked.");
+  return body.url;
 }
 
 export async function emailSignInCode(email: string) {

@@ -283,6 +283,11 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}body{min-width:0}button,a,i
 .settingsIdentity label{display:grid;gap:7px;color:var(--muted);font-size:11px}
 .settingsIdentity input{padding:13px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);font-size:16px}
 .settingsIdentity small{color:var(--green)}
+.accountIdentityManager{display:grid;grid-template-columns:minmax(0,.8fr) minmax(280px,1.2fr);gap:24px;margin-top:16px;padding:25px;border:1px solid var(--skin-border,var(--line));border-radius:20px;background:linear-gradient(145deg,var(--skin-panel-strong,#fffefa),var(--skin-panel,#f6f2e8));box-shadow:inset 0 1px 0 #ffffff8c,0 22px 55px var(--skin-shadow,#273d3418);color:var(--skin-ink,var(--ink));backdrop-filter:blur(24px)}
+.accountIdentityManager h2{margin:5px 0;font:500 27px Georgia}.accountIdentityManager>div:first-child>p:last-child{color:var(--skin-muted,var(--muted));line-height:1.55}.accountIdentityMethods{display:grid;gap:8px}.accountIdentityMethods article{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:10px;padding:12px;border:1px solid var(--skin-border,var(--line));border-radius:13px;background:color-mix(in srgb,var(--skin-panel-strong,#fff) 74%,transparent)}.accountIdentityMethods article.linked{border-color:color-mix(in srgb,var(--skin-accent,var(--green)) 55%,var(--skin-border,var(--line)))}.accountIdentityMethods article>span{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:color-mix(in srgb,var(--skin-accent,var(--green)) 14%,transparent);color:var(--skin-accent,var(--green));font-weight:800}.accountIdentityMethods article>div{display:grid;gap:3px}.accountIdentityMethods small{color:var(--skin-muted,var(--muted));font-size:10px}.accountIdentityMethods button{padding:8px 11px;border:1px solid var(--skin-border,var(--line));border-radius:9px;background:color-mix(in srgb,var(--skin-accent,var(--green)) 14%,transparent);color:var(--skin-ink,var(--ink))}.accountLinkStatus{grid-column:1/-1;margin:0;color:var(--skin-accent,var(--green));font-size:12px}.googleServicesHandoff{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px;border:1px solid color-mix(in srgb,var(--skin-accent,var(--green)) 35%,var(--skin-border,var(--line)));border-radius:14px;background:color-mix(in srgb,var(--skin-accent,var(--green)) 8%,transparent)}.googleServicesHandoff p{margin:4px 0 0;color:var(--skin-muted,var(--muted));font-size:12px}.googleServicesHandoff a{flex:0 0 auto;padding:11px 14px;border-radius:10px;text-decoration:none}
+.accountDeletionCard{display:grid;grid-template-columns:minmax(0,.8fr) minmax(300px,1.2fr);gap:24px;padding:25px;border:1px solid color-mix(in srgb,#a74343 24%,var(--skin-border,var(--line)));border-radius:20px;background:linear-gradient(145deg,var(--skin-panel-strong,#fffefa),color-mix(in srgb,var(--skin-panel,#f6f2e8) 92%,#a74343 8%));color:var(--skin-ink,var(--ink));box-shadow:inset 0 1px 0 #ffffff78,0 18px 48px var(--skin-shadow,#273d3418)}
+.accountDeletionCard h2{margin:5px 0;font:500 27px Georgia}.accountDeletionCard>div:first-child>p:last-child,.accountDeletionNote{color:var(--skin-muted,var(--muted));line-height:1.5}.accountDeletionChoices{display:grid;gap:9px}.accountDeletionChoices button{display:grid;gap:5px;padding:14px 15px;text-align:left;border:1px solid var(--skin-border,var(--line));border-radius:13px;background:color-mix(in srgb,var(--skin-panel-elevated,#fff) 82%,transparent);color:var(--skin-ink,var(--ink))}.accountDeletionChoices button.permanent{border-color:color-mix(in srgb,#c64f4f 50%,var(--skin-border,var(--line)))}.accountDeletionChoices small{color:var(--skin-muted,var(--muted));line-height:1.4}.accountDeletionNote{grid-column:1/-1;margin:0;font-size:11px}
+.accountDeletionLayer{position:fixed;z-index:140;inset:0;display:grid;place-items:center;padding:20px;background:#07100ddd;backdrop-filter:blur(18px)}.accountDeletionDialog{width:min(560px,100%);max-height:min(720px,calc(100dvh - 40px));overflow:auto;padding:clamp(22px,5vw,34px);border:1px solid color-mix(in srgb,#d65b5b 44%,var(--skin-border,var(--line)));border-radius:24px;background:linear-gradient(145deg,var(--skin-panel-strong,#fffefa),var(--skin-panel-solid,#f3eee3));color:var(--skin-ink,var(--ink));box-shadow:inset 0 1px 0 #ffffff8c,0 35px 120px #0008}.accountDeletionDialog h2{margin:6px 0 10px;font:500 clamp(28px,6vw,39px) Georgia}.accountDeletionDialog>p:not(.eyebrow){color:var(--skin-muted,var(--muted));line-height:1.55}.accountDeletionDialog label{display:grid;gap:8px;margin-top:18px;color:var(--skin-muted,var(--muted));font-size:12px}.accountDeletionDialog label b{color:var(--skin-ink,var(--ink))}.accountDeletionDialog input[type="text"],.accountDeletionDialog label>input:not([type]){width:100%;padding:13px;border:1px solid var(--skin-border,var(--line));border-radius:11px;background:var(--skin-panel-elevated,#fff);color:var(--skin-ink,var(--ink));font-size:16px}.accountDeletionExport{padding:10px 13px;border:1px solid var(--skin-border,var(--line));border-radius:10px;background:transparent;color:var(--skin-ink,var(--ink))}.accountDeletionAcknowledge{grid-template-columns:20px 1fr!important;align-items:center}.accountDeletionAcknowledge input{width:18px;height:18px;accent-color:#aa3f3f}.accountDeletionError{padding:10px 12px;border-radius:10px;background:#8f2d2d20;color:#b23d3d!important}.accountDeletionDialog footer{position:sticky;bottom:-1px;display:flex;justify-content:flex-end;gap:9px;margin:24px -4px -4px;padding:14px 4px 4px;background:linear-gradient(transparent,var(--skin-panel-solid,#f3eee3) 25%)}.accountDeletionDialog footer button{padding:11px 15px;border:1px solid var(--skin-border,var(--line));border-radius:10px;background:var(--skin-panel-elevated,#fff);color:var(--skin-ink,var(--ink))}.accountDeletionDialog footer .danger{border-color:#bd4646;background:#9d3535;color:#fff}.accountDeletionDialog footer .danger:disabled{border-color:var(--skin-border,var(--line));background:var(--skin-panel-elevated,#fff);color:var(--skin-muted,var(--muted))}
 .providerCatalog>div:last-child{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}
 .providerCatalog article{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:10px;padding:13px;border:1px solid var(--line);border-radius:14px;background:#ffffff82}
 .providerCatalog article>span{width:36px;height:36px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(145deg,#315947,#183428);color:#e5fff3;font-weight:800}
@@ -732,15 +737,17 @@ main[data-skin="midnight"] :is(.taskPanel button,.taskCategoryGroup button,.cate
 section.content:has(.connectionHub)>header{order:0}
 section.content:has(.connectionHub)>.appearanceSettings{order:1}
 section.content:has(.connectionHub)>.settingsIdentity{order:2}
-section.content:has(.connectionHub)>.setupInterviewCard{order:3}
-section.content:has(.connectionHub)>.goalSettingCard{order:4}
-section.content:has(.connectionHub)>.connectionHub{order:5}
+section.content:has(.connectionHub)>.accountIdentityManager{order:3}
+section.content:has(.connectionHub)>.setupInterviewCard{order:4}
+section.content:has(.connectionHub)>.goalSettingCard{order:5}
+section.content:has(.connectionHub)>.connectionHub{order:6}
 section.content:has(.connectionHub)>.providerCatalog{order:6}
 section.content:has(.connectionHub)>.accountManager{order:7}
 section.content:has(.connectionHub)>.cloudSaveCard{order:8}
 section.content:has(.connectionHub)>.syncConflictCard{order:9}
 section.content:has(.connectionHub)>.dataProtectionCard{order:10}
 section.content:has(.connectionHub)>.cloudRecoveryCard{order:11}
+section.content:has(.connectionHub)>.accountDeletionCard{order:16}
 section.content:has(.connectionHub)>.nativePrivacyCard{order:12}
 section.content:has(.connectionHub)>.dataTools{order:13}
 section.content:has(.connectionHub)>.feedbackCard{order:14}
@@ -750,6 +757,7 @@ section.content:has(.connectionHub)>.buildInfo{order:15}
  .appearanceHeading{grid-template-columns:1fr}
  .skinGallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:3px 2px 14px}
  .skinGallery>button{flex:0 0 178px;scroll-snap-align:start}
+ .accountIdentityManager{grid-template-columns:1fr;padding:19px}.googleServicesHandoff{display:grid}.googleServicesHandoff a{text-align:center}
  .skinPreview{height:92px}
 }
 
@@ -858,7 +866,8 @@ section.content:has(.connectionHub) :is(.dataProtectionCard,.cloudRecoveryCard,.
 @media(max-width:800px){
  section.content:has(.connectionHub){gap:14px}
  section.content:has(.connectionHub)>header{margin-bottom:4px}
- section.content:has(.connectionHub) :is(.dataProtectionCard,.cloudRecoveryCard,.cloudSaveCard,.accountManager,.settingsIdentity,.setupInterviewCard,.providerCatalog,.feedbackCard){padding:19px}
+ section.content:has(.connectionHub) :is(.dataProtectionCard,.cloudRecoveryCard,.cloudSaveCard,.accountManager,.settingsIdentity,.setupInterviewCard,.providerCatalog,.feedbackCard,.accountDeletionCard){padding:19px}
+ .accountDeletionCard{grid-template-columns:1fr}.accountDeletionNote{grid-column:1}.accountDeletionLayer{padding:12px}.accountDeletionDialog{max-height:calc(100dvh - 24px);border-radius:20px}
  .cloudRevisionList article{gap:10px;padding:14px}
 }
 
