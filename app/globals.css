@@ -1590,3 +1590,7 @@ main[data-skin] .interviewButtons button.current:not(.complete){
 .mailClient,.mailInbox{min-inline-size:0;max-inline-size:100%}
 main[data-skin] .mailInbox>.empty{max-inline-size:100%;white-space:normal;overflow-wrap:anywhere;word-break:normal;box-sizing:border-box}
 @media(max-width:600px){.journalForm{inline-size:100%}.mailInbox>.empty{font-size:15px;line-height:1.45}}
+.journalDateField{min-width:0;overflow:hidden}
+.journalDateControl{position:relative;display:grid!important;place-items:center;inline-size:100%;min-inline-size:0;max-inline-size:100%;min-height:50px;overflow:hidden;border:1px solid var(--surface-line);border-radius:11px;background:var(--skin-control);color:var(--skin-ink);box-sizing:border-box}
+.journalDateControl b{font-size:16px;font-weight:700;pointer-events:none}
+.journalDateControl input[type="date"]{position:absolute;inset:0;inline-size:100%;block-size:100%;margin:0;padding:0!important;border:0!important;opacity:0;cursor:pointer}
