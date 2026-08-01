@@ -1581,3 +1581,12 @@ main[data-skin] .interviewButtons button.current:not(.complete){
  main[data-skin] :is(.interviewTop,.healthInterviewBridge) .interviewButtons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%}
  main[data-skin] .interviewButtons button{min-width:0;padding-inline:7px}
 }
+/* Intrinsic-width containment for iOS controls and long empty-state copy. */
+.journalView,.journalView>*,.journalForm,.journalForm>*{min-inline-size:0;max-inline-size:100%}
+.journalForm{overflow:hidden}
+.journalForm label{overflow:hidden}
+.journalForm :is(input,textarea){display:block;inline-size:100%;min-inline-size:0;max-inline-size:100%;box-sizing:border-box}
+.journalForm input[type="date"]{-webkit-appearance:none;appearance:none}
+.mailClient,.mailInbox{min-inline-size:0;max-inline-size:100%}
+main[data-skin] .mailInbox>.empty{max-inline-size:100%;white-space:normal;overflow-wrap:anywhere;word-break:normal;box-sizing:border-box}
+@media(max-width:600px){.journalForm{inline-size:100%}.mailInbox>.empty{font-size:15px;line-height:1.45}}
