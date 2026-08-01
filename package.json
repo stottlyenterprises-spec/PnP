@@ -14,6 +14,7 @@
     "test:account-system": "node --experimental-strip-types --test tests/account-system.test.ts",
     "test:cloud-bootstrap": "node --experimental-strip-types --test tests/cloud-bootstrap.test.ts",
     "test:native-shell": "node --experimental-strip-types --test tests/native-shell.test.ts",
+    "test:feedback": "node --experimental-strip-types --test tests/feedback-drilldown.test.ts",
     "native:package": "node scripts/build-native-shell.mjs",
     "native:build": "pnpm build && pnpm native:package",
     "mobile:sync": "pnpm native:build && cap sync",

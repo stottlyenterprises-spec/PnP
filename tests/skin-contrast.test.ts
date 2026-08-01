@@ -90,6 +90,18 @@ test("the app defines one cohesive surface hierarchy",()=>{
  assert.match(hierarchy,/border:1px solid var\(--surface-line\)!important/);
 });
 
+test("nested forms and empty inboxes keep the compact layout contract",()=>{
+ const hierarchy=css.slice(css.indexOf("/* Cohesive surface hierarchy"),css.indexOf("/* Nested layout wrappers"));
+ for(const selector of [".journalForm",".reviewForm",".businessIncome",".pipeline",".everyday"]){
+  assert.ok(!hierarchy.includes(`${selector},`),`${selector} must not become a second card inside its parent`);
+ }
+ const nested=css.slice(css.indexOf("/* Nested layout wrappers"));
+ for(const selector of [".goalCreate",".journalForm",".reviewForm",".businessIncome",".pipeline",".everyday"]){
+  assert.ok(nested.includes(selector),`${selector} is missing the nested-layout reset`);
+ }
+ assert.match(nested,/\.mailInbox>\.empty[\s\S]+min-height:112px[\s\S]+padding:24px 20px/);
+});
+
 test("reported compact-layout controls keep explicit app styling",()=>{
  for(const selector of [".accountAccessActions",".calendarIntro>.primary",".goalMeasureRow",".goalCheckIn"]){
   assert.ok(css.includes(selector),`${selector} is missing its compact-layout treatment`);

@@ -443,9 +443,20 @@ export async function installNativeBridge(handlers: {
     const capture = await native?.DeedsPrivacy?.nextCapture().then(result => result.capture).catch(() => null);
     if (capture) handlers.onSharedCapture(capture);
   };
+  const accountCallbackFingerprint = (url: string) => {
+    let value = 2166136261;
+    for (let index = 0; index < url.length; index += 1) {
+      value ^= url.charCodeAt(index);
+      value = Math.imul(value, 16777619);
+    }
+    return (value >>> 0).toString(36);
+  };
   const routeUrl = (url?: string) => {
     if (!url) return;
     if (url.startsWith("deeds://open") && /(?:access_token|error(?:_description)?)=/.test(url)) {
+      const fingerprint = accountCallbackFingerprint(url);
+      if (sessionStorage.getItem("deeds.native.account-callback") === fingerprint) return;
+      sessionStorage.setItem("deeds.native.account-callback", fingerprint);
       handlers.onAccountCallback(url);
       return;
     }

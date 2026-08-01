@@ -31,6 +31,8 @@ test("native account callbacks survive an iOS cold start", () => {
   const mobile = text("lib/mobile.ts");
   assert.match(mobile, /getLaunchUrl/);
   assert.match(mobile, /routeUrl\(event\?\.url\)/);
+  assert.match(mobile, /accountCallbackFingerprint/);
+  assert.match(mobile, /deeds\.native\.account-callback/);
 });
 
 test("native builds do not follow the website version redirect", () => {
