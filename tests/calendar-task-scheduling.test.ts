@@ -48,3 +48,28 @@ test("repeating tasks warn before the scheduling sheet moves their series", () =
   assert.match(page, /next\.repeatAnchor=date/);
   assert.match(page, /next\.recurringDays/);
 });
+
+test("undated tasks can be planned from lists directly onto a real month grid", () => {
+  assert.match(page, /unscheduledCalendarTasks/);
+  assert.match(page, /CalendarPlanningTray/);
+  assert.match(page, /tap it and then tap a day/i);
+  assert.match(page, /schedulePlanningTask/);
+  assert.match(page, /MonthCalendar/);
+  assert.match(page, /monthPlanningGrid/);
+  assert.match(css, /\.calendarBacklog/);
+  assert.match(css, /\.monthPlanningGrid/);
+});
+
+test("an undated task is not mistaken for an unchanged calendar move", () => {
+  assert.match(page, /hasExistingDate=!!\(original\.scheduledDate\|\|original\.repeatAnchor\|\|original\.calendarOccurrenceSource\)/);
+  assert.match(page, /sameDate=hasExistingDate&&date===sourceKey/);
+  assert.match(page, /drag\.sourceDate===""/);
+});
+
+test("task editing presents one date concept for one-time and repeating work", () => {
+  assert.match(page, /editingTask\.recurring\?"Next due":"Scheduled for"/);
+  assert.match(page, /The next date this task should appear/);
+  assert.doesNotMatch(page, />Scheduled date</);
+  assert.doesNotMatch(page, />First occurrence</);
+  assert.match(page, /scheduledDate:recurring\?undefined:anchor/);
+});
