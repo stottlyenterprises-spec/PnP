@@ -62,6 +62,17 @@ test("native account bootstrap does not depend on the packaged request shim", ()
   assert.match(accountClient, /isNativePnp\(\) && path\.startsWith\("\/api\/"\)/);
 });
 
+test("temporary account failures cannot erase a valid saved session", () => {
+  assert.match(accountClient, /Network errors, rate limits, and upstream failures are not sign-outs/);
+  assert.match(accountClient, /return \{ configured: true, session, providers \}/);
+  assert.match(accountClient, /shouldClearAccountSession\(refreshError\)/);
+  assert.match(accountClient, /return NATIVE_ACCOUNT_CONFIG/);
+  const callbackSave = accountClient.indexOf("session = saveAccountSession({ ...callback, user })");
+  const callbackCleanup = accountClient.indexOf('history.replaceState({}, "", `${window.location.pathname}${window.location.search}`)', callbackSave);
+  assert.ok(callbackSave >= 0 && callbackCleanup > callbackSave, "OAuth callback must remain recoverable until its session is saved");
+  assert.match(accountClient, /callback whose token is definitively invalid/);
+});
+
 test("existing accounts can add sign-in methods without merging connected services", () => {
   assert.match(accountClient, /accountIdentityLinkUrl/);
   assert.match(accountClient, /linkedProviders/);

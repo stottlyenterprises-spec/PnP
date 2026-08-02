@@ -53,6 +53,20 @@ type SupabaseUser = {
   identities?: Array<{ provider?: string }>;
 };
 
+class AccountHttpError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.name = "AccountHttpError";
+    this.status = status;
+  }
+}
+
+export function shouldClearAccountSession(error: unknown) {
+  return error instanceof AccountHttpError && [400, 401, 403].includes(error.status);
+}
+
 function accountUser(user: SupabaseUser): DeedsAccountUser {
   const email = String(user.email || "");
   const linkedProviders = [...new Set((user.identities || []).map(identity => String(identity.provider || "")).filter(Boolean))];
@@ -107,13 +121,20 @@ export function consumeAccountCallback() {
 
 async function accountConfig() {
   if (isNativePnp()) return NATIVE_ACCOUNT_CONFIG;
-  const response = await fetch("/api/account/config", { cache: "no-store" });
-  return response.json() as Promise<{
-    configured: boolean;
-    url?: string;
-    publishableKey?: string;
-    providers?: DeedsAccountProviders;
-  }>;
+  try {
+    const response = await fetch("/api/account/config", { cache: "no-store" });
+    if (!response.ok) throw new AccountHttpError("Account configuration is temporarily unavailable.", response.status);
+    return await response.json() as {
+      configured: boolean;
+      url?: string;
+      publishableKey?: string;
+      providers?: DeedsAccountProviders;
+    };
+  } catch {
+    // The publishable account configuration is safe to cache in the client. A
+    // temporary Vercel/API failure must not turn a signed-in user into a guest.
+    return NATIVE_ACCOUNT_CONFIG;
+  }
 }
 
 function accountRedirectUrl() {
@@ -125,7 +146,7 @@ async function fetchUser(accessToken: string, url: string, publishableKey: strin
     headers: { apikey: publishableKey, Authorization: `Bearer ${accessToken}` },
     cache: "no-store",
   });
-  if (!response.ok) throw new Error("Your D.E.E.D.S. session has expired.");
+  if (!response.ok) throw new AccountHttpError("Your D.E.E.D.S. session has expired.", response.status);
   return accountUser(await response.json() as SupabaseUser);
 }
 
@@ -139,13 +160,13 @@ export async function completeAccountCallback(url: string) {
 }
 
 async function refreshSession(session: DeedsAccountSession, url: string, publishableKey: string) {
-  if (!session.refreshToken) throw new Error("Please sign in again.");
+  if (!session.refreshToken) throw new AccountHttpError("Please sign in again.", 401);
   const response = await fetch(`${url}/auth/v1/token?grant_type=refresh_token`, {
     method: "POST",
     headers: { apikey: publishableKey, "Content-Type": "application/json" },
     body: JSON.stringify({ refresh_token: session.refreshToken }),
   });
-  if (!response.ok) throw new Error("Please sign in again.");
+  if (!response.ok) throw new AccountHttpError("Please sign in again.", response.status);
   const body = await response.json() as { access_token: string; refresh_token: string; expires_in: number; user: SupabaseUser };
   return saveAccountSession({
     accessToken: body.access_token,
@@ -163,23 +184,52 @@ export async function restoreAccountSession(): Promise<{
   const config = await accountConfig();
   const providers = config.providers || { apple: false, google: false, email: false };
   if (!config.configured || !config.url || !config.publishableKey) return { configured: false, session: null, providers };
-  const callback = consumeAccountCallback();
+  const callback = typeof window === "undefined" ? null : accountCallbackTokens(window.location.href);
   let session = readAccountSession();
   if (callback) {
-    const user = await fetchUser(callback.accessToken, config.url, config.publishableKey);
-    session = saveAccountSession({ ...callback, user });
+    try {
+      const user = await fetchUser(callback.accessToken, config.url, config.publishableKey);
+      session = saveAccountSession({ ...callback, user });
+      history.replaceState({}, "", `${window.location.pathname}${window.location.search}`);
+    } catch (error) {
+      // Keep a callback available for a retry after a temporary outage, but do
+      // not trap the browser on a callback whose token is definitively invalid.
+      if (shouldClearAccountSession(error)) {
+        history.replaceState({}, "", `${window.location.pathname}${window.location.search}`);
+      }
+      throw error;
+    }
   }
   if (!session) return { configured: true, session: null, providers };
   try {
-    if (session.expiresAt < Date.now() + 60_000) session = await refreshSession(session, config.url, config.publishableKey);
-    else {
+    if (session.expiresAt < Date.now() + 60_000) {
+      session = await refreshSession(session, config.url, config.publishableKey);
+    } else {
       const user = await fetchUser(session.accessToken, config.url, config.publishableKey);
       session = saveAccountSession({ ...session, user });
     }
     return { configured: true, session, providers };
-  } catch {
-    clearAccountSession();
-    return { configured: true, session: null, providers };
+  } catch (error) {
+    // A valid access token can be rejected shortly before its local expiry.
+    // Refresh once before treating that as a real sign-out.
+    if (shouldClearAccountSession(error) && session.refreshToken) {
+      try {
+        session = await refreshSession(session, config.url, config.publishableKey);
+        return { configured: true, session, providers };
+      } catch (refreshError) {
+        if (shouldClearAccountSession(refreshError)) {
+          clearAccountSession();
+          return { configured: true, session: null, providers };
+        }
+      }
+    } else if (shouldClearAccountSession(error)) {
+      clearAccountSession();
+      return { configured: true, session: null, providers };
+    }
+
+    // Network errors, rate limits, and upstream failures are not sign-outs.
+    // Keep the last verified identity and retry naturally on the next launch.
+    return { configured: true, session, providers };
   }
 }
 
