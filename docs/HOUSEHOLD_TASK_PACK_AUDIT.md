@@ -158,10 +158,11 @@ Suggested recurrence: monthly or quarterly.
 - Stovetop: Clean surface and controls
 - Hood vent: Clean filter and exterior
 - Dishwasher: Clean filter
+- Dishwasher: Run cleaning cycle
 - Coffee maker: Clean and descale
 - Toaster: Empty and clean crumb tray
 
-Suggested recurrence varies by appliance. The installer should propose monthly for the microwave, coffee maker, dishwasher filter, and toaster; quarterly for the oven and hood filter.
+Suggested recurrence varies by appliance. The installer should propose monthly for the microwave, coffee maker, dishwasher filter, dishwasher cleaning cycle, and toaster; quarterly for the oven and hood filter.
 
 ### Kitchen: Sink
 
@@ -220,6 +221,9 @@ The original entries `Scrubbing Bubbles`, `Soft scrub brush`, and `Magic Eraser 
 - Bedroom furniture: Dust from top to bottom
 - Bedroom furniture: Wipe nightstands
 - Bedroom furniture: Vacuum under bed
+- Bedroom mattresses: Rotate
+
+Suggested recurrence: mattress rotation quarterly; other tasks monthly or quarterly according to the room and user preference.
 
 ### Bedrooms: Closets
 
@@ -278,11 +282,15 @@ The original entries `Scrubbing Bubbles`, `Soft scrub brush`, and `Magic Eraser 
 - Dryer: Deep-clean exhaust vent
 - Dryer: Clean lint trap and housing
 
+Suggested recurrence: washing-machine cleaning quarterly, dryer exhaust vent semiannually, lint-trap housing monthly or according to use.
+
 ### Utility: Home Systems
 
 - Water heater: Inspect visible condition
 - HVAC: Replace filter
 - Utility area: Organize cleaning supplies
+
+Suggested recurrence: HVAC filter quarterly by default, then adjusted for the actual filter, equipment, household, and manufacturer guidance. Other tasks are quarterly or semiannual.
 
 ### Garage
 
@@ -347,6 +355,11 @@ The installer should ask which systems are actually present. It must omit irrele
 - Exterior front: Clean light fixtures
 - Exterior front: Trim bushes
 - Exterior front: Weed flower beds
+- Exterior surfaces: Pressure-wash appropriate areas
+- Gutters: Clean and inspect
+- Roof: Perform ground-level or professionally appropriate visual inspection
+
+Suggested recurrence: general exterior pressure washing, gutter service, and roof review semiannually or seasonally. Tasks involving height, roof access, or unsafe equipment require an appropriate professional.
 
 ### Back Patio: Reset, Surfaces, and Storage
 
@@ -428,34 +441,20 @@ Suggested recurrence: furniture and deck monthly, umbrella quarterly and before 
 
 Suggested recurrence: reset after use or weekly, washing monthly, safety inspection monthly and after severe weather.
 
-### Whole-House Monthly Maintenance
+### Whole House
 
 - Whole house: Dust ceiling fans
 - Whole house: Clean air vents
 - Whole house: Clean baseboards
 - Whole house: Clean window tracks
 - Whole house: Clean under furniture
-- Dishwasher: Run cleaning cycle
+- Whole house curtains: Wash or clean
+- Whole house carpets: Steam-clean
+- Whole house wood furniture: Clean and polish
 
-The monthly refrigerator, pantry, coffee-maker, and disposal work uses the canonical tasks already listed above. The installer must not create second copies.
+Suggested recurrence: ceiling fans, vents, baseboards, window tracks, and under-furniture cleaning monthly; curtains quarterly; carpets and wood-furniture care semiannually.
 
-### Whole-House Quarterly Maintenance
-
-- Curtains: Wash or clean
-- Mattresses: Rotate
-- Appliances: Vacuum behind and underneath
-
-The quarterly HVAC, oven, refrigerator, and washing-machine work uses the canonical tasks already listed above.
-
-### Whole-House Semiannual Maintenance
-
-- Exterior: Pressure-wash surfaces
-- Gutters: Clean and inspect
-- Roof: Perform visual inspection
-- Carpets: Steam-clean
-- Wood furniture: Clean and polish
-
-The semiannual dryer-vent work uses the canonical dryer task already listed above.
+These tasks belong to the `Whole House` area. Their cadence is metadata, not a separate task list.
 
 ### Daily Maintenance
 
@@ -503,7 +502,7 @@ Brand names should be optional and replaceable with generic equivalents before p
 
 ## 6. Pack modules
 
-Household Complete should not install all 123 tasks automatically. It should offer modules:
+Household Complete should not install all 179 tasks automatically. It should offer area-based modules:
 
 - Daily Maintenance
 - Kitchen
@@ -517,18 +516,20 @@ Household Complete should not install all 123 tasks automatically. It should off
 - Back Patio and Lanai
 - Pool and Spa
 - Outdoor Play Area
-- Monthly Maintenance
-- Quarterly Maintenance
-- Semiannual Maintenance
+- Whole House
 - Supplies
 
-The setup interview enables only the modules that fit the user's home.
+The setup interview enables only the area modules that fit the user's home. Monthly, quarterly, and semiannual are recurrence rules inside those areas, never separate lists or installation modules.
 
 ## 7. Scheduling behavior
 
 The pack installer must:
 
 - install one canonical task per action
+- store area, subarea, recurrence, and next-due date independently
+- keep every task in its area when its recurrence or next-due date changes
+- show cadence as supporting information, such as `Kitchen · Monthly`, rather than as the task's location
+- allow cadence filters without creating cadence-based lists
 - attach one recurrence rule to that task
 - avoid a second copy when multiple modules reference the same action
 - let users change every suggested schedule
