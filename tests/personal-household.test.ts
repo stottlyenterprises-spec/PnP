@@ -62,6 +62,22 @@ test("the second pass repairs vague labels, timing, and This Month household wor
  assert.equal(result.tasks.find(task=>task.id==="returns")?.section,"month");
 });
 
+test("the third pass repairs tasks trapped in the wrong area category",()=>{
+ const value=input();value.migrations=["personal-household-areas-v1","personal-household-areas-v2"];
+ value.categories=[
+  {id:"pool",title:"Pool & Spa",section:"custom",listId:"home-list",order:0},
+  {id:"living",title:"Living Spaces",section:"custom",listId:"home-list",order:1},
+ ];
+ value.tasks=[
+  {id:"misplaced",title:"Deep clean the living room",section:"custom",listId:"home-list",categoryId:"pool",done:false,created:"2026-07-01T12:00:00.000Z"},
+  {id:"generic",title:"Check supplies",section:"custom",listId:"home-list",categoryId:"pool",done:false,created:"2026-07-01T12:00:00.000Z"},
+ ];
+ const result=upgradePersonalHousehold(value),misplaced=result.tasks.find(task=>task.id==="misplaced")!,generic=result.tasks.find(task=>task.id==="generic")!;
+ assert.equal(result.categories.find(category=>category.id===misplaced.categoryId)?.title,"Living Spaces");
+ assert.equal(result.categories.find(category=>category.id===generic.categoryId)?.title,"Pool & Spa");
+ assert.ok(result.migrations.includes(PERSONAL_HOUSEHOLD_MIGRATION));
+});
+
 test("missing patio pool play and garage tasks are added once with staggered next dates",()=>{
  const first=upgradePersonalHousehold(input());
  assert.ok(first.tasks.some(task=>task.title==="Pool: Test and record water chemistry"));
