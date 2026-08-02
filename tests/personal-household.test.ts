@@ -30,7 +30,8 @@ test("personal household migration replaces cadence categories with physical are
 
 test("existing data is preserved while recurrence and area are corrected",()=>{
  const result=upgradePersonalHousehold(input()),fridge=result.tasks.find(task=>task.id==="fridge")!,garage=result.tasks.find(task=>task.id==="garage")!;
- assert.equal(fridge.notes,"Keep my note");
+ assert.match(fridge.notes||"",/Keep my note/);
+ assert.match(fridge.notes||"",/Suggested timing: monthly/);
  assert.equal(fridge.done,true);
  assert.equal(fridge.completed,"2026-07-29T18:00:00.000Z");
  assert.equal(fridge.recurring,true);
@@ -40,6 +41,25 @@ test("existing data is preserved while recurrence and area are corrected",()=>{
  assert.equal(garage.title,"Garage floor: Sweep or vacuum debris");
  assert.equal(result.categories.find(category=>category.id===garage.categoryId)?.title,"Garage");
  assert.equal(result.tasks.find(task=>task.id==="personal")?.categoryId,undefined);
+});
+
+test("the second pass repairs vague labels, timing, and This Month household work",()=>{
+ const value=input();value.migrations=["personal-household-areas-v1"];
+ value.categories=[{id:"kitchen",title:"Kitchen",section:"custom",listId:"home-list",order:0}];
+ value.tasks=[
+  {id:"vague",title:"Remove shelves and drawers",section:"custom",listId:"home-list",categoryId:"kitchen",done:false,created:"2026-07-01T12:00:00.000Z"},
+  {id:"ac",title:"Clear AC line",section:"month",done:false,created:"2026-07-01T12:00:00.000Z"},
+  {id:"returns",title:"Returns",section:"month",done:false,created:"2026-07-01T12:00:00.000Z"},
+ ];
+ const result=upgradePersonalHousehold(value),vague=result.tasks.find(task=>task.id==="vague")!,ac=result.tasks.find(task=>task.id==="ac")!;
+ assert.equal(vague.title,"Refrigerator: Remove shelves and drawers");
+ assert.equal(vague.repeatUnit,"month");
+ assert.equal(vague.repeatInterval,3);
+ assert.match(vague.notes||"",/every 3 months/);
+ assert.equal(ac.title,"HVAC drain line: Clear and inspect");
+ assert.equal(ac.section,"custom");
+ assert.equal(result.categories.find(category=>category.id===ac.categoryId)?.title,"Laundry & Utility");
+ assert.equal(result.tasks.find(task=>task.id==="returns")?.section,"month");
 });
 
 test("missing patio pool play and garage tasks are added once with staggered next dates",()=>{

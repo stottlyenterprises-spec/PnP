@@ -1,4 +1,5 @@
-export const PERSONAL_HOUSEHOLD_MIGRATION = "personal-household-areas-v1";
+export const PERSONAL_HOUSEHOLD_MIGRATION = "personal-household-areas-v2";
+const PREVIOUS_PERSONAL_HOUSEHOLD_MIGRATION = "personal-household-areas-v1";
 
 type RepeatUnit = "day" | "week" | "month" | "year";
 type TaskLike = {id:string;title:string;notes?:string;section:string;listId?:string;categoryId?:string;scheduledDate?:string;recurring?:boolean;recurringDays?:string[];repeatInterval?:number;repeatUnit?:RepeatUnit;repeatAnchor?:string;done:boolean;created:string;completed?:string;[key:string]:unknown};
@@ -6,6 +7,7 @@ type CategoryLike = {id:string;title:string;section:string;listId?:string;order:
 type ListLike = {id:string;title:string};
 type Cadence = "weekly"|"monthly"|"quarterly"|"semiannual";
 type Seed = {title:string;area:string;cadence:Cadence;notes?:string};
+type Timing = {cadence?:Cadence|"daily";notes:string};
 
 const areas=["Kitchen","Bathrooms","Bedrooms","Living Spaces","Office","Laundry & Utility","Garage","Exterior","Back Patio & Lanai","Pool & Spa","Outdoor Play Area","Whole House","Other Household"];
 const weekdays=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
@@ -26,6 +28,69 @@ const legacyTitles:Record<string,string>={
  "garage organize shelves":"Garage shelving: Organize by use and hazard type",
  "garage dispose of chemicals properly":"Garage chemicals: Review for safe disposal",
  "garage inventory tools":"Garage tools: Inventory and return tools to storage",
+};
+
+const clearerTitles:Record<string,string>={
+ "deep clean kitchen air fryer":"Air fryer: Deep-clean basket and accessible surfaces",
+ "deep clean kitchen refrigerator":"Refrigerator: Deep clean interior",
+ "deep clean kitchen pantry":"Pantry: Deep clean shelves and storage",
+ "deep clean kitchen cabinets":"Kitchen cabinets: Wipe fronts and organize interiors",
+ "deep clean kitchen appliances":"Kitchen appliances: Clean accessible exterior surfaces",
+ "deep clean kitchen sink":"Kitchen sink: Deep clean basin, drain, and fixtures",
+ "deep clean kitchen floors":"Kitchen floor: Deep clean edges and under movable items",
+ "toss expired food":"Refrigerator: Toss expired food",
+ "remove shelves and drawers":"Refrigerator: Remove shelves and drawers",
+ "wash with warm water and dish soap":"Refrigerator: Wash shelves and drawers with warm soapy water",
+ "wipe door seals":"Refrigerator: Wipe door seals",
+ "vacuum condenser coils if accessible":"Refrigerator: Vacuum condenser coils if accessible",
+ "ceiling fans":"Whole house: Dust ceiling fans",
+ "air vents":"Whole house: Clean accessible air vents",
+ "baseboards":"Whole house: Clean baseboards",
+ "window tracks":"Whole house: Clean window tracks",
+ "under furniture":"Whole house: Clean under movable furniture",
+ "refrigerator shelves":"Refrigerator: Clean shelves",
+ "pantry check":"Pantry: Check expiration dates and organization",
+ "descale coffee maker":"Coffee maker: Descale according to manufacturer guidance",
+ "dishwasher cleaning cycle":"Dishwasher: Run cleaning cycle and clean filter",
+ "garbage disposal cleaning":"Garbage disposal: Clean and deodorize safely",
+ "replace hvac filter":"HVAC: Replace filter",
+ "wash curtains":"Whole house: Wash or clean curtains",
+ "rotate mattresses":"Bedrooms: Rotate mattresses",
+ "deep clean oven":"Oven: Deep clean interior",
+ "deep clean refrigerator":"Refrigerator: Deep clean interior",
+ "clean washing machine":"Washing machine: Run cleaning cycle",
+ "vacuum behind appliances":"Kitchen: Vacuum behind accessible appliances",
+ "pressure wash exterior":"Exterior: Pressure wash appropriate surfaces",
+ "clean gutters":"Exterior: Clean gutters",
+ "inspect roof":"Exterior: Visually inspect roof from a safe location",
+ "clean dryer vent":"Dryer exhaust: Clean accessible vent path",
+ "steam clean carpets":"Whole house: Steam clean carpets",
+ "polish wood furniture":"Whole house: Polish wood furniture",
+};
+
+const cadenceDetails:Record<Cadence|"daily",string>={
+ daily:"Suggested timing: daily.",weekly:"Suggested timing: weekly.",monthly:"Suggested timing: monthly.",quarterly:"Suggested timing: every 3 months.",semiannual:"Suggested timing: every 6 months."
+};
+const timingFor=(title:string):Timing=>{const value=key(title);
+ if(/make beds|empty dishwasher|wipe kitchen counters|one load of laundry|return items to their proper place|quick bathroom|five minute floor|empty trash if full/.test(value))return{cadence:"daily",notes:cadenceDetails.daily};
+ if(/toss expired|refrigerator clean shelves|pantry check expiration|coffee maker|dishwasher|garbage disposal|ceiling fan|air vent|baseboard|window track|under movable furniture|air fryer|kitchen cabinets|kitchen appliances|kitchen sink|kitchen floor|cleaning supplies|photo eyes|charging area|floor sweep|cobweb|pool equipment area|pool filter|pool deck wash|outdoor furniture|back patio floor wash|back patio storage|lanai tracks/.test(value))return{cadence:"monthly",notes:cadenceDetails.monthly};
+ if(/condenser coil|dryer exhaust|steam clean carpet|polish wood|pressure wash exterior|clean gutter|inspect roof|seasonal storage|identify items to donate|lanai enclosure inspect/.test(value))return{cadence:"semiannual",notes:cadenceDetails.semiannual};
+ if(/remove shelves|wash shelves|wipe door seals|deep clean refrigerator|deep clean shelves|wash curtains|rotate mattress|deep clean oven|washing machine|vacuum behind|hvac|garage shelving|garage storage|garage tools|garage door visually|garage door seals|garage entry|garage chemicals|fire extinguisher|visible pests|water intrusion|overhead storage|back patio windows|back patio lighting|lanai screens and frames|mildew|patio umbrella/.test(value))return{cadence:"quarterly",notes:cadenceDetails.quarterly};
+ if(/back patio return|back patio table|back patio chairs|back patio floor sweep|outdoor grill clean cooking|pool skim|pool brush|pool and spa brush|pool vacuum|pool empty|pool check water|pool test|pool equipment inspect|pool toys|pool deck remove|pool boundary|outdoor play|garage return|garage clear|garage trash/.test(value))return{cadence:"weekly",notes:cadenceDetails.weekly};
+ return{notes:"Suggested timing: schedule as needed."};
+};
+const appendTiming=(notes:string|undefined,timing:string)=>{const current=(notes||"").trim();if(/suggested timing:/i.test(current))return current;return[current,timing].filter(Boolean).join("\n")};
+const repeatFor=(cadence:Timing["cadence"])=>cadence?{unit:cadence==="daily"?"day" as const:cadence==="weekly"?"week" as const:"month" as const,interval:cadence==="quarterly"?3:cadence==="semiannual"?6:1}:null;
+const suggestedAnchor=(title:string,cadence:Timing["cadence"],today:string)=>{if(cadence==="daily")return today;const hash=[...key(title)].reduce((total,char)=>total+char.charCodeAt(0),0),span=cadence==="weekly"?7:cadence==="monthly"?28:cadence==="quarterly"?75:150,minimum=cadence==="weekly"?1:cadence==="monthly"?3:cadence==="quarterly"?14:30;return addDays(today,minimum+(hash%span))};
+
+const monthlyMoves:Record<string,{title:string;area:string;cadence?:Cadence;notes?:string}>={
+ "clear ac line":{title:"HVAC drain line: Clear and inspect",area:"Laundry & Utility",cadence:"monthly"},
+ "paint bedroom":{title:"Bedroom: Paint planned room",area:"Bedrooms",notes:"One-time household project. Schedule a date when ready."},
+ "downstairs bathroom":{title:"Downstairs bathroom: Complete planned work",area:"Bathrooms",notes:"One-time household project. Add the specific work to this note."},
+ "paint door":{title:"Door: Paint planned door",area:"Other Household",notes:"One-time household project. Note which door before scheduling."},
+ "pool black algae hunt":{title:"Pool: Address visible black algae",area:"Pool & Spa",notes:"Condition-based task. Follow pool professional and product guidance."},
+ "bug spray":{title:"Exterior perimeter: Apply pest treatment as appropriate",area:"Exterior",cadence:"quarterly",notes:"Follow product, safety, weather, pet, and professional guidance."},
+ "tree and bush trim":{title:"Exterior landscaping: Trim trees and bushes as appropriate",area:"Exterior",cadence:"quarterly",notes:"Use qualified help for height, power lines, or hazardous limbs."},
 };
 
 const seeds:Seed[]=[
@@ -105,11 +170,13 @@ export function upgradePersonalHousehold<T extends TaskLike,C extends CategoryLi
  if(input.migrations.includes(PERSONAL_HOUSEHOLD_MIGRATION))return input;
  const household=input.lists.filter(list=>/household/i.test(list.title));
  if(!household.length)return input;
- const householdIds=new Set(household.map(list=>list.id)),oldCategories=new Map(input.categories.map(category=>[category.id,category]));
- const categories=input.categories.filter(category=>!category.listId||!householdIds.has(category.listId)) as C[];
+ const householdIds=new Set(household.map(list=>list.id)),oldCategories=new Map(input.categories.map(category=>[category.id,category])),alreadyOrganized=input.migrations.includes(PREVIOUS_PERSONAL_HOUSEHOLD_MIGRATION);
+ const categories=(alreadyOrganized?input.categories:input.categories.filter(category=>!category.listId||!householdIds.has(category.listId))) as C[];
  const categoryIds=new Map<string,string>();
- household.forEach(list=>areas.forEach((area,order)=>{const id=`household-${slug(list.id)}-${slug(area)}`;categoryIds.set(`${list.id}:${area}`,id);categories.push({id,title:area,section:"custom",listId:list.id,order} as C)}));
- let tasks=input.tasks.map(task=>{if(task.section!=="custom"||!task.listId||!householdIds.has(task.listId))return task;const category=task.categoryId?oldCategories.get(task.categoryId):undefined,title=legacyTitles[key(task.title)]||task.title,area=areaFor(title,category?.title),cadence=cadenceFromCategory(category?.title),anchor=task.repeatAnchor||task.scheduledDate||input.today;return{...task,title,categoryId:categoryIds.get(`${task.listId}:${area}`),recurring:cadence?true:task.recurring,repeatUnit:cadence?.unit||task.repeatUnit,repeatInterval:cadence?.interval||task.repeatInterval,repeatAnchor:cadence?anchor:task.repeatAnchor,scheduledDate:cadence?undefined:task.scheduledDate} as T});
+ household.forEach(list=>areas.forEach((area,order)=>{const existing=categories.find(category=>category.listId===list.id&&key(category.title)===key(area)),id=existing?.id||`household-${slug(list.id)}-${slug(area)}`;categoryIds.set(`${list.id}:${area}`,id);if(!existing)categories.push({id,title:area,section:"custom",listId:list.id,order} as C)}));
+ const primaryHousehold=household[0];
+ let tasks=input.tasks.map(task=>{const monthly=task.section==="month"?monthlyMoves[key(task.title)]:undefined;if(monthly&&primaryHousehold){const cadence=monthly.cadence,repeat=repeatFor(cadence),anchor=task.repeatAnchor||task.scheduledDate||suggestedAnchor(monthly.title,cadence,input.today);return{...task,title:monthly.title,notes:appendTiming([task.notes,monthly.notes].filter(Boolean).join("\n"),cadence?cadenceDetails[cadence]:"Suggested timing: schedule as needed."),section:"custom",listId:primaryHousehold.id,categoryId:categoryIds.get(`${primaryHousehold.id}:${monthly.area}`),recurring:Boolean(cadence),repeatUnit:repeat?.unit,repeatInterval:repeat?.interval,repeatAnchor:repeat?anchor:undefined,scheduledDate:repeat?undefined:task.scheduledDate} as T}if(task.section!=="custom"||!task.listId||!householdIds.has(task.listId))return task;const category=task.categoryId?oldCategories.get(task.categoryId):undefined,title=clearerTitles[key(task.title)]||legacyTitles[key(task.title)]||task.title,area=areaFor(title,category?.title),categoryCadence=cadenceFromCategory(category?.title),timing=timingFor(title),repeat=categoryCadence||repeatFor(timing.cadence),cadence=categoryCadence?(categoryCadence.interval===6?"semiannual":categoryCadence.interval===3?"quarterly":categoryCadence.unit==="month"?"monthly":"daily") as Timing["cadence"]:timing.cadence,anchor=task.repeatAnchor||task.scheduledDate||suggestedAnchor(title,cadence,input.today);return{...task,title,notes:appendTiming(task.notes,timing.notes),categoryId:categoryIds.get(`${task.listId}:${area}`),recurring:repeat?true:task.recurring,repeatUnit:repeat?.unit||task.repeatUnit,repeatInterval:repeat?.interval||task.repeatInterval,repeatAnchor:repeat?anchor:task.repeatAnchor,scheduledDate:repeat?undefined:task.scheduledDate} as T});
  household.forEach(list=>{const existing=new Set(tasks.filter(task=>task.listId===list.id).map(task=>key(task.title)));seeds.forEach((seed,index)=>{if(existing.has(key(seed.title)))return;const unit=seed.cadence==="weekly"?"week":"month",interval=seed.cadence==="quarterly"?3:seed.cadence==="semiannual"?6:1,offset=seed.cadence==="weekly"?(index%6)+1:seed.cadence==="monthly"?(index%24)+7:seed.cadence==="quarterly"?(index%45)+30:(index%60)+90,anchor=addDays(input.today,offset);tasks.push({id:`personal-${slug(list.id)}-${slug(seed.title)}`,title:seed.title,notes:seed.notes,section:"custom",listId:list.id,categoryId:categoryIds.get(`${list.id}:${seed.area}`),recurring:true,repeatUnit:unit,repeatInterval:interval,repeatAnchor:anchor,recurringDays:unit==="week"?[weekday(anchor)]:undefined,done:false,created:`${input.today}T12:00:00.000Z`} as T);existing.add(key(seed.title))})});
+ const seen=new Map<string,T>();tasks=tasks.filter(task=>{if(task.section!=="custom"||!task.listId||!householdIds.has(task.listId))return true;const identity=`${task.listId}:${key(task.title)}`,prior=seen.get(identity);if(!prior){seen.set(identity,task);return true}prior.notes=[prior.notes,task.notes].filter(Boolean).filter((value,index,array)=>array.indexOf(value)===index).join("\n");prior.done=prior.done||task.done;if(!prior.completed&&task.completed)prior.completed=task.completed;return false});
  return{...input,tasks,categories,migrations:[...input.migrations,PERSONAL_HOUSEHOLD_MIGRATION]};
 }

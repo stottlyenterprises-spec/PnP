@@ -800,7 +800,9 @@ main[data-skin] .deedsWorkspaceStatus .decisionGuideButton{border-color:color-mi
 @media(max-width:800px){.nativePrivacyCard{display:grid;padding:19px}.nativePrivacyCard>button,.nativePrivacyCard>span{width:100%;text-align:center}.nativePrivacyGate{padding:24px 20px calc(24px + env(safe-area-inset-bottom))}}
 
 /* Native layout and contrast cleanup */
-html,body{min-height:100%;background:#0e2019}body{min-height:100dvh;overscroll-behavior-y:none}main{min-height:100dvh}
+html,body{min-height:100%;background:#050608}body{min-height:100dvh;overscroll-behavior-y:none}main{min-height:100dvh}
+main[data-skin]{min-height:100dvh;background:var(--skin-side-b)}
+body:has(main[data-skin="signature"]){background:#dce7e2}body:has(main[data-skin="forest"]){background:#020807}body:has(main[data-skin="midnight"]){background:#050608}body:has(main[data-skin="coastal"]){background:#a9ced8}body:has(main[data-skin="stage"]){background:#9d6974}body:has(main[data-skin="focus"]){background:#dfe4e1}body:has(main[data-skin="aurora"]){background:#0b0820}body:has(main[data-skin="solstice"]){background:#cf7659}body:has(main[data-skin="nebula"]){background:#070510}body:has(main[data-skin="kintsugi"]){background:#d9d0bf}body:has(main[data-skin="blueprint"]){background:#03101c}body:has(main[data-skin="velvet"]){background:#170914}
 main[data-skin] ::placeholder{color:color-mix(in srgb,var(--skin-muted) 86%,transparent);opacity:1}
 main[data-skin] button:disabled{color:var(--skin-muted);opacity:.72}
 main[data-skin] :is(.taskPanel,.taskCategoryGroup,.categoryManager,.listManager,.taskImportPanel) :is(.hint,.micro,small,label){color:var(--skin-muted)}
