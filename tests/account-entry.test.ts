@@ -60,8 +60,13 @@ test("a disconnected account never opens the setup interview",()=>{
 });
 
 test("the app contains a blocking recovery state for a connected empty account",()=>{
- assert.match(page,/const accountNeedsRecovery=/);
+ assert.match(page,/const accountNeedsRecovery=.*\(!hasMeaningfulLocalData\|\|explicitAccountSwitch\)/);
  assert.match(page,/Use a different account/);
  assert.match(page,/Use this device’s protected data/);
  assert.match(page,/D\.E\.E\.D\.S\. will not open a blank account or replace protected local data/);
+});
+
+test("a usable device record keeps routine account recovery in the background",()=>{
+ assert.match(page,/const explicitAccountSwitch=/);
+ assert.match(page,/\(!hasMeaningfulLocalData\|\|explicitAccountSwitch\)/);
 });
